@@ -1,3 +1,5 @@
+package net.subroh0508.wingcalculator.desktop
+
 import net.subroh0508.wingcalculator.composeui.App
 import androidx.compose.desktop.Window
 

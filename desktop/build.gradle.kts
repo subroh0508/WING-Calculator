@@ -9,19 +9,18 @@ plugins {
 kotlin {
     jvm { withJava() }
     sourceSets {
-        val jvmMain by getting {
+        named("jvmMain") {
             dependencies {
                 implementation(project(":common:composeui"))
                 implementation(compose.desktop.currentOs)
             }
         }
-        val jvmTest by getting
     }
 }
 
 compose.desktop {
     application {
-        mainClass = "MainKt"
+        mainClass = "net.subroh0508.wingcalculator.desktop.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "jvm"
