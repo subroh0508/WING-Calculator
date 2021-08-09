@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
 plugins {
     kotlin("multiplatform")
+    id("android-multiplatform")
     id("com.android.library")
 }
 
@@ -9,7 +10,6 @@ kotlin {
     jvm("desktop")
     android()
     // ios()
-
     js(IR, KotlinJsTargetDsl::browser)
 
     sourceSets {

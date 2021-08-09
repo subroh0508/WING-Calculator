@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.data.getPlatformName
 
 @Composable
 fun App() {
@@ -11,7 +12,7 @@ fun App() {
 
     MaterialTheme {
         Button(onClick = {
-            text = "Hello, ${net.subroh0508.wingcalculator.composeui.getPlatformName()}"
+            text = "Hello, ${getPlatformName()}"
         }) {
             Text(text)
         }
