@@ -1,5 +1,6 @@
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 plugins {
     kotlin("multiplatform")
@@ -7,7 +8,7 @@ plugins {
 }
 
 kotlin {
-    jvm { withJava() }
+    jvm(configure = KotlinJvmTarget::withJava)
     sourceSets {
         named("jvmMain") {
             dependencies {
