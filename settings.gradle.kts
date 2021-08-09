@@ -1,1 +1,5 @@
-include(":common", ":android", ":desktop")
+include(
+    ":common:composeui",
+    ":android",
+    ":desktop",
+)

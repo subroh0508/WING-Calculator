@@ -1,6 +1,6 @@
 package net.subroh0508.wingcalculator.android
 
-import net.subroh0508.wingcalculator.common.App
+import net.subroh0508.wingcalculator.composeui.App
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent

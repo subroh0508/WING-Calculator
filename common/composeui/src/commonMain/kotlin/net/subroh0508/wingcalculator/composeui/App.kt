@@ -1,4 +1,4 @@
-package net.subroh0508.wingcalculator.common
+package net.subroh0508.wingcalculator.composeui
 
 import androidx.compose.material.Text
 import androidx.compose.material.Button
@@ -11,7 +11,7 @@ fun App() {
 
     MaterialTheme {
         Button(onClick = {
-            text = "Hello, ${getPlatformName()}"
+            text = "Hello, ${net.subroh0508.wingcalculator.composeui.getPlatformName()}"
         }) {
             Text(text)
         }

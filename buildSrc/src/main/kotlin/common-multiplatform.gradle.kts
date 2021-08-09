@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -8,7 +10,7 @@ kotlin {
     android()
     // ios()
 
-    // js(IR) { browser() }
+    js(IR, KotlinJsTargetDsl::browser)
 
     sourceSets {
         named("commonTest") {
@@ -27,13 +29,11 @@ kotlin {
                 implementation(kotlinTestJUnit)
             }
         }
-        /*
         named("jsTest") {
             dependencies {
                 implementation(kotlinTestJs)
             }
         }
-        */
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
