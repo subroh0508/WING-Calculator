@@ -1,4 +1,4 @@
-package me.subroh_0508.common
+package net.subroh0508.wingcalculator.common
 
 import androidx.compose.material.Text
 import androidx.compose.material.Button

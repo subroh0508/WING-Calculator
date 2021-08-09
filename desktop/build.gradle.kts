@@ -3,18 +3,11 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.4.0"
+    id("org.jetbrains.compose")
 }
 
-group = "me.subroh_0508"
-version = "1.0"
-
 kotlin {
-    jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "11"
-        }
-    }
+    jvm { withJava() }
     sourceSets {
         val jvmMain by getting {
             dependencies {
