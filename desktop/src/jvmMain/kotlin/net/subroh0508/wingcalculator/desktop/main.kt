@@ -1,6 +1,6 @@
 package net.subroh0508.wingcalculator.desktop
 
-import net.subroh0508.wingcalculator.composeui.App
+import net.subroh0508.wingcalculator.composeui.pages.simple.App
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState

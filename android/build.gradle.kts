@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":common:composeui"))
+    implementation(project(":common:composeui:pages:simple"))
 
     implementation(compose.runtime)
     implementation(compose.foundation)

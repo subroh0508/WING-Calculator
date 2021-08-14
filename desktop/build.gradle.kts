@@ -12,7 +12,7 @@ kotlin {
     sourceSets {
         named("jvmMain") {
             dependencies {
-                implementation(project(":common:composeui"))
+                implementation(project(":common:composeui:pages:simple"))
                 implementation(compose.desktop.currentOs)
             }
         }

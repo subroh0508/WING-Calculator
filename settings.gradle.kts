@@ -1,5 +1,6 @@
 include(
-    ":common:composeui",
+    ":common:composeui:components",
+    ":common:composeui:pages:simple",
     ":common:data",
     ":android",
     ":desktop",
