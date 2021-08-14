@@ -6,14 +6,14 @@ sealed class Idol {
     abstract val visual: Visual
 
     data class Produce(
-        override val vocal: Vocal,
-        override val dance: Dance,
-        override val visual: Visual,
+        override val vocal: Vocal = Vocal(0),
+        override val dance: Dance = Dance(0),
+        override val visual: Visual = Visual(0),
     ) : Idol()
 
     data class Support(
-        override val vocal: Vocal,
-        override val dance: Dance,
-        override val visual: Visual,
+        override val vocal: Vocal = Vocal(0),
+        override val dance: Dance = Dance(0),
+        override val visual: Visual = Visual(0),
     ) : Idol()
 }
