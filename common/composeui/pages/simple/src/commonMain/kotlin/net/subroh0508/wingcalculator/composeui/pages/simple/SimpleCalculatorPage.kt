@@ -2,19 +2,20 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import net.subroh0508.wingcalculator.composeui.pages.simple.container.SimpleUnitForm
+import androidx.compose.ui.Modifier
+import net.subroh0508.wingcalculator.composeui.components.molecules.TotalAppealsTab
+import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculateResult
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleUnitForm
+import net.subroh0508.wingcalculator.data.Appeal
 import net.subroh0508.wingcalculator.data.Idol
 import net.subroh0508.wingcalculator.data.TotalAppeals
-
-data class SimpleCalculatorUiModel(
-    val pIdol: Idol.Produce = Idol.Produce(),
-    val sIdols: List<Idol.Support> = listOf(Idol.Support(), Idol.Support(), Idol.Support(), Idol.Support()),
-    val totalAppeals: TotalAppeals = TotalAppeals(),
-)
 
 typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
 
@@ -36,9 +37,12 @@ fun SimpleCalculatorPage() {
             CompositionLocalProvider(
                 SimpleCalculatorDispatcherContext provides { uiModel = it },
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxHeight()
+                        .background(MaterialTheme.colors.background)
+                ) {
                     SimpleUnitForm()
-                    Text(uiModel.toString())
+                    SimpleCalculateResult()
                 }
             }
         }

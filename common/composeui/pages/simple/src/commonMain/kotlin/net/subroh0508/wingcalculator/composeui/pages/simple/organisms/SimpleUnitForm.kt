@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.container
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,36 +20,41 @@ fun SimpleUnitForm() {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
-    val (pIdol, sIdols) = uiModel
+    val (_, sIdols) = uiModel
 
-    fun handleOnPIdolStateChange(vo: Int?, da: Int?, vi: Int?) {
-        onChangeUiModel(uiModel.copy(
-            pIdol = Idol.Produce(
-                vo?.let(::Vocal) ?: pIdol.vocal,
-                da?.let(::Dance) ?: pIdol.dance,
-                vi?.let(::Visual) ?: pIdol.visual,
-            ),
-        ))
+    val handleOnPIdolStateChange = remember(uiModel) {
+        { vo: Int?, da: Int?, vi: Int? ->
+            onChangeUiModel(uiModel.copy(
+                pIdol = Idol.Produce(
+                    vo?.let(::Vocal) ?: uiModel.pIdol.vocal,
+                    da?.let(::Dance) ?: uiModel.pIdol.dance,
+                    vi?.let(::Visual) ?: uiModel.pIdol.visual,
+                ),
+            ))
+        }
     }
+    val handleOnSIdolStateChange = remember(uiModel) {
+        { index: Int, vo: Int?, da: Int?, vi: Int? ->
+            val newSIdol = uiModel.sIdols[index].let {
+                Idol.Support(
+                    vo?.let(::Vocal) ?: it.vocal,
+                    da?.let(::Dance) ?: it.dance,
+                    vi?.let(::Visual) ?: it.visual,
+                )
+            }
 
-    fun handleOnSIdolStateChange(index: Int, vo: Int?, da: Int?, vi: Int?) {
-        val newSIdol = sIdols[index].let {
-            Idol.Support(
-                vo?.let(::Vocal) ?: it.vocal,
-                da?.let(::Dance) ?: it.dance,
-                vi?.let(::Visual) ?: it.visual,
+            onChangeUiModel(
+                uiModel.copy(
+                    sIdols = uiModel.sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
+                ),
             )
         }
-
-        onChangeUiModel(uiModel.copy(
-            sIdols = sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
-        ))
     }
 
     Column {
         IdolStatusBox(
             "プロデュースアイドル",
-            ::handleOnPIdolStateChange,
+            handleOnPIdolStateChange,
             modifier = Modifier.padding(bottom = 16.dp),
         )
         sIdols.forEachIndexed { i, _ ->
