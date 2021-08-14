@@ -2,18 +2,20 @@
 
 package net.subroh0508.wingcalculator.composeui.components.molecules
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 
 @Composable
 fun IdolStatusBox(
     label: String,
     onValueChange: (Int?, Int?, Int?) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var status by remember { mutableStateOf(IdolStatus()) }
 
@@ -23,29 +25,35 @@ fun IdolStatusBox(
         onValueChange(vocal, dance, visual)
     }
 
-    Column {
+    Column(modifier = modifier) {
+        val numberFieldModifier = Modifier.width(100.dp)
+
         Text(
             label,
+            modifier = Modifier.padding(horizontal = 8.dp),
             style = MaterialTheme.typography.h6,
         )
         Row {
             NumberField(
                 status.vocal,
-                label = { Text("Vo") },
+                label = "Vo",
                 focusedColor = Color.Magenta,
                 onChangeValue = { s -> status = status.copy(vocal = s) },
+                modifier = numberFieldModifier,
             )
             NumberField(
                 status.dance,
-                label = { Text("Da") },
+                label = "Da",
                 focusedColor = Color.Blue,
                 onChangeValue = { s -> status = status.copy(dance = s) },
+                modifier = numberFieldModifier,
             )
             NumberField(
                 status.visual,
-                label = { Text("Vi") },
-                focusedColor = Color.Yellow,
-                onChangeValue = { s -> status = status.copy(dance = s) },
+                label = "Vi",
+                focusedColor = Color(0xFFFFA500),
+                onChangeValue = { s -> status = status.copy(visual = s) },
+                modifier = numberFieldModifier,
             )
         }
     }

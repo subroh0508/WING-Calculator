@@ -3,9 +3,9 @@ package net.subroh0508.wingcalculator.data
 import kotlin.math.floor
 
 data class TotalAppeals(
-    val vocal: TotalAppeal.Vocal,
-    val dance: TotalAppeal.Dance,
-    val visual: TotalAppeal.Visual,
+    val vocal: TotalAppeal.Vocal = TotalAppeal.Vocal(),
+    val dance: TotalAppeal.Dance = TotalAppeal.Dance(),
+    val visual: TotalAppeal.Visual = TotalAppeal.Visual(),
 ) {
     companion object {
         operator fun invoke(
