@@ -117,6 +117,29 @@ fun BuffRatioField(
 private val BUFF_RATIO_REGEX = """^(0|-?[1-9]?[0-9]?|-?100)?$""".toRegex()
 
 @Composable
+fun <E: Enum<*>> AppealJudgeSelector(
+    selectedFactor: E,
+    factors: Array<E>,
+    onChange: (E) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            "アピール判定",
+            style = MaterialTheme.typography.h6,
+        )
+        Row {
+            DropdownSelector(
+                selectedFactor.toString(),
+                factors.map(Enum<*>::toString),
+                onClick = { onChange(factors[it]) },
+                labelWidth = 72.dp,
+            )
+        }
+    }
+}
+
+@Composable
 private fun DropdownSelector(
     selectedItem: String,
     items: List<String>,

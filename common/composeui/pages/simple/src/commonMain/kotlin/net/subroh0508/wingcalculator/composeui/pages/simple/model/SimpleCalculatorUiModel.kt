@@ -7,7 +7,8 @@ data class SimpleCalculatorUiModel(
     val sIdols: List<Idol.Support> = listOf(Idol.Support(), Idol.Support(), Idol.Support(), Idol.Support()),
     val week: Week = Week(Week.Season.ONE),
     val appealRatio: AppealRatio = AppealRatio(2.5),
-    val buff: Buff = Buff(0.0)
+    val buff: Buff = Buff(0.0),
+    val appealJudge: AppealJudge = AppealJudge(AppealJudge.Factor.GOOD),
 ) {
     val totalAppeals: TotalAppeals = TotalAppeals(
         pIdol,
@@ -15,7 +16,7 @@ data class SimpleCalculatorUiModel(
         week,
         Buffs(buff, buff, buff),
         appealRatio,
-        AppealJudge(AppealJudge.Factor.PERFECT),
+        appealJudge,
         InterestRatio(1.0),
     )
 }

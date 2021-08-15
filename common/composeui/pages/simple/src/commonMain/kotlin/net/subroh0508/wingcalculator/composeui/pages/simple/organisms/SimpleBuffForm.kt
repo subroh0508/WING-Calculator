@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.molecules.AppealJudgeSelector
 import net.subroh0508.wingcalculator.composeui.components.molecules.AppealRatioSelector
 import net.subroh0508.wingcalculator.composeui.components.molecules.BuffRatioField
 import net.subroh0508.wingcalculator.composeui.components.molecules.WeekSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.data.AppealJudge
 import net.subroh0508.wingcalculator.data.AppealRatio
 import net.subroh0508.wingcalculator.data.Buff
 import net.subroh0508.wingcalculator.data.Week
@@ -20,7 +22,7 @@ fun SimpleBuffForm() {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
-    val (_, _, week, appealRatio, buff) = uiModel
+    val (_, _, week, appealRatio, buff, appealJudge) = uiModel
 
     Column {
         WeekSelector(
@@ -39,6 +41,12 @@ fun SimpleBuffForm() {
         BuffRatioField(
             buff.toString(),
             onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
+        )
+        Spacer(Modifier.height(16.dp))
+        AppealJudgeSelector(
+            appealJudge.factor,
+            AppealJudge.Factor.values(),
+            onChange = { factor -> onChangeUiModel(uiModel.copy(appealJudge = AppealJudge(factor))) },
         )
     }
 }
