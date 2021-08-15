@@ -6,7 +6,7 @@ sealed class BaseAppeal {
         val sStatus: List<Status>,
         val week: Week,
     ) {
-        private val base = pStatus * 0.5 + sStatus.sum() * 0.2 * (1.0 + week * 0.1)
+        private val base = pStatus * 2.0 + sStatus.sum() * 0.2 * (1.0 + week * 0.1)
 
         operator fun times(buff: Buff) = base * buff
     }

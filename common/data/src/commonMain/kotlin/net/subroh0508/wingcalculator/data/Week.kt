@@ -7,7 +7,7 @@ data class Week(
     internal operator fun times(factor: Double) = when (season) {
         Season.SEMI_FINAL -> 32
         Season.FINAL -> 33
-        else -> (season.ordinal + 1) * (week - 1)
+        else -> (season.ordinal * 8) + (week - 1)
     } * factor
 
     enum class Season {
