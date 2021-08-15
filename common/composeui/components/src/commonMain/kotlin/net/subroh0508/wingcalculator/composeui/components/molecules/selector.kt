@@ -18,8 +18,6 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
 
-private val WEEK_REGEX = """^[1-8]?$""".toRegex()
-
 @Composable
 fun <E: Enum<*>> WeekSelector(
     selectedSeason: E,
@@ -86,6 +84,37 @@ fun AppealRatioSelector(
 }
 
 private val APPEAL_RATIO_RANGE = 10..50
+
+@Composable
+fun BuffRatioField(
+    buffRatio: String,
+    onChange: (Double) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var ratio by remember { mutableStateOf(buffRatio) }
+
+    LaunchedEffect(ratio) {
+        val value = if (ratio.isBlank()) 0 else ratio.toIntOrNull()
+
+        value?.let { onChange(it * 0.01) }
+    }
+
+    Column(modifier = modifier) {
+        Text(
+            "バフ補正",
+            style = MaterialTheme.typography.h6,
+        )
+        NumberField(
+            ratio,
+            onChangeValue = { ratio = it },
+            label = "単位: %",
+            regex = BUFF_RATIO_REGEX,
+            modifier = Modifier.width(100.dp),
+        )
+    }
+}
+
+private val BUFF_RATIO_REGEX = """^(0|-?[1-9]?[0-9]?|-?100)?$""".toRegex()
 
 @Composable
 private fun DropdownSelector(

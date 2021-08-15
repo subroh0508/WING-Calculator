@@ -20,7 +20,7 @@ fun NumberField(
     modifier: Modifier = Modifier,
 ) = OutlinedTextField(
     n,
-    { s -> if (regex != null && s.matches(regex)) onChangeValue(s) },
+    { s -> if (regex == null || s.matches(regex)) onChangeValue(s) },
     label = { Text(label) },
     enabled = enabled,
     singleLine = true,
