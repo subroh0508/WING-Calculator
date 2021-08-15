@@ -48,6 +48,7 @@ fun SimpleCalculatorPage() {
                         SimpleBuffForm()
                     }
                     SimpleCalculateResult()
+                    Text(uiModel.toString())
                 }
             }
         }

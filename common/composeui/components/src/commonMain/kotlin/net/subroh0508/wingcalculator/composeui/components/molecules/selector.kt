@@ -88,15 +88,17 @@ private val APPEAL_RATIO_RANGE = 10..50
 @Composable
 fun BuffRatioField(
     buffRatio: String,
-    onChange: (Double) -> Unit,
+    onChange: (List<Double>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var ratio by remember { mutableStateOf(buffRatio) }
 
     LaunchedEffect(ratio) {
-        val value = if (ratio.isBlank()) 0 else ratio.toIntOrNull()
+        val array = ratio.split(",")
+            .filter(String::isNotBlank)
+            .mapNotNull { it.toIntOrNull()?.let { n -> n * 0.01 } }
 
-        value?.let { onChange(it * 0.01) }
+        if (array.isNotEmpty()) onChange(array)
     }
 
     Column(modifier = modifier) {
@@ -107,14 +109,14 @@ fun BuffRatioField(
         NumberField(
             ratio,
             onChangeValue = { ratio = it },
-            label = "単位: %",
+            label = "カンマ区切り(単位: %)",
             regex = BUFF_RATIO_REGEX,
-            modifier = Modifier.width(100.dp),
+            modifier = Modifier.width(160.dp),
         )
     }
 }
 
-private val BUFF_RATIO_REGEX = """^(0|-?[1-9]?[0-9]?|-?100)?$""".toRegex()
+private val BUFF_RATIO_REGEX = """^((0|-?[1-9]?[0-9]?|-?100),?)*$""".toRegex()
 
 @Composable
 fun <E: Enum<*>> AppealJudgeSelector(
@@ -138,6 +140,39 @@ fun <E: Enum<*>> AppealJudgeSelector(
         }
     }
 }
+
+@Composable
+fun InterestRatioField(
+    interestRatio: String,
+    onChange: (List<Double>) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var ratio by remember { mutableStateOf(interestRatio) }
+
+    LaunchedEffect(ratio) {
+        val array = ratio.split(",")
+            .filter(String::isNotBlank)
+            .mapNotNull { it.toDoubleOrNull()?.takeIf { r -> r > 0.0 } }
+
+        if (array.isNotEmpty()) onChange(array)
+    }
+
+    Column(modifier = modifier) {
+        Text(
+            "興味度",
+            style = MaterialTheme.typography.h6,
+        )
+        NumberField(
+            ratio,
+            onChangeValue = { ratio = it },
+            label = "カンマ区切り",
+            regex = INTEREST_RATIO_REGEX,
+            modifier = Modifier.width(200.dp),
+        )
+    }
+}
+
+private val INTEREST_RATIO_REGEX = """^([0-1]?\.?[0-9]{0,2},?)*$""".toRegex()
 
 @Composable
 private fun DropdownSelector(
