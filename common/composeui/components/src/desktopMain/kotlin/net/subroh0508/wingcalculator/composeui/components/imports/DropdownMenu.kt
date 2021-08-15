@@ -1,4 +1,5 @@
 @file:Suppress("FunctionName")
+@file:JvmName("DesktopDropdownMenu")
 
 package net.subroh0508.wingcalculator.composeui.components.imports
 
