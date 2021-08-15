@@ -5,7 +5,7 @@ import net.subroh0508.wingcalculator.data.*
 data class SimpleCalculatorUiModel(
     val pIdol: Idol.Produce = Idol.Produce(),
     val sIdols: List<Idol.Support> = listOf(Idol.Support(), Idol.Support(), Idol.Support(), Idol.Support()),
-    val week: Week = Week(Week.Season.FINAL),
+    val week: Week = Week(Week.Season.ONE),
 ) {
     val totalAppeals: TotalAppeals = TotalAppeals(
         pIdol,

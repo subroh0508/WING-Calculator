@@ -14,6 +14,7 @@ fun NumberField(
     n: String,
     onChangeValue: (String) -> Unit,
     label: String,
+    enabled: Boolean = true,
     focusedColor: Color = MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
     regex: Regex? = null,
     modifier: Modifier = Modifier,
@@ -21,6 +22,7 @@ fun NumberField(
     n,
     { s -> if (regex != null && s.matches(regex)) onChangeValue(s) },
     label = { Text(label) },
+    enabled = enabled,
     singleLine = true,
     modifier = modifier.padding(horizontal = 8.dp),
     colors = TextFieldDefaults.textFieldColors(

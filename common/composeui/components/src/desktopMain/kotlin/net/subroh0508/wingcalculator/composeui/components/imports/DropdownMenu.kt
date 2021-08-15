@@ -21,7 +21,7 @@ internal actual fun ExpectDropdownMenu(
 ) = androidx.compose.material.DropdownMenu(
     expanded,
     onDismissRequest,
-    focusable = false,
+    focusable = true,
     modifier,
     offset,
     content,

@@ -2,9 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.components.molecules
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -12,19 +10,21 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
 
-private val WEEK_REGEX = """^[1-8]*$""".toRegex()
+private val WEEK_REGEX = """^[1-8]?$""".toRegex()
 
 @Composable
 fun <E: Enum<*>> WeekSelector(
     selectedSeason: E,
     week: Int,
     seasons: Array<E>,
-    isWeekNumberVisible: Boolean,
+    isWeekNumberEnabled: Boolean,
     onChange: (E, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -46,16 +46,17 @@ fun <E: Enum<*>> WeekSelector(
                 selectedSeason.toString(),
                 seasons.map(Enum<*>::toString),
                 onClick = { selection = selection.copy(season = seasons[it]) },
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
 
-            if (isWeekNumberVisible) {
-                NumberField(
-                    selection.week,
-                    label = "週",
-                    regex = WEEK_REGEX,
-                    onChangeValue = { selection = selection.copy(week = it) },
-                )
-            }
+            NumberField(
+                selection.week,
+                label = "週",
+                regex = WEEK_REGEX,
+                enabled = isWeekNumberEnabled,
+                onChangeValue = { selection = selection.copy(week = it) },
+                modifier = Modifier.width(80.dp),
+            )
         }
     }
 }
@@ -76,7 +77,12 @@ private fun DropdownSelector(
 
     Box(modifier = modifier) {
         Row {
-            Text(selectedItem)
+            Text(
+                selectedItem,
+                modifier = Modifier.width(92.dp)
+                    .padding(start = 16.dp)
+                    .align(Alignment.CenterVertically),
+            )
             IconButton(onClick = { expanded = true }) {
                 Icon(
                     Icons.Default.ArrowDropDown,
@@ -90,7 +96,13 @@ private fun DropdownSelector(
             onDismissRequest = { expanded = false },
         ) {
             items.forEachIndexed { i, item ->
-                DropdownMenuItem(onClick = { onClick(i) }) {
+                DropdownMenuItem(
+                    onClick = {
+                        expanded = false
+                        onClick(i)
+                    },
+                    modifier = Modifier.width(140.dp),
+                ) {
                     Text(item)
                 }
             }
