@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
@@ -46,6 +47,7 @@ fun <E: Enum<*>> WeekSelector(
                 selectedSeason.toString(),
                 seasons.map(Enum<*>::toString),
                 onClick = { selection = selection.copy(season = seasons[it]) },
+                labelWidth = 92.dp,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
 
@@ -67,10 +69,33 @@ private data class WeekSelection<out T: Enum<*>>(
 )
 
 @Composable
+fun AppealRatioSelector(
+    selectedRatio: String,
+    onChange: (Double) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            "アピール倍率",
+            style = MaterialTheme.typography.h6,
+        )
+        DropdownSelector(
+            selectedRatio,
+            APPEAL_RATIO_RANGE.map { "%.1f倍".format(it * 0.1) },
+            onClick = { onChange(APPEAL_RATIO_RANGE.toList()[it] * 0.1) },
+            labelWidth = 64.dp
+        )
+    }
+}
+
+private val APPEAL_RATIO_RANGE = 10..50
+
+@Composable
 private fun DropdownSelector(
     selectedItem: String,
     items: List<String>,
     onClick: (Int) -> Unit,
+    labelWidth: Dp,
     modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -79,7 +104,7 @@ private fun DropdownSelector(
         Row {
             Text(
                 selectedItem,
-                modifier = Modifier.width(92.dp)
+                modifier = Modifier.width(labelWidth)
                     .padding(start = 16.dp)
                     .align(Alignment.CenterVertically),
             )
@@ -94,6 +119,7 @@ private fun DropdownSelector(
         DropdownMenu(
             expanded,
             onDismissRequest = { expanded = false },
+            modifier = Modifier.requiredSizeIn(maxHeight = 240.dp),
         ) {
             items.forEachIndexed { i, item ->
                 DropdownMenuItem(
@@ -101,7 +127,7 @@ private fun DropdownSelector(
                         expanded = false
                         onClick(i)
                     },
-                    modifier = Modifier.width(140.dp),
+                    modifier = Modifier.width(labelWidth + 48.dp),
                 ) {
                     Text(item)
                 }
