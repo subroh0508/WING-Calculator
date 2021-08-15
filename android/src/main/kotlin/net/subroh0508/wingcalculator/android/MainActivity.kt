@@ -8,6 +8,6 @@ import androidx.activity.compose.setContent
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent(content = ::SimpleCalculatorPage)
+        setContent { SimpleCalculatorPage() }
     }
 }
