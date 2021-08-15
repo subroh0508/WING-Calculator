@@ -29,13 +29,9 @@ fun <E: Enum<*>> WeekSelector(
     onChange: (E, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selection by remember { mutableStateOf(WeekSelection(selectedSeason, week.toString()))}
+    var selection by remember { mutableStateOf(WeekSelection(selectedSeason, week))}
 
-    LaunchedEffect(selection) {
-        val intWeek = if (selection.week.isBlank()) 1 else selection.week.toIntOrNull()
-
-        onChange(selection.season, intWeek ?: week)
-    }
+    LaunchedEffect(selection) { onChange(selection.season, selection.week) }
 
     Column(modifier = modifier) {
         Text(
@@ -48,25 +44,26 @@ fun <E: Enum<*>> WeekSelector(
                 seasons.map(Enum<*>::toString),
                 onClick = { selection = selection.copy(season = seasons[it]) },
                 labelWidth = 92.dp,
-                modifier = Modifier.align(Alignment.CenterVertically)
             )
-
-            NumberField(
-                selection.week,
-                label = "週",
-                regex = WEEK_REGEX,
-                enabled = isWeekNumberEnabled,
-                onChangeValue = { selection = selection.copy(week = it) },
-                modifier = Modifier.width(80.dp),
-            )
+            if (isWeekNumberEnabled) {
+                Spacer(modifier = Modifier.width(16.dp))
+                DropdownSelector(
+                    "${selection.week}週目",
+                    WEEK_RANGE.map { "${it}週目" },
+                    onClick = { selection = selection.copy(week = it + 1) },
+                    labelWidth = 72.dp,
+                )
+            }
         }
     }
 }
 
 private data class WeekSelection<out T: Enum<*>>(
     val season: T,
-    val week: String = "",
+    val week: Int = 1,
 )
+
+private val WEEK_RANGE = 1..8
 
 @Composable
 fun AppealRatioSelector(
