@@ -111,7 +111,7 @@ fun BuffRatioField(
             onChangeValue = { ratio = it },
             label = "カンマ区切り(単位: %)",
             regex = BUFF_RATIO_REGEX,
-            modifier = Modifier.width(160.dp),
+            modifier = Modifier.width(200.dp),
         )
     }
 }

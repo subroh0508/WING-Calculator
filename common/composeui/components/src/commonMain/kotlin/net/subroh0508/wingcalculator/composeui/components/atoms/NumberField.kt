@@ -2,12 +2,10 @@
 
 package net.subroh0508.wingcalculator.composeui.components.atoms
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun NumberField(
@@ -24,7 +22,7 @@ fun NumberField(
     label = { Text(label) },
     enabled = enabled,
     singleLine = true,
-    modifier = modifier.padding(horizontal = 8.dp),
+    modifier = modifier,
     colors = TextFieldDefaults.textFieldColors(
         focusedIndicatorColor = focusedColor,
         focusedLabelColor = focusedColor,

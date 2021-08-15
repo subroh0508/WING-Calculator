@@ -68,7 +68,8 @@ private fun StatusField(
     focusedColor = focusedColor,
     regex = STATUS_NUMBER_REGEX,
     onChangeValue = onChangeValue,
-    modifier = Modifier.width(100.dp),
+    modifier = Modifier.width(100.dp)
+        .padding(horizontal = 8.dp),
 )
 
 private data class IdolStatus(

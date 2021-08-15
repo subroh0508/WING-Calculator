@@ -3,13 +3,12 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.molecules.TotalAppealsTab
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleBuffForm
@@ -45,10 +44,10 @@ fun SimpleCalculatorPage() {
                 ) {
                     Row {
                         SimpleUnitForm()
+                        Spacer(Modifier.width(32.dp))
                         SimpleBuffForm()
                     }
                     SimpleCalculateResult()
-                    Text(uiModel.toString())
                 }
             }
         }
