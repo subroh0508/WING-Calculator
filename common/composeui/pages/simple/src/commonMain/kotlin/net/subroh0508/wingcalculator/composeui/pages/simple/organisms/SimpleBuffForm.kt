@@ -27,25 +27,29 @@ fun SimpleBuffForm() {
             onChange = { season, week -> onChangeUiModel(uiModel.copy(week = Week(season, week))) },
         )
         Spacer(Modifier.height(16.dp))
-        AppealRatioSelector(
-            appealRatio.toString(),
-            onChange = { ratio -> onChangeUiModel(uiModel.copy(appealRatio = AppealRatio(ratio))) },
-        )
+        Row {
+            AppealRatioSelector(
+                appealRatio.toString(),
+                onChange = { ratio -> onChangeUiModel(uiModel.copy(appealRatio = AppealRatio(ratio))) },
+            )
+            Spacer(Modifier.width(36.dp))
+            AppealJudgeSelector(
+                appealJudge.factor,
+                AppealJudge.Factor.values(),
+                onChange = { factor -> onChangeUiModel(uiModel.copy(appealJudge = AppealJudge(factor))) },
+            )
+        }
         Spacer(Modifier.height(16.dp))
-        BuffRatioField(
-            buff.toString(),
-            onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
-        )
-        Spacer(Modifier.height(16.dp))
-        AppealJudgeSelector(
-            appealJudge.factor,
-            AppealJudge.Factor.values(),
-            onChange = { factor -> onChangeUiModel(uiModel.copy(appealJudge = AppealJudge(factor))) },
-        )
-        Spacer(Modifier.height(16.dp))
-        InterestRatioField(
-            interestRatio.toString(),
-            onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) }
-        )
+        Row {
+            BuffRatioField(
+                buff.toString(),
+                onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
+            )
+            Spacer(Modifier.width(16.dp))
+            InterestRatioField(
+                interestRatio.toString(),
+                onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) }
+            )
+        }
     }
 }

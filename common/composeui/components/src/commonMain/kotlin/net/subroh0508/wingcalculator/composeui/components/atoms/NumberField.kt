@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 fun NumberField(
     n: String,
     onChangeValue: (String) -> Unit,
-    label: String,
+    label: String? = null,
     enabled: Boolean = true,
     focusedColor: Color = MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
     regex: Regex? = null,
@@ -19,7 +19,7 @@ fun NumberField(
 ) = OutlinedTextField(
     n,
     { s -> if (regex == null || s.matches(regex)) onChangeValue(s) },
-    label = { Text(label) },
+    label = label?.let { { Text(it) } },
     enabled = enabled,
     singleLine = true,
     modifier = modifier,

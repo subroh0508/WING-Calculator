@@ -2,6 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.components.molecules
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -12,11 +13,14 @@ import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
+import java.time.format.TextStyle
 
 @Composable
 fun <E: Enum<*>> WeekSelector(
@@ -102,16 +106,18 @@ fun BuffRatioField(
     }
 
     Column(modifier = modifier) {
-        Text(
-            "バフ補正",
-            style = MaterialTheme.typography.h6,
-        )
         NumberField(
             ratio,
+            label = "バフ補正",
             onChangeValue = { ratio = it },
-            label = "カンマ区切り(単位: %)",
             regex = BUFF_RATIO_REGEX,
             modifier = Modifier.width(200.dp),
+        )
+        Text(
+            "カンマ区切り(単位: %)",
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.height(16.dp)
+                .padding(start = 16.dp),
         )
     }
 }
@@ -158,16 +164,18 @@ fun InterestRatioField(
     }
 
     Column(modifier = modifier) {
-        Text(
-            "興味度",
-            style = MaterialTheme.typography.h6,
-        )
         NumberField(
             ratio,
+            label = "興味度",
             onChangeValue = { ratio = it },
-            label = "カンマ区切り",
             regex = INTEREST_RATIO_REGEX,
             modifier = Modifier.width(200.dp),
+        )
+        Text(
+            "カンマ区切り",
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.height(16.dp)
+                .padding(start = 16.dp),
         )
     }
 }
