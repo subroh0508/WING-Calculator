@@ -2,6 +2,7 @@ include(
     ":common:composeui:components",
     ":common:composeui:pages:simple",
     ":common:data",
+    ":common:utilities",
     ":android",
     ":desktop",
     ":web",
