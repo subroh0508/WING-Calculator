@@ -11,6 +11,15 @@ data class Week(
     } * factor
 
     enum class Season {
-        ONE, TWO, THREE, FOUR, SEMI_FINAL, FINAL
+        ONE, TWO, THREE, FOUR, SEMI_FINAL, FINAL;
+
+        override fun toString() = when (this) {
+            ONE -> "シーズン1"
+            TWO -> "シーズン2"
+            THREE -> "シーズン3"
+            FOUR -> "シーズン4"
+            SEMI_FINAL -> "準決勝"
+            FINAL -> "決勝"
+        }
     }
 }
