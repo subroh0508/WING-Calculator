@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 
+private val STATUS_NUMBER_REGEX = """^(0|[1-9][0-9]{0,4})*$""".toRegex()
+
 @Composable
 fun IdolStatusBox(
     label: String,
@@ -26,39 +28,48 @@ fun IdolStatusBox(
     }
 
     Column(modifier = modifier) {
-        val numberFieldModifier = Modifier.width(100.dp)
-
         Text(
             label,
             modifier = Modifier.padding(horizontal = 8.dp),
             style = MaterialTheme.typography.h6,
         )
         Row {
-            NumberField(
+            StatusField(
                 status.vocal,
                 label = "Vo",
                 focusedColor = Color.Magenta,
                 onChangeValue = { s -> status = status.copy(vocal = s) },
-                modifier = numberFieldModifier,
             )
-            NumberField(
+            StatusField(
                 status.dance,
                 label = "Da",
                 focusedColor = Color.Blue,
                 onChangeValue = { s -> status = status.copy(dance = s) },
-                modifier = numberFieldModifier,
             )
-            NumberField(
+            StatusField(
                 status.visual,
                 label = "Vi",
                 focusedColor = Color(0xFFFFA500),
                 onChangeValue = { s -> status = status.copy(visual = s) },
-                modifier = numberFieldModifier,
             )
         }
     }
 }
 
+@Composable
+private fun StatusField(
+    value: String,
+    label: String,
+    focusedColor: Color,
+    onChangeValue: (String) -> Unit,
+) = NumberField(
+    value,
+    label = label,
+    focusedColor = focusedColor,
+    regex = STATUS_NUMBER_REGEX,
+    onChangeValue = onChangeValue,
+    modifier = Modifier.width(100.dp),
+)
 
 private data class IdolStatus(
     val vocal: String = "",

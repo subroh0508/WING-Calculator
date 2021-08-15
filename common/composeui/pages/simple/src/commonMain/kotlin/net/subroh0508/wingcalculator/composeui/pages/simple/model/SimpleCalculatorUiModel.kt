@@ -5,11 +5,12 @@ import net.subroh0508.wingcalculator.data.*
 data class SimpleCalculatorUiModel(
     val pIdol: Idol.Produce = Idol.Produce(),
     val sIdols: List<Idol.Support> = listOf(Idol.Support(), Idol.Support(), Idol.Support(), Idol.Support()),
+    val week: Week = Week(Week.Season.FINAL),
 ) {
     val totalAppeals: TotalAppeals = TotalAppeals(
         pIdol,
         sIdols,
-        Week(Week.Season.FINAL),
+        week,
         Buffs(Buff(1.0), Buff(1.0), Buff(1.0)),
         AppealRatio(2.5),
         AppealJudge(AppealJudge.Factor.PERFECT),

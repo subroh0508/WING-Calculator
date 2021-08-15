@@ -9,18 +9,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-private val NUMBER_REGEX = """^(0|[1-9][0-9]*)*$""".toRegex()
-
 @Composable
 fun NumberField(
     n: String,
     onChangeValue: (String) -> Unit,
     label: String,
     focusedColor: Color = MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
+    regex: Regex? = null,
     modifier: Modifier = Modifier,
 ) = OutlinedTextField(
     n,
-    { s -> if (s.matches(NUMBER_REGEX)) onChangeValue(s) },
+    { s -> if (regex != null && s.matches(regex)) onChangeValue(s) },
     label = { Text(label) },
     singleLine = true,
     modifier = modifier.padding(horizontal = 8.dp),

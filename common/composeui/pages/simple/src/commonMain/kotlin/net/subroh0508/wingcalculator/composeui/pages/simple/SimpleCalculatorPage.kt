@@ -4,6 +4,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -11,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.molecules.TotalAppealsTab
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleBuffForm
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculateResult
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleUnitForm
 import net.subroh0508.wingcalculator.data.Appeal
@@ -41,7 +43,10 @@ fun SimpleCalculatorPage() {
                     modifier = Modifier.fillMaxHeight()
                         .background(MaterialTheme.colors.background)
                 ) {
-                    SimpleUnitForm()
+                    Row {
+                        SimpleUnitForm()
+                        SimpleBuffForm()
+                    }
                     SimpleCalculateResult()
                 }
             }

@@ -1,8 +1,8 @@
 package net.subroh0508.wingcalculator.data
 
 data class Week(
-    private val season: Season,
-    private val week: Int = 0,
+    val season: Season,
+    val week: Int = 1,
 ) {
     internal operator fun times(factor: Double) = when (season) {
         Season.SEMI_FINAL -> 32
