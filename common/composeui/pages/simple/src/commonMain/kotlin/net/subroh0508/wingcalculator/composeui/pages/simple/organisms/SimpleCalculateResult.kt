@@ -13,23 +13,23 @@ fun SimpleCalculateResult() {
     TotalAppealsTab(
         uiModel.totalAppeals.vocal.let { (vo, da, vi) ->
             listOf(
-                listOf(vo.toString()),
-                listOf(da.toString()),
-                listOf(vi.toString()),
+                listOf(vo.toString(), "0", "0", "0", "0"),
+                listOf(da.toString(), "0", "0", "0", "0"),
+                listOf(vi.toString(), "0", "0", "0", "0"),
             )
         },
         uiModel.totalAppeals.dance.let { (vo, da, vi) ->
             listOf(
-                listOf(vo.toString()),
-                listOf(da.toString()),
-                listOf(vi.toString()),
+                listOf(vo.toString(), "0", "0", "0", "0"),
+                listOf(da.toString(), "0", "0", "0", "0"),
+                listOf(vi.toString(), "0", "0", "0", "0"),
             )
         },
         uiModel.totalAppeals.visual.let { (vo, da, vi) ->
             listOf(
-                listOf(vo.toString()),
-                listOf(da.toString()),
-                listOf(vi.toString()),
+                listOf(vo.toString(), "0", "0", "0", "0"),
+                listOf(da.toString(), "0", "0", "0", "0"),
+                listOf(vi.toString(), "0", "0", "0", "0"),
             )
         },
     )
