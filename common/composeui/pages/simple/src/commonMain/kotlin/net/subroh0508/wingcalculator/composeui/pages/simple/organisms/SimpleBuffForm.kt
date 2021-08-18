@@ -18,7 +18,7 @@ fun SimpleBuffForm() {
 
     val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel
 
-    Column {
+    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
         WeekSelector(
             week.season,
             week.week,

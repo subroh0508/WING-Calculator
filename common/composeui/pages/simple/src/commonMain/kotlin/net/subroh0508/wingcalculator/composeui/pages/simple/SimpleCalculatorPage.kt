@@ -4,6 +4,8 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -31,6 +33,8 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 fun SimpleCalculatorPage() {
     var uiModel by remember { mutableStateOf(SimpleCalculatorUiModel()) }
 
+    val verticalScrollState = rememberScrollState(0)
+
     MaterialTheme {
         CompositionLocalProvider(
             SimpleCalculatorProviderContext provides uiModel,
@@ -41,12 +45,11 @@ fun SimpleCalculatorPage() {
                 Column(
                     modifier = Modifier.fillMaxHeight()
                         .background(MaterialTheme.colors.background)
+                        .verticalScroll(verticalScrollState),
                 ) {
-                    Row {
-                        SimpleUnitForm()
-                        Spacer(Modifier.width(32.dp))
-                        SimpleBuffForm()
-                    }
+                    SimpleUnitForm()
+                    SimpleBuffForm()
+
                     SimpleCalculateResult()
                 }
             }
