@@ -33,7 +33,7 @@ fun TotalAppealsTable(
         ) {
             Spacer(
                 modifier = Modifier.fillMaxHeight()
-                    .width(36.dp)
+                    .width(28.dp)
                     .border(1.dp, Color.Black),
             )
             JUDGES.forEach { judge ->
@@ -46,7 +46,7 @@ fun TotalAppealsTable(
                 Text(
                     HEADERS[i],
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.width(36.dp)
+                    modifier = Modifier.width(28.dp)
                         .border(1.dp, Color.Black)
                         .padding(vertical = 8.dp),
                 )

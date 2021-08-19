@@ -31,12 +31,14 @@ fun SimpleBuffForm() {
             AppealRatioSelector(
                 appealRatio.toString(),
                 onChange = { ratio -> onChangeUiModel(uiModel.copy(appealRatio = AppealRatio(ratio))) },
+                modifier = Modifier.weight(1F),
             )
-            Spacer(Modifier.width(36.dp))
+            Spacer(Modifier.width(8.dp))
             AppealJudgeSelector(
                 appealJudge.factor,
                 AppealJudge.Factor.values(),
                 onChange = { factor -> onChangeUiModel(uiModel.copy(appealJudge = AppealJudge(factor))) },
+                modifier = Modifier.weight(1F),
             )
         }
         Spacer(Modifier.height(16.dp))
@@ -44,11 +46,13 @@ fun SimpleBuffForm() {
             BuffRatioField(
                 buff.toString(),
                 onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
+                modifier = Modifier.weight(1F),
             )
-            Spacer(Modifier.width(16.dp))
+            Spacer(Modifier.width(8.dp))
             InterestRatioField(
                 interestRatio.toString(),
-                onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) }
+                onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) },
+                modifier = Modifier.weight(1F),
             )
         }
     }

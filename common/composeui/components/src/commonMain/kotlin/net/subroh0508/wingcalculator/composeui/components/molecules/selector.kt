@@ -2,21 +2,17 @@
 
 package net.subroh0508.wingcalculator.composeui.components.molecules
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.Dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
@@ -38,23 +34,25 @@ fun <E: Enum<*>> WeekSelector(
     Column(modifier = modifier) {
         Text(
             "シーズン・週",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
         )
-        Row {
+        Row(modifier = Modifier.fillMaxWidth()) {
             DropdownSelector(
                 selectedSeason.toString(),
                 seasons.map(Enum<*>::toString),
                 onClick = { selection = selection.copy(season = seasons[it]) },
-                labelWidth = 92.dp,
+                modifier = Modifier.weight(1F),
             )
+            Spacer(modifier = Modifier.width(8.dp))
             if (isWeekNumberEnabled) {
-                Spacer(modifier = Modifier.width(16.dp))
                 DropdownSelector(
                     "${selection.week}週目",
                     WEEK_RANGE.map { "${it}週目" },
                     onClick = { selection = selection.copy(week = it + 1) },
-                    labelWidth = 72.dp,
+                    modifier = Modifier.weight(1F),
                 )
+            } else {
+                Spacer(modifier = Modifier.weight(1F))
             }
         }
     }
@@ -76,13 +74,12 @@ fun AppealRatioSelector(
     Column(modifier = modifier) {
         Text(
             "アピール倍率",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
         )
         DropdownSelector(
             selectedRatio,
             APPEAL_RATIO_RANGE.map { "%.1f倍".format(it * 0.1) },
             onClick = { onChange(APPEAL_RATIO_RANGE.toList()[it] * 0.1) },
-            labelWidth = 64.dp
         )
     }
 }
@@ -134,14 +131,13 @@ fun <E: Enum<*>> AppealJudgeSelector(
     Column(modifier = modifier) {
         Text(
             "アピール判定",
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
         )
         Row {
             DropdownSelector(
                 selectedFactor.toString(),
                 factors.map(Enum<*>::toString),
                 onClick = { onChange(factors[it]) },
-                labelWidth = 72.dp,
             )
         }
     }
@@ -187,41 +183,53 @@ private fun DropdownSelector(
     selectedItem: String,
     items: List<String>,
     onClick: (Int) -> Unit,
-    labelWidth: Dp,
     modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var buttonSize by remember { mutableStateOf(IntSize.Zero) }
 
-    Box(modifier = modifier) {
-        Row {
+    Box(
+        modifier = modifier.onGloballyPositioned {
+            buttonSize = it.size
+        },
+    ) {
+        OutlinedButton(
+            onClick = { expanded = true },
+            contentPadding = PaddingValues(0.dp, 8.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = MaterialTheme.colors.onSurface,
+            ),
+        ) {
             Text(
                 selectedItem,
-                modifier = Modifier.width(labelWidth)
-                    .padding(start = 16.dp)
+                modifier = Modifier.weight(1F)
+                    .padding(horizontal = 16.dp)
                     .align(Alignment.CenterVertically),
             )
-            IconButton(onClick = { expanded = true }) {
-                Icon(
-                    Icons.Default.ArrowDropDown,
-                    contentDescription = "Select",
-                )
-            }
+            Icon(
+                Icons.Default.ArrowDropDown,
+                contentDescription = "Select",
+                modifier = Modifier.size(24.dp),
+            )
+            Spacer(modifier = Modifier.width(12.dp))
         }
 
-        DropdownMenu(
-            expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier.requiredSizeIn(maxHeight = 240.dp),
-        ) {
-            items.forEachIndexed { i, item ->
-                DropdownMenuItem(
-                    onClick = {
-                        expanded = false
-                        onClick(i)
-                    },
-                    modifier = Modifier.width(labelWidth + 48.dp),
-                ) {
-                    Text(item)
+        with (LocalDensity.current) {
+            DropdownMenu(
+                expanded,
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.width(buttonSize.width.toDp())
+                    .requiredSizeIn(maxHeight = 240.dp),
+            ) {
+                items.forEachIndexed { i, item ->
+                    DropdownMenuItem(
+                        onClick = {
+                            expanded = false
+                            onClick(i)
+                        },
+                    ) {
+                        Text(item)
+                    }
                 }
             }
         }
