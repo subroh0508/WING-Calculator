@@ -54,13 +54,12 @@ fun SimpleUnitForm(modifier: Modifier = Modifier) {
         IdolStatusBox(
             "プロデュースアイドル",
             handleOnPIdolStateChange,
-            modifier = Modifier.padding(bottom = 16.dp),
         )
         sIdols.forEachIndexed { i, _ ->
+            Spacer(modifier = Modifier.height(16.dp))
             IdolStatusBox(
                 "サポートアイドル(${i + 1})",
                 { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
-                modifier = Modifier.padding(bottom = 16.dp),
             )
         }
     }
