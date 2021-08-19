@@ -2,8 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -51,18 +50,25 @@ fun SimpleUnitForm() {
         }
     }
 
-    Column {
-        IdolStatusBox(
-            "プロデュースアイドル",
-            handleOnPIdolStateChange,
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
-        sIdols.forEachIndexed { i, _ ->
+    BoxWithConstraints {
+        val widthModifier = when {
+            maxWidth < 480.dp -> Modifier.requiredSizeIn(minWidth = 320.dp)
+            else -> Modifier.requiredSizeIn(maxWidth = 480.dp)
+        }
+
+        Column {
             IdolStatusBox(
-                "サポートアイドル(${i + 1})",
-                { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
-                modifier = Modifier.padding(bottom = 16.dp),
+                "プロデュースアイドル",
+                handleOnPIdolStateChange,
+                modifier = widthModifier.padding(bottom = 16.dp),
             )
+            sIdols.forEachIndexed { i, _ ->
+                IdolStatusBox(
+                    "サポートアイドル(${i + 1})",
+                    { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
+                    modifier = widthModifier.padding(bottom = 16.dp),
+                )
+            }
         }
     }
 }

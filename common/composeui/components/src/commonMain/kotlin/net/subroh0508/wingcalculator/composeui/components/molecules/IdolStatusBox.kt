@@ -31,26 +31,36 @@ fun IdolStatusBox(
         Text(
             label,
             modifier = Modifier.padding(horizontal = 8.dp),
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.subtitle1,
         )
-        Row {
+        Row(modifier = Modifier.padding(horizontal = 4.dp)) {
             StatusField(
                 status.vocal,
                 label = "Vo",
                 focusedColor = Color.Magenta,
                 onChangeValue = { s -> status = status.copy(vocal = s) },
+                modifier = Modifier.weight(1F),
             )
             StatusField(
                 status.dance,
                 label = "Da",
                 focusedColor = Color.Blue,
                 onChangeValue = { s -> status = status.copy(dance = s) },
+                modifier = Modifier.weight(1F),
             )
             StatusField(
                 status.visual,
                 label = "Vi",
                 focusedColor = Color(0xFFFFA500),
                 onChangeValue = { s -> status = status.copy(visual = s) },
+                modifier = Modifier.weight(1F),
+            )
+            StatusField(
+                status.visual,
+                label = "Me",
+                focusedColor = Color(0xFF4B0082),
+                onChangeValue = { s -> status = status.copy(mental = s) },
+                modifier = Modifier.weight(1F),
             )
         }
     }
@@ -62,22 +72,23 @@ private fun StatusField(
     label: String,
     focusedColor: Color,
     onChangeValue: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) = NumberField(
     value,
     label = label,
     focusedColor = focusedColor,
     regex = STATUS_NUMBER_REGEX,
     onChangeValue = onChangeValue,
-    modifier = Modifier.width(100.dp)
-        .padding(horizontal = 8.dp),
+    modifier = modifier.padding(horizontal = 4.dp),
 )
 
 private data class IdolStatus(
     val vocal: String = "",
     val dance: String = "",
     val visual: String = "",
+    val mental: String = "",
 ) {
-    fun toInt(): List<Int?> = listOf(vocal, dance, visual).map {
+    fun toInt(): List<Int?> = listOf(vocal, dance, visual, mental).map {
         if (it.isBlank()) {
             return@map 0
         }
