@@ -15,7 +15,7 @@ import net.subroh0508.wingcalculator.data.Visual
 import net.subroh0508.wingcalculator.data.Vocal
 
 @Composable
-fun SimpleUnitForm() {
+fun SimpleUnitForm(modifier: Modifier = Modifier) {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
@@ -50,25 +50,18 @@ fun SimpleUnitForm() {
         }
     }
 
-    BoxWithConstraints {
-        val widthModifier = when {
-            maxWidth < 480.dp -> Modifier.requiredSizeIn(minWidth = 320.dp)
-            else -> Modifier.requiredSizeIn(maxWidth = 480.dp)
-        }
-
-        Column {
+    Column(modifier = modifier) {
+        IdolStatusBox(
+            "プロデュースアイドル",
+            handleOnPIdolStateChange,
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        sIdols.forEachIndexed { i, _ ->
             IdolStatusBox(
-                "プロデュースアイドル",
-                handleOnPIdolStateChange,
-                modifier = widthModifier.padding(bottom = 16.dp),
+                "サポートアイドル(${i + 1})",
+                { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
+                modifier = Modifier.padding(bottom = 16.dp),
             )
-            sIdols.forEachIndexed { i, _ ->
-                IdolStatusBox(
-                    "サポートアイドル(${i + 1})",
-                    { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
-                    modifier = widthModifier.padding(bottom = 16.dp),
-                )
-            }
         }
     }
 }

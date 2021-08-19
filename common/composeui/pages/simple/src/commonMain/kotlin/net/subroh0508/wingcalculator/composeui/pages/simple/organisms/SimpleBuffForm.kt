@@ -12,13 +12,13 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProv
 import net.subroh0508.wingcalculator.data.*
 
 @Composable
-fun SimpleBuffForm() {
+fun SimpleBuffForm(modifier: Modifier = Modifier) {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
     val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel
 
-    Column(modifier = Modifier.padding(horizontal = 8.dp)) {
+    Column(modifier = modifier.padding(horizontal = 8.dp)) {
         WeekSelector(
             week.season,
             week.week,
