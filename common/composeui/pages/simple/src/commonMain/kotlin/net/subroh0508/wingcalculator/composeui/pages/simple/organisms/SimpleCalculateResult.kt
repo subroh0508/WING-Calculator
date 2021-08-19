@@ -24,9 +24,11 @@ fun SimpleCalculateResult() {
         TotalAppealsTable(
             uiModel.totalAppeals.vocal.let { (vo, da, vi) ->
                 listOf(
-                    listOf(vo.toString(), "0", "0", "0", "0"),
-                    listOf(da.toString(), "0", "0", "0", "0"),
-                    listOf(vi.toString(), "0", "0", "0", "0"),
+                    listOf(vo.toString(), da.toString(), vi.toString()),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
                 )
             },
             modifier = tableModifier,
@@ -35,9 +37,11 @@ fun SimpleCalculateResult() {
         TotalAppealsTable(
             uiModel.totalAppeals.dance.let { (vo, da, vi) ->
                 listOf(
-                    listOf(vo.toString(), "0", "0", "0", "0"),
-                    listOf(da.toString(), "0", "0", "0", "0"),
-                    listOf(vi.toString(), "0", "0", "0", "0"),
+                    listOf(vo.toString(), da.toString(), vi.toString()),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
                 )
             },
             modifier = tableModifier,
@@ -45,9 +49,11 @@ fun SimpleCalculateResult() {
         TotalAppealsTable(
             uiModel.totalAppeals.visual.let { (vo, da, vi) ->
                 listOf(
-                    listOf(vo.toString(), "0", "0", "0", "0"),
-                    listOf(da.toString(), "0", "0", "0", "0"),
-                    listOf(vi.toString(), "0", "0", "0", "0"),
+                    listOf(vo.toString(), da.toString(), vi.toString()),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
+                    listOf("0", "0", "0"),
                 )
             },
             modifier = tableModifier,

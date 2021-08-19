@@ -23,43 +23,43 @@ fun TotalAppealsTable(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        val cellModifier = Modifier.width(72.dp)
+        val cellModifier = Modifier.width(92.dp)
             .border(1.dp, Color.Black)
             .padding(8.dp)
 
         Row(
             modifier = Modifier.height(IntrinsicSize.Max)
-                .background(Color.LightGray)
+                .background(Color.LightGray),
         ) {
             Spacer(
                 modifier = Modifier.fillMaxHeight()
-                    .width(100.dp)
-                    .border(1.dp, Color.Black)
+                    .width(36.dp)
+                    .border(1.dp, Color.Black),
             )
-            HEADERS.forEach { header ->
-                Text(header, textAlign = TextAlign.Center, modifier = cellModifier)
+            JUDGES.forEach { judge ->
+                Text(judge, textAlign = TextAlign.Center, modifier = cellModifier)
             }
         }
 
         appeals.forEachIndexed { i, rows ->
             Row(modifier = Modifier.height(IntrinsicSize.Max)) {
                 Text(
-                    JUDGES[i],
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.width(100.dp)
+                    HEADERS[i],
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.width(36.dp)
                         .border(1.dp, Color.Black)
-                        .padding(8.dp),
+                        .padding(vertical = 8.dp),
                 )
                 rows.forEach { appeal ->
                     Box(
                         modifier = Modifier.fillMaxHeight()
-                            .border(1.dp, Color.Black)
+                            .width(92.dp)
+                            .border(1.dp, Color.Black),
                     ) {
                         Text(
                             appeal,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.width(72.dp)
-                                .align(Alignment.Center),
+                            modifier = Modifier.align(Alignment.Center),
                         )
                     }
                 }
