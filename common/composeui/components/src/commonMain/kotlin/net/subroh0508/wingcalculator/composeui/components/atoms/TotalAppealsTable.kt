@@ -23,7 +23,7 @@ fun TotalAppealsTable(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        val cellModifier = Modifier.width(92.dp)
+        val cellModifier = Modifier.weight(1F)
             .border(1.dp, Color.Black)
             .padding(8.dp)
 
@@ -33,7 +33,7 @@ fun TotalAppealsTable(
         ) {
             Spacer(
                 modifier = Modifier.fillMaxHeight()
-                    .width(28.dp)
+                    .weight(0.3F)
                     .border(1.dp, Color.Black),
             )
             JUDGES.forEach { judge ->
@@ -46,14 +46,14 @@ fun TotalAppealsTable(
                 Text(
                     HEADERS[i],
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.width(28.dp)
+                    modifier = Modifier.weight(0.3F)
                         .border(1.dp, Color.Black)
                         .padding(vertical = 8.dp),
                 )
                 rows.forEach { appeal ->
                     Box(
                         modifier = Modifier.fillMaxHeight()
-                            .width(92.dp)
+                            .weight(1F)
                             .border(1.dp, Color.Black),
                     ) {
                         Text(

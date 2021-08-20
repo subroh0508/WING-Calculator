@@ -2,7 +2,6 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.templates
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,43 +24,53 @@ fun SimpleCalculatorFrontLayerContent(
     backdropScaffoldState: BackdropScaffoldState,
 ) {
     val verticalScrollState = rememberScrollState(0)
-    val coroutineScope = rememberCoroutineScope()
 
-    Column {
-        Row(
-            modifier = Modifier.height(headerHeight)
-                .padding(start = 16.dp),
-        ) {
-            Text(
-                "計算結果",
-                modifier = Modifier.weight(1F)
-                    .padding(vertical = 8.dp)
-                    .align(Alignment.CenterVertically),
-            )
-            IconButton(
-                onClick = {
-                    coroutineScope.launch {
-                        if (backdropScaffoldState.isConcealed)
-                            backdropScaffoldState.reveal()
-                        else
-                            backdropScaffoldState.conceal()
-                    }
-                }
-            ) {
-                val (icon, description) =
-                    if (backdropScaffoldState.isConcealed)
-                        Icons.Default.KeyboardArrowUp to "reveal"
-                    else
-                        Icons.Default.KeyboardArrowDown to "conceal"
-
-                Icon(icon, contentDescription = description)
+    SimpleCalculatorBoxWithConstraints { constraints ->
+        Column {
+            FrontLayerHeader(headerHeight, backdropScaffoldState, constraints)
+            Divider(constraints.padding(horizontal = 8.dp))
+            Box(modifier = constraints.verticalScroll(verticalScrollState)) {
+                SimpleCalculateResult()
             }
-        }
-        Divider(Modifier.padding(horizontal = 8.dp))
-        Box(modifier = Modifier.verticalScroll(verticalScrollState)) {
-            SimpleCalculateResult()
         }
     }
 }
 
+@Composable
+private fun FrontLayerHeader(
+    headerHeight: Dp,
+    backdropScaffoldState: BackdropScaffoldState,
+    modifier: Modifier = Modifier,
+) {
+    val coroutineScope = rememberCoroutineScope()
 
+    Row(
+        modifier = modifier.height(headerHeight)
+            .padding(start = 16.dp),
+    ) {
+        Text(
+            "計算結果",
+            modifier = Modifier.weight(1F)
+                .padding(vertical = 8.dp)
+                .align(Alignment.CenterVertically),
+        )
+        IconButton(
+            onClick = {
+                coroutineScope.launch {
+                    if (backdropScaffoldState.isConcealed)
+                        backdropScaffoldState.reveal()
+                    else
+                        backdropScaffoldState.conceal()
+                }
+            }
+        ) {
+            val (icon, description) =
+                if (backdropScaffoldState.isConcealed)
+                    Icons.Default.KeyboardArrowUp to "reveal"
+                else
+                    Icons.Default.KeyboardArrowDown to "conceal"
+
+            Icon(icon, contentDescription = description)
+        }
+    }
+}

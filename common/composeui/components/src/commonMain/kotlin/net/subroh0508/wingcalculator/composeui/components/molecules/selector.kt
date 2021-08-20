@@ -108,6 +108,7 @@ fun BuffRatioField(
             label = "バフ補正",
             onChangeValue = { ratio = it },
             regex = BUFF_RATIO_REGEX,
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             "カンマ区切り(単位: %)",
@@ -164,6 +165,7 @@ fun InterestRatioField(
             label = "興味度",
             onChangeValue = { ratio = it },
             regex = INTEREST_RATIO_REGEX,
+            modifier = Modifier.fillMaxWidth(),
         )
         Text(
             "カンマ区切り",
