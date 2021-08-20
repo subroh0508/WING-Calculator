@@ -10,13 +10,15 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleBuffForm
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculateResult
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleUnitForm
 
 @Composable
-fun SimpleCalculatorTemplate() {
+fun SimpleCalculatorBackLayerContent(
+    headerHeight: Dp,
+) {
     val verticalScrollState = rememberScrollState(0)
 
     BoxWithConstraints {
@@ -27,15 +29,13 @@ fun SimpleCalculatorTemplate() {
 
         Column(
             modifier = Modifier.fillMaxHeight()
-                .background(MaterialTheme.colors.background)
+                .background(MaterialTheme.colors.primary)
                 .verticalScroll(verticalScrollState),
         ) {
             SimpleUnitForm(widthModifier)
             Divider(widthModifier.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
             SimpleBuffForm(widthModifier)
-            Divider(widthModifier.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
-
-            SimpleCalculateResult()
+            Spacer(Modifier.height(headerHeight))
         }
     }
 }

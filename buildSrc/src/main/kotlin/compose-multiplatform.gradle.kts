@@ -12,6 +12,12 @@ kotlin {
     android()
 
     sourceSets {
+        all {
+            languageSettings.apply {
+                useExperimentalAnnotation("androidx.compose.material.ExperimentalMaterialApi")
+            }
+        }
+
         named("commonMain") {
             dependencies {
                 implementation(compose.runtime)
