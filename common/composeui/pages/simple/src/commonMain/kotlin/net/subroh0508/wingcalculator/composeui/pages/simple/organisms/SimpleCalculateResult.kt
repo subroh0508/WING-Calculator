@@ -26,10 +26,8 @@ private enum class AppealType(val text: String) {
     operator fun component1() = text
 
     fun next() = values()[(ordinal + 1) % 3]
-    fun previous() = values()[abs(ordinal - 1) % 3]
+    fun previous() = values()[(values().size + (ordinal - 1)) % 3]
 }
-
-val RESULT_COMPONENT_HEIGHT = 280.dp
 
 @Composable
 fun SimpleCalculateResult() {
