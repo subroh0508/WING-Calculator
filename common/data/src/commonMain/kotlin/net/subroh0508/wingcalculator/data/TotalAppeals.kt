@@ -3,10 +3,12 @@ package net.subroh0508.wingcalculator.data
 import kotlin.math.floor
 
 data class TotalAppeals(
-    val vocal: TotalAppeal.Vocal = TotalAppeal.Vocal(),
-    val dance: TotalAppeal.Dance = TotalAppeal.Dance(),
-    val visual: TotalAppeal.Visual = TotalAppeal.Visual(),
+    val vocal: Unit<TotalAppeal.Vocal> = Unit(List(5) { TotalAppeal.Vocal() }),
+    val dance: Unit<TotalAppeal.Dance> = Unit(List(5) { TotalAppeal.Dance() }),
+    val visual: Unit<TotalAppeal.Visual> = Unit(List(5) { TotalAppeal.Visual() }),
 ) {
+    data class Unit<out T: TotalAppeal>(private val appeals: List<T>) : List<T> by appeals
+
     companion object {
         operator fun invoke(
             pIdol: Idol.Produce,
@@ -17,21 +19,21 @@ data class TotalAppeals(
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
         ): TotalAppeals = TotalAppeals(
-            calculateAppeal(
+            calculateUnitAppeals(
                 pIdol.vocal,
                 sIdols.map(Idol.Support::vocal),
                 week,
                 buffs.forVocal,
                 appealRatio, appealJudge, interestRatio,
             ),
-            calculateAppeal(
+            calculateUnitAppeals(
                 pIdol.dance,
                 sIdols.map(Idol.Support::dance),
                 week,
                 buffs.forDance,
                 appealRatio, appealJudge, interestRatio,
             ),
-            calculateAppeal(
+            calculateUnitAppeals(
                 pIdol.visual,
                 sIdols.map(Idol.Support::visual),
                 week,
@@ -41,7 +43,7 @@ data class TotalAppeals(
         )
 
         @Suppress("UNCHECKED_CAST")
-        private fun <T: TotalAppeal> calculateAppeal(
+        private fun <T: TotalAppeal> calculateUnitAppeals(
             pStatus: Status,
             sStatus: List<Status>,
             week: Week,
@@ -49,15 +51,16 @@ data class TotalAppeals(
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
-        ): T {
-            val base = BaseAppeal.Produce(pStatus, sStatus, week)
-
-            val (vocal, dance, visual) = listOf(
-                pStatus is Vocal,
-                pStatus is Dance,
-                pStatus is Visual,
-            ).map { excellent ->
-                floor(floor(floor(base * buff * appealRatio) * appealJudge.copy(excellent = excellent)) * interestRatio)
+        ): Unit<T> {
+            val pTotalAppeal = calculateAppeal(
+                pStatus, BaseAppeal.Produce(pStatus, sStatus, week),
+                buff, appealRatio, appealJudge, interestRatio,
+            )
+            val sTotalAppeals = sStatus.map { s ->
+                calculateAppeal(
+                    s, BaseAppeal.Support(listOf(s) + (sStatus - s), pStatus, week),
+                    buff, appealRatio, appealJudge, interestRatio,
+                )
             }
 
             val constructor = when (pStatus) {
@@ -66,11 +69,30 @@ data class TotalAppeals(
                 is Visual -> TotalAppeal::Visual
             }
 
-            return constructor(
-                Appeal.ToVocal(vocal.toInt()),
-                Appeal.ToDance(dance.toInt()),
-                Appeal.ToVisual(visual.toInt()),
-            ) as T
+            return Unit(
+                (listOf(pTotalAppeal) + sTotalAppeals).map { (vocal, dance, visual) ->
+                    constructor(
+                        Appeal.ToVocal(vocal),
+                        Appeal.ToDance(dance),
+                        Appeal.ToVisual(visual),
+                    ) as T
+                },
+            )
+        }
+
+        private fun calculateAppeal(
+            status: Status,
+            base: BaseAppeal,
+            buff: Buff,
+            appealRatio: AppealRatio,
+            appealJudge: AppealJudge,
+            interestRatio: InterestRatio,
+        ) = listOf(
+                status is Vocal,
+                status is Dance,
+                status is Visual,
+        ).map { excellent ->
+            floor(floor(floor(base * buff * appealRatio) * appealJudge.copy(excellent = excellent)) * interestRatio).toInt()
         }
     }
 }

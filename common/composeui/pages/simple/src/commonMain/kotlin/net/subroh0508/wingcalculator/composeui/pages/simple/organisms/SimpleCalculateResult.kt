@@ -8,8 +8,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.*
@@ -92,17 +90,11 @@ private fun ColumnScope.TableSwitcher(
 }
 
 private fun TotalAppeals.toTableData() = Triple(
-    vocal.toTableData(),
-    dance.toTableData(),
-    visual.toTableData(),
+    vocal.map(TotalAppeal.Vocal::toTableData),
+    dance.map(TotalAppeal.Dance::toTableData),
+    visual.map(TotalAppeal.Visual::toTableData),
 )
 
 private fun TotalAppeal.toTableData() = listOf(toVocal, toDance, toVisual).let { (vo, da, vi) ->
-    listOf(
-        listOf(vo.toString(), da.toString(), vi.toString()),
-        listOf("0", "0", "0"),
-        listOf("0", "0", "0"),
-        listOf("0", "0", "0"),
-        listOf("0", "0", "0"),
-    )
+    listOf(vo.toString(), da.toString(), vi.toString())
 }
