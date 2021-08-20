@@ -10,6 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
+import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
+import net.subroh0508.wingcalculator.composeui.components.themes.mentalColor
+import net.subroh0508.wingcalculator.composeui.components.themes.visualColor
+import net.subroh0508.wingcalculator.composeui.components.themes.vocalColor
 
 private val STATUS_NUMBER_REGEX = """^(0|[1-9][0-9]{0,4})*$""".toRegex()
 
@@ -37,28 +41,28 @@ fun IdolStatusBox(
             StatusField(
                 status.vocal,
                 label = "Vo",
-                focusedColor = Color.Magenta,
+                focusedColor = vocalColor,
                 onChangeValue = { s -> status = status.copy(vocal = s) },
                 modifier = Modifier.weight(1F),
             )
             StatusField(
                 status.dance,
                 label = "Da",
-                focusedColor = Color.Blue,
+                focusedColor = danceColor,
                 onChangeValue = { s -> status = status.copy(dance = s) },
                 modifier = Modifier.weight(1F),
             )
             StatusField(
                 status.visual,
                 label = "Vi",
-                focusedColor = Color(0xFFFFA500),
+                focusedColor = visualColor,
                 onChangeValue = { s -> status = status.copy(visual = s) },
                 modifier = Modifier.weight(1F),
             )
             StatusField(
                 status.mental,
                 label = "Me",
-                focusedColor = Color(0xFF4B0082),
+                focusedColor = mentalColor,
                 onChangeValue = { s -> status = status.copy(mental = s) },
                 modifier = Modifier.weight(1F),
             )

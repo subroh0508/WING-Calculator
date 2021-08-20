@@ -4,6 +4,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackLayerContent
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorFrontLayerContent
@@ -21,7 +22,7 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 fun SimpleCalculatorPage() {
     val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
 
-    MaterialTheme {
+    AppTheme {
         SimpleCalculatorUiModelProvider {
             BackdropScaffold(
                 appBar = {},
