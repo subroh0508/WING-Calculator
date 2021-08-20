@@ -2,10 +2,13 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.composeui.components.atoms.StaticBackdrop
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.RESULT_COMPONENT_HEIGHT
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackLayerContent
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorFrontLayerContent
 
@@ -20,26 +23,22 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 
 @Composable
 fun SimpleCalculatorPage() {
-    val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
-
     AppTheme {
         SimpleCalculatorUiModelProvider {
-            BackdropScaffold(
-                appBar = {},
-                backLayerContent = {
-                    SimpleCalculatorBackLayerContent(
-                        BackdropScaffoldDefaults.HeaderHeight,
-                    )
-                },
-                backLayerBackgroundColor = MaterialTheme.colors.background,
-                frontLayerContent = {
-                    SimpleCalculatorFrontLayerContent(
-                        BackdropScaffoldDefaults.HeaderHeight,
-                        backdropScaffoldState,
-                    )
-                },
-                scaffoldState = backdropScaffoldState,
-            )
+            BoxWithConstraints {
+                StaticBackdrop(
+                    appBar = {},
+                    backLayerContent = {
+                        SimpleCalculatorBackLayerContent(
+                            RESULT_COMPONENT_HEIGHT + BackdropScaffoldDefaults.HeaderHeight,
+                        )
+                    },
+                    backLayerBackgroundColor = MaterialTheme.colors.background,
+                    frontLayerContent = {
+                        SimpleCalculatorFrontLayerContent(BackdropScaffoldDefaults.HeaderHeight)
+                    },
+                )
+            }
         }
     }
 }

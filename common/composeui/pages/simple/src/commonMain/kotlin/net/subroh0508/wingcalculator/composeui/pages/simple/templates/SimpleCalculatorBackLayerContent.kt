@@ -15,7 +15,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleUnit
 
 @Composable
 fun SimpleCalculatorBackLayerContent(
-    headerHeight: Dp,
+    frontLayerHeight: Dp,
 ) {
     val verticalScrollState = rememberScrollState(0)
 
@@ -27,7 +27,7 @@ fun SimpleCalculatorBackLayerContent(
             SimpleUnitForm(constraints)
             Divider(constraints.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
             SimpleBuffForm(constraints)
-            Spacer(constraints.height(headerHeight))
+            Spacer(Modifier.height(frontLayerHeight + 32.dp))
         }
     }
 }

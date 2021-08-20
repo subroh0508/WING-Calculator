@@ -1,25 +1,28 @@
 package net.subroh0508.wingcalculator.data
 
 sealed class BaseAppeal {
-    abstract operator fun times(buff: Buff): Double
+    internal abstract val pStatus: Status
+    internal abstract val sStatus: List<Status>
+    internal abstract val week: Week
+
+    protected abstract val base: Double
+    private val weekRatio get() = 0.2 * (1.0 + week * 0.1)
+
+    operator fun times(buff: Buff) = base * weekRatio * buff
 
     data class Produce(
-        val pStatus: Status,
-        val sStatus: List<Status>,
-        val week: Week,
+        override val pStatus: Status,
+        override val sStatus: List<Status>,
+        override val week: Week,
     ) : BaseAppeal() {
-        private val base = pStatus * 2.0 + sStatus.sum() * 0.2 * (1.0 + week * 0.1)
-
-        override operator fun times(buff: Buff) = base * buff
+        override val base = pStatus * 2.0 + sStatus.sum()
     }
 
     data class Support(
-        val sStatus: List<Status>,
-        val pStatus: Status,
-        val week: Week,
+        override val sStatus: List<Status>,
+        override val pStatus: Status,
+        override val week: Week,
     ) : BaseAppeal() {
-        private val base = pStatus * 0.5 + (sStatus.sum() + sStatus.first() * 3.0) * 0.2 * (1.0 + week * 0.1)
-
-        override operator fun times(buff: Buff) = base * buff
+        override val base = pStatus * 0.5 + (sStatus.sum() + sStatus.first() * 3.0)
     }
 }

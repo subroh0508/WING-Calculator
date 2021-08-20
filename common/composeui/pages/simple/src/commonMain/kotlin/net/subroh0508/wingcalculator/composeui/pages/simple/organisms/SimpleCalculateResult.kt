@@ -29,6 +29,8 @@ private enum class AppealType(val text: String) {
     fun previous() = values()[abs(ordinal - 1) % 3]
 }
 
+val RESULT_COMPONENT_HEIGHT = 280.dp
+
 @Composable
 fun SimpleCalculateResult() {
     var appealTypeState by remember { mutableStateOf(AppealType.VOCAL) }
