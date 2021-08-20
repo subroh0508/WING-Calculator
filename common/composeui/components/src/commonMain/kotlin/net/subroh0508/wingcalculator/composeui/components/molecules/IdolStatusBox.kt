@@ -56,7 +56,7 @@ fun IdolStatusBox(
                 modifier = Modifier.weight(1F),
             )
             StatusField(
-                status.visual,
+                status.mental,
                 label = "Me",
                 focusedColor = Color(0xFF4B0082),
                 onChangeValue = { s -> status = status.copy(mental = s) },

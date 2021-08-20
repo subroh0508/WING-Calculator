@@ -2,61 +2,107 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTable
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.data.TotalAppeal
+import net.subroh0508.wingcalculator.data.TotalAppeals
+import kotlin.math.abs
+
+private enum class AppealType(val text: String) {
+    VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール");
+
+    operator fun component1() = text
+
+    fun next() = values()[(ordinal + 1) % 3]
+    fun previous() = values()[abs(ordinal - 1) % 3]
+}
 
 @Composable
 fun SimpleCalculateResult() {
-    val stateHorizontal = rememberScrollState()
+    var appealTypeState by remember { mutableStateOf(AppealType.VOCAL) }
 
     val uiModel = SimpleCalculatorProviderContext.current
 
-    val tableModifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp)
-
-    Row(modifier = Modifier.horizontalScroll(stateHorizontal)) {
+    Column {
         TotalAppealsTable(
-            uiModel.totalAppeals.vocal.let { (vo, da, vi) ->
-                listOf(
-                    listOf(vo.toString(), da.toString(), vi.toString()),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                )
+            uiModel.totalAppeals.toTableData().let { (vo, da, vi) ->
+                when (appealTypeState) {
+                    AppealType.VOCAL -> vo
+                    AppealType.DANCE -> da
+                    AppealType.VISUAL -> vi
+                }
             },
-            modifier = tableModifier,
+            modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
         )
-
-        TotalAppealsTable(
-            uiModel.totalAppeals.dance.let { (vo, da, vi) ->
-                listOf(
-                    listOf(vo.toString(), da.toString(), vi.toString()),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                )
-            },
-            modifier = tableModifier,
-        )
-        TotalAppealsTable(
-            uiModel.totalAppeals.visual.let { (vo, da, vi) ->
-                listOf(
-                    listOf(vo.toString(), da.toString(), vi.toString()),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                    listOf("0", "0", "0"),
-                )
-            },
-            modifier = tableModifier,
+        TableSwitcher(
+            appealTypeState,
+            onClickBack = { appealTypeState = appealTypeState.previous() },
+            onClickForward = { appealTypeState = appealTypeState.next() },
         )
     }
+}
+
+@Composable
+private fun ColumnScope.TableSwitcher(
+    type: AppealType,
+    onClickBack: () -> Unit,
+    onClickForward: () -> Unit,
+) = Row(
+    modifier = Modifier.padding(vertical = 8.dp)
+        .align(Alignment.CenterHorizontally),
+) {
+    IconButton(
+        onClick = onClickBack
+    ) {
+        Icon(
+            Icons.Default.KeyboardArrowLeft,
+            contentDescription = "back",
+            modifier = Modifier.size(24.dp),
+        )
+    }
+    Text(
+        type.text,
+        style = MaterialTheme.typography.subtitle1,
+        modifier = Modifier.padding(horizontal = 16.dp)
+            .align(Alignment.CenterVertically),
+    )
+    IconButton(
+        onClick = onClickForward
+    ) {
+        Icon(
+            Icons.Default.KeyboardArrowRight,
+            contentDescription = "forward",
+            modifier = Modifier.size(24.dp),
+        )
+    }
+}
+
+private fun TotalAppeals.toTableData() = Triple(
+    vocal.toTableData(),
+    dance.toTableData(),
+    visual.toTableData(),
+)
+
+private fun TotalAppeal.toTableData() = listOf(toVocal, toDance, toVisual).let { (vo, da, vi) ->
+    listOf(
+        listOf(vo.toString(), da.toString(), vi.toString()),
+        listOf("0", "0", "0"),
+        listOf("0", "0", "0"),
+        listOf("0", "0", "0"),
+        listOf("0", "0", "0"),
+    )
 }
