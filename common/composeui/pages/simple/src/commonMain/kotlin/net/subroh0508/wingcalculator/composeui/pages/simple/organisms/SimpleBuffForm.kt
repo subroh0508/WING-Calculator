@@ -44,11 +44,13 @@ fun SimpleBuffForm(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(16.dp))
         BuffRatioField(
             buff.toString(),
+            buff.total(),
             onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
         )
         Spacer(Modifier.height(16.dp))
         InterestRatioField(
             interestRatio.toString(),
+            interestRatio.total(),
             onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) },
         )
     }

@@ -89,6 +89,7 @@ private val APPEAL_RATIO_RANGE = 10..50
 @Composable
 fun BuffRatioField(
     buffRatio: String,
+    total: String,
     onChange: (List<Double>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -105,7 +106,7 @@ fun BuffRatioField(
     Column(modifier = modifier) {
         NumberField(
             ratio,
-            label = "バフ補正",
+            label = "バフ補正: $total",
             onChangeValue = { ratio = it },
             regex = BUFF_RATIO_REGEX,
             modifier = Modifier.fillMaxWidth(),
@@ -146,6 +147,7 @@ fun <E: Enum<*>> AppealJudgeSelector(
 @Composable
 fun InterestRatioField(
     interestRatio: String,
+    total: String,
     onChange: (List<Double>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -162,7 +164,7 @@ fun InterestRatioField(
     Column(modifier = modifier) {
         NumberField(
             ratio,
-            label = "興味度",
+            label = "興味度: $total",
             onChangeValue = { ratio = it },
             regex = INTEREST_RATIO_REGEX,
             modifier = Modifier.fillMaxWidth(),
