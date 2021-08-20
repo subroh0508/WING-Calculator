@@ -19,7 +19,7 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 
 @Composable
 fun SimpleCalculatorPage() {
-    val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Concealed)
+    val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
 
     MaterialTheme {
         SimpleCalculatorUiModelProvider {
@@ -30,6 +30,7 @@ fun SimpleCalculatorPage() {
                         BackdropScaffoldDefaults.HeaderHeight,
                     )
                 },
+                backLayerBackgroundColor = MaterialTheme.colors.background,
                 frontLayerContent = {
                     SimpleCalculatorFrontLayerContent(
                         BackdropScaffoldDefaults.HeaderHeight,

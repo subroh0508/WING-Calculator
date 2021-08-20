@@ -28,11 +28,14 @@ fun SimpleCalculatorFrontLayerContent(
     val coroutineScope = rememberCoroutineScope()
 
     Column {
-        Row(modifier = Modifier.height(headerHeight)) {
+        Row(
+            modifier = Modifier.height(headerHeight)
+                .padding(start = 16.dp),
+        ) {
             Text(
                 "計算結果",
                 modifier = Modifier.weight(1F)
-                    .padding(8.dp)
+                    .padding(vertical = 8.dp)
                     .align(Alignment.CenterVertically),
             )
             IconButton(

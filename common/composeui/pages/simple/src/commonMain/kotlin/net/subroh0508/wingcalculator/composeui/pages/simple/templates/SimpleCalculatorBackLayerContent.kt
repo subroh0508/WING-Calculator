@@ -29,7 +29,6 @@ fun SimpleCalculatorBackLayerContent(
 
         Column(
             modifier = Modifier.fillMaxHeight()
-                .background(MaterialTheme.colors.primary)
                 .verticalScroll(verticalScrollState),
         ) {
             SimpleUnitForm(widthModifier)
