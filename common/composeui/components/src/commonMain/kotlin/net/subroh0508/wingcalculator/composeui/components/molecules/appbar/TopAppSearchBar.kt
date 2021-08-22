@@ -83,7 +83,9 @@ private fun RowScope.OpenedSearchBarContent(
             text ?: "",
             onValueChange = { onQueryChange(it.takeIf(String::isNotBlank)) },
             singleLine = true,
-            modifier = Modifier.align(Alignment.CenterStart),
+            modifier = Modifier.fillMaxWidth()
+                .padding(end = 16.dp)
+                .align(Alignment.CenterStart),
         )
     }
 }
