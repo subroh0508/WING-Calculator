@@ -16,7 +16,7 @@ fun SimpleBuffForm(modifier: Modifier = Modifier) {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
-    val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel
+    val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
 
     Column(modifier = modifier.padding(horizontal = 8.dp)) {
         WeekSelector(
@@ -24,20 +24,20 @@ fun SimpleBuffForm(modifier: Modifier = Modifier) {
             week.week,
             Week.Season.values(),
             !listOf(Week.Season.SEMI_FINAL, Week.Season.FINAL).contains(week.season),
-            onChange = { season, week -> onChangeUiModel(uiModel.copy(week = Week(season, week))) },
+            onChange = { season, week -> onChangeUiModel(uiModel.input(week = Week(season, week))) },
         )
         Spacer(Modifier.height(16.dp))
         Row {
             AppealRatioSelector(
                 appealRatio.toString(),
-                onChange = { ratio -> onChangeUiModel(uiModel.copy(appealRatio = AppealRatio(ratio))) },
+                onChange = { ratio -> onChangeUiModel(uiModel.input(appealRatio = AppealRatio(ratio))) },
                 modifier = Modifier.weight(1F),
             )
             Spacer(Modifier.width(8.dp))
             AppealJudgeSelector(
                 appealJudge.factor,
                 AppealJudge.Factor.values(),
-                onChange = { factor -> onChangeUiModel(uiModel.copy(appealJudge = AppealJudge(factor))) },
+                onChange = { factor -> onChangeUiModel(uiModel.input(appealJudge = AppealJudge(factor))) },
                 modifier = Modifier.weight(1F),
             )
         }
@@ -45,13 +45,13 @@ fun SimpleBuffForm(modifier: Modifier = Modifier) {
         BuffRatioField(
             buff.toString(),
             buff.total(),
-            onChange = { ratio -> onChangeUiModel(uiModel.copy(buff = Buff(ratio))) },
+            onChange = { ratio -> onChangeUiModel(uiModel.input(buff = Buff(ratio))) },
         )
         Spacer(Modifier.height(16.dp))
         InterestRatioField(
             interestRatio.toString(),
             interestRatio.total(),
-            onChange = { ratio -> onChangeUiModel(uiModel.copy(interestRatio = InterestRatio(ratio))) },
+            onChange = { ratio -> onChangeUiModel(uiModel.input(interestRatio = InterestRatio(ratio))) },
         )
     }
 }

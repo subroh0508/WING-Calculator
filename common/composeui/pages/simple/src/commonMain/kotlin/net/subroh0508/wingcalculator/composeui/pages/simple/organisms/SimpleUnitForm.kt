@@ -19,22 +19,22 @@ fun SimpleUnitForm(modifier: Modifier = Modifier) {
     val uiModel = SimpleCalculatorProviderContext.current
     val onChangeUiModel = SimpleCalculatorDispatcherContext.current
 
-    val (_, sIdols) = uiModel
+    val (_, sIdols) = uiModel.form
 
     val handleOnPIdolStateChange = remember(uiModel) {
         { vo: Int?, da: Int?, vi: Int? ->
-            onChangeUiModel(uiModel.copy(
+            onChangeUiModel(uiModel.input(
                 pIdol = Idol.Produce(
-                    vo?.let(::Vocal) ?: uiModel.pIdol.vocal,
-                    da?.let(::Dance) ?: uiModel.pIdol.dance,
-                    vi?.let(::Visual) ?: uiModel.pIdol.visual,
+                    vo?.let(::Vocal) ?: uiModel.form.pIdol.vocal,
+                    da?.let(::Dance) ?: uiModel.form.pIdol.dance,
+                    vi?.let(::Visual) ?: uiModel.form.pIdol.visual,
                 ),
             ))
         }
     }
     val handleOnSIdolStateChange = remember(uiModel) {
         { index: Int, vo: Int?, da: Int?, vi: Int? ->
-            val newSIdol = uiModel.sIdols[index].let {
+            val newSIdol = uiModel.form.sIdols[index].let {
                 Idol.Support(
                     vo?.let(::Vocal) ?: it.vocal,
                     da?.let(::Dance) ?: it.dance,
@@ -43,8 +43,8 @@ fun SimpleUnitForm(modifier: Modifier = Modifier) {
             }
 
             onChangeUiModel(
-                uiModel.copy(
-                    sIdols = uiModel.sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
+                uiModel.input(
+                    sIdols = uiModel.form.sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
                 ),
             )
         }
