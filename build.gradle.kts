@@ -9,6 +9,7 @@ buildscript {
         classpath(kotlinGradlePlugin)
         classpath(androidGradlePlugin)
         classpath(composeGradlePlugin)
+        classpath(Libraries.SQLDelight.plugin)
     }
 }
 
