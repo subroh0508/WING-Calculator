@@ -5,16 +5,12 @@ package net.subroh0508.wingcalculator.composeui.pages.simple.templates
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarContainer
 
 @Composable
-actual fun SimpleCalculatorBackdrop() {
+actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
     val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -30,8 +26,15 @@ actual fun SimpleCalculatorBackdrop() {
                     if (backdropScaffoldState.isConcealed)
                         frontLayerHeightState
                     else
-                        BackdropScaffoldDefaults.HeaderHeight
-                )
+                        BackdropScaffoldDefaults.HeaderHeight,
+                ) {
+                    coroutineScope.launch {
+                        if (drawerState.isOpen)
+                            drawerState.close()
+                        else
+                            drawerState.open()
+                    }
+                }
             },
             backLayerBackgroundColor = MaterialTheme.colors.background,
             frontLayerContent = {

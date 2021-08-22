@@ -5,7 +5,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
-import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackdrop
+import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorDrawer
 
 typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
 
@@ -20,7 +20,7 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 fun SimpleCalculatorPage() {
     AppTheme {
         SimpleCalculatorUiModelProvider {
-            SimpleCalculatorBackdrop()
+            SimpleCalculatorDrawer()
         }
     }
 }

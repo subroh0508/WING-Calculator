@@ -22,9 +22,10 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleUnit
 @Composable
 fun SimpleCalculatorBackLayerContent(
     frontLayerHeight: Dp,
+    onClickAppBarNavigation: () -> Unit,
 ) = SimpleCalculatorBoxWithConstraints { constraints ->
     CollapsingTopAppBarContainer(
-        onClickAppBarNavigation = {},
+        onClickAppBarNavigation = onClickAppBarNavigation,
         appBarBackgroundColor = MaterialTheme.colors.background,
         appBarElevation = 0.dp,
         appBarActions = {
