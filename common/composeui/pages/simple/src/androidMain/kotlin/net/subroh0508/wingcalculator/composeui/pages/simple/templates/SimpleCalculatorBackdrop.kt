@@ -5,9 +5,13 @@ package net.subroh0508.wingcalculator.composeui.pages.simple.templates
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarContainer
 
 @Composable
 actual fun SimpleCalculatorBackdrop() {

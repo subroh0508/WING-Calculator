@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.components.molecules
+package net.subroh0508.wingcalculator.composeui.components.molecules.appbar
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,17 +10,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun TopAppBar(
     onClickNavigation: () -> Unit,
     title: String? = null,
-    actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = MaterialTheme.colors.primarySurface,
+    elevation: Dp = AppBarDefaults.TopAppBarElevation,
     modifier: Modifier = Modifier,
+    actions: @Composable RowScope.() -> Unit = {},
 ) = TopAppBar(
     backgroundColor = backgroundColor,
+    elevation = elevation,
     modifier = modifier,
 ) {
     IconButton(
