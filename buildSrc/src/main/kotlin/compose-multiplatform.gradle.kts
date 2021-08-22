@@ -24,6 +24,7 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.ui)
+                implementation(compose.materialIconsExtended)
             }
         }
 
