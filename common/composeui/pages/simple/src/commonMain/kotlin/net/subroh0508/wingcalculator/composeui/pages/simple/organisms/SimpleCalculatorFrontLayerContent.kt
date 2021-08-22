@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.templates
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,7 +16,11 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculateResult
+import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
 
 @Composable
 fun SimpleCalculatorFrontLayerContent(
@@ -25,7 +29,13 @@ fun SimpleCalculatorFrontLayerContent(
     isConcealed: Boolean? = null,
     onClickIcon: () -> Unit = {},
 ) {
+    val (_, query) = SimpleCalculatorProviderContext.current
+
     val verticalScrollState = rememberScrollState(0)
+
+    if (query is SimpleCalculatorUiModel.Query.Opened) {
+        return
+    }
 
     SimpleCalculatorBoxWithConstraints { constraints ->
         with (LocalDensity.current) {

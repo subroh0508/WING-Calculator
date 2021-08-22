@@ -25,6 +25,7 @@ private val DefaultAppBarHeight = 56.dp
 fun CollapsingTopAppBarContainer(
     appBar: @Composable (Modifier) -> Unit,
     appBarHeight: Dp = DefaultAppBarHeight,
+    isCollapsingEnable: Boolean = true,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -43,12 +44,14 @@ fun CollapsingTopAppBarContainer(
     }
 
     val verticalScrollState = rememberScrollState(0)
+    var boxModifier = modifier.fillMaxSize()
+    if (isCollapsingEnable) {
+        boxModifier = boxModifier.nestedScroll(nestedScrollConnection)
+    }
+    val columnModifier = if (isCollapsingEnable) Modifier.verticalScroll(verticalScrollState) else Modifier
 
-    Box(
-        modifier = modifier.fillMaxSize()
-            .nestedScroll(nestedScrollConnection),
-    ) {
-        Column(modifier = Modifier.verticalScroll(verticalScrollState)) {
+    Box(modifier = boxModifier) {
+        Column(modifier = columnModifier) {
             Spacer(modifier = Modifier.height(appBarHeight))
             content()
         }

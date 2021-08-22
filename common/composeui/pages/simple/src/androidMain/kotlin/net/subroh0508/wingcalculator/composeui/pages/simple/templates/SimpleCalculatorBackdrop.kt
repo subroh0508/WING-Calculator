@@ -8,6 +8,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.launch
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculatorBackLayerContent
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculatorFrontLayerContent
 
 @Composable
 actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
