@@ -4,6 +4,12 @@ plugins {
     id("com.squareup.sqldelight")
 }
 
+sqldelight {
+    database("WingCalculatorDatabase") {
+        packageName = "net.subroh0508.wingcalculator.database"
+    }
+}
+
 kotlin {
     jvm("desktop")
     android()
