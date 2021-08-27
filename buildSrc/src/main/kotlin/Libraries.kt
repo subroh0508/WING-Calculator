@@ -1,6 +1,11 @@
 @Suppress("HardcodedStringLiteral", "unused")
 
 object Libraries {
+    object Coroutines {
+        private const val version = "1.5.1"
+        const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    }
+
     object Jetpack {
         private const val appCompatVersion = "1.3.0"
         const val appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
@@ -19,5 +24,7 @@ object Libraries {
         const val jvm = "com.squareup.sqldelight:sqlite-driver:$version"
         const val android = "com.squareup.sqldelight:android-driver:$version"
         const val ios = "com.squareup.sqldelight:ios-driver:$version"
+
+        const val coroutines = "com.squareup.sqldelight:coroutines-extensions:$version"
     }
 }

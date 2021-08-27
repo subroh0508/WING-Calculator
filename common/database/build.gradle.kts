@@ -16,6 +16,12 @@ kotlin {
     // ios()
 
     sourceSets {
+        named("commonMain") {
+            dependencies {
+                implementation(Libraries.Coroutines.core)
+                implementation(Libraries.SQLDelight.coroutines)
+            }
+        }
         named("commonTest") {
             dependencies {
                 implementation(kotlinTestCommon)
