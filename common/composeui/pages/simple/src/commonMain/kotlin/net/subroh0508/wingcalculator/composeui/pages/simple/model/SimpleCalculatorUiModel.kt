@@ -1,6 +1,6 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.model
 
-import net.subroh0508.wingcalculator.data.*
+import net.subroh0508.wingcalculator.appeal.model.*
 
 data class SimpleCalculatorUiModel(
     val form: Form = Form(),

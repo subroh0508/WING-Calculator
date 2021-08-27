@@ -15,7 +15,7 @@ kotlin {
     sourceSets {
         named("jsMain") {
             dependencies {
-                implementation(project(":common:data"))
+                implementation(project(":common:data:appeal:model"))
 
                 implementation(compose.runtime)
                 implementation(compose.web.widgets)

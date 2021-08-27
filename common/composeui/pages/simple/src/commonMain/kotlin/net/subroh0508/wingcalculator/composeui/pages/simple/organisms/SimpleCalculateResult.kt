@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTable
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
-import net.subroh0508.wingcalculator.data.TotalAppeal
-import net.subroh0508.wingcalculator.data.TotalAppeals
+import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
+import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import kotlin.math.abs
 
 private enum class AppealType(val text: String) {

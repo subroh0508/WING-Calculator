@@ -1,7 +1,7 @@
 package net.subroh0508.wingcalculator.web
 
 import androidx.compose.runtime.*
-import net.subroh0508.wingcalculator.data.getPlatformName
+import net.subroh0508.wingcalculator.appeal.model.getPlatformName
 import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Text
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.molecules.*
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
-import net.subroh0508.wingcalculator.data.*
+import net.subroh0508.wingcalculator.appeal.model.*
 
 @Composable
 fun SimpleBuffForm(modifier: Modifier = Modifier) {

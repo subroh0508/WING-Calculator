@@ -9,10 +9,10 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.molecules.IdolStatusBox
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
-import net.subroh0508.wingcalculator.data.Dance
-import net.subroh0508.wingcalculator.data.Idol
-import net.subroh0508.wingcalculator.data.Visual
-import net.subroh0508.wingcalculator.data.Vocal
+import net.subroh0508.wingcalculator.appeal.model.Dance
+import net.subroh0508.wingcalculator.appeal.model.Idol
+import net.subroh0508.wingcalculator.appeal.model.Visual
+import net.subroh0508.wingcalculator.appeal.model.Vocal
 
 @Composable
 fun SimpleUnitForm(modifier: Modifier = Modifier) {
