@@ -2,6 +2,7 @@ include(
     ":common:composeui:components",
     ":common:composeui:pages:simple",
     ":common:data:appeal:model",
+    ":common:data:preset:model",
     ":common:data:preset:infra",
     ":common:database",
     ":common:utilities",
