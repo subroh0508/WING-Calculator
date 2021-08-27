@@ -1,6 +1,5 @@
 plugins {
-    kotlin("multiplatform")
-    `android-multiplatform`
+    `common-multiplatform`
     id("com.squareup.sqldelight")
 }
 
@@ -11,41 +10,16 @@ sqldelight {
 }
 
 kotlin {
-    jvm("desktop")
-    android()
-    // ios()
-
     sourceSets {
-        named("commonMain") {
-            dependencies {
-                implementation(Libraries.Coroutines.core)
-                implementation(Libraries.SQLDelight.coroutines)
-            }
-        }
-        named("commonTest") {
-            dependencies {
-                implementation(kotlinTestCommon)
-            }
-        }
         named("androidMain") {
             dependencies {
                 implementation(Libraries.SQLDelight.jvm)
                 implementation(Libraries.SQLDelight.android)
             }
         }
-        named("androidTest") {
-            dependencies {
-                implementation(kotlinTestJUnit)
-            }
-        }
         named("desktopMain") {
             dependencies {
                 implementation(Libraries.SQLDelight.jvm)
-            }
-        }
-        named("desktopTest") {
-            dependencies {
-                implementation(kotlinTestJUnit)
             }
         }
         /*

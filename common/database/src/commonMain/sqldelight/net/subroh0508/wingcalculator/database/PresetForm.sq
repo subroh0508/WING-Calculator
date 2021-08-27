@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS PresetForm(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
     pVocal INTEGER NOT NULL,
     pDance INTEGER NOT NULL,
     pVisual INTEGER NOT NULL,
@@ -16,6 +17,73 @@ CREATE TABLE IF NOT EXISTS PresetForm(
     s4Vocal INTEGER NOT NULL,
     s4Dance INTEGER NOT NULL,
     s4Visual INTEGER NOT NULL,
+    comment TEXT,
     producer INTEGER NOT NULL,
+    selectCount INTEGER NOT NULL DEFAULT 0,
+    createdAt INTEGER NOT NULL,
+    lastModified INTEGER NOT NULL,
     FOREIGN KEY(producer) REFERENCES Producer(id)
 );
+
+select:
+SELECT *
+FROM PresetForm
+WHERE
+  id = :id AND producer = :producerId;
+
+selectByName:
+SELECT *
+FROM PresetForm
+WHERE
+  producer = :producerId AND name LIKE ('%' || :name || '%')
+ORDER BY selectCount DESC
+LIMIT :limit;
+
+selectOfLatestCreatedAt:
+SELECT *
+FROM PresetForm
+WHERE
+  producer = :producerId
+ORDER BY createdAt DESC
+LIMIT 1;
+
+add:
+INSERT INTO PresetForm (
+  name,
+  pVocal, pDance, pVisual, pMental,
+  s1Vocal, s1Dance, s1Visual,
+  s2Vocal, s2Dance, s2Visual,
+  s3Vocal, s3Dance, s3Visual,
+  s4Vocal, s4Dance, s4Visual,
+  comment, producer,
+  createdAt, lastModified
+)
+VALUES (
+  :name,
+  :pVocal, :pDance, :pVisual, :pMental,
+  :s1Vocal, :s1Dance, :s1Visual,
+  :s2Vocal, :s2Dance, :s2Visual,
+  :s3Vocal, :s3Dance, :s3Visual,
+  :s4Vocal, :s4Dance, :s4Visual,
+  :comment, :producer,
+  :createdAt, :createdAt
+);
+
+update:
+UPDATE PresetForm
+SET
+  name = :name,
+  pVocal = :pVocal, pDance = :pDance, pVisual = :pVisual, pMental = :pMental,
+  s1Vocal = :s1Vocal, s1Dance = :s1Dance, s1Visual = :s1Visual,
+  s2Vocal = :s2Vocal, s2Dance = :s2Dance, s2Visual = :s2Visual,
+  s3Vocal = :s3Vocal, s3Dance = :s3Dance, s3Visual = :s3Visual,
+  s4Vocal = :s4Vocal, s4Dance = :s4Dance, s4Visual = :s4Visual,
+  comment = :comment,
+  lastModified = :lastModified
+WHERE
+  producer = :producerId AND id = :id;
+
+delete:
+DELETE FROM PresetForm
+WHERE
+   producer = :producerId AND id = :id;

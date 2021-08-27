@@ -6,6 +6,11 @@ object Libraries {
         const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
     }
 
+    object Datetime {
+        private const val version = "0.2.1"
+        const val common = "org.jetbrains.kotlinx:kotlinx-datetime:$version"
+    }
+
     object Jetpack {
         private const val appCompatVersion = "1.3.0"
         const val appCompat = "androidx.appcompat:appcompat:$appCompatVersion"
