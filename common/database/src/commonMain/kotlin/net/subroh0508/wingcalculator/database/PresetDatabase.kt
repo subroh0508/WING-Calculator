@@ -1,14 +1,12 @@
-package net.subroh0508.wingcalculator.preset.infra.repository.db
+package net.subroh0508.wingcalculator.database
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
-import net.subroh0508.wingcalculator.database.PresetForm
-import net.subroh0508.wingcalculator.database.PresetFormQueries
 
-internal class PresetDatabase(
+class PresetDatabase(
     private val queries: PresetFormQueries,
 ) {
     suspend fun get(id: Long, producerId: Long) = queries.select(id, producerId).asFlow().mapToOne().first()

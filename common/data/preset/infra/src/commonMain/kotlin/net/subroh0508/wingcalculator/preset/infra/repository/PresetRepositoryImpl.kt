@@ -5,7 +5,7 @@ import net.subroh0508.wingcalculator.appeal.model.Idol
 import net.subroh0508.wingcalculator.appeal.model.Visual
 import net.subroh0508.wingcalculator.appeal.model.Vocal
 import net.subroh0508.wingcalculator.database.PresetForm
-import net.subroh0508.wingcalculator.preset.infra.repository.db.PresetDatabase
+import net.subroh0508.wingcalculator.database.PresetDatabase
 import net.subroh0508.wingcalculator.preset.model.Preset
 
 internal class PresetRepositoryImpl(

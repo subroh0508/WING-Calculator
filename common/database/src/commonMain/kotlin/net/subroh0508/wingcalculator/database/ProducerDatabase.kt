@@ -1,11 +1,9 @@
-package net.subroh0508.wingcalculator.producer.infra.repository.db
+package net.subroh0508.wingcalculator.database
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.first
-import net.subroh0508.wingcalculator.database.Producer
-import net.subroh0508.wingcalculator.database.ProducerQueries
 
 class ProducerDatabase(
     private val queries: ProducerQueries,

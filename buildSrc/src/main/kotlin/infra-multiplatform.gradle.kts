@@ -16,9 +16,6 @@ kotlin {
                 implementation(project(":common:utilities"))
                 implementation(project(":common:database"))
 
-                implementation(Libraries.Coroutines.core)
-                implementation(Libraries.SQLDelight.coroutines)
-
                 implementation(Libraries.Koin.core)
             }
         }

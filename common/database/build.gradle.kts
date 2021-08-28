@@ -11,6 +11,14 @@ sqldelight {
 
 kotlin {
     sourceSets {
+        named("commonMain") {
+            dependencies {
+                implementation(Libraries.Coroutines.core)
+                implementation(Libraries.SQLDelight.coroutines)
+
+                implementation(Libraries.Datetime.common)
+            }
+        }
         named("androidMain") {
             dependencies {
                 implementation(Libraries.SQLDelight.jvm)
