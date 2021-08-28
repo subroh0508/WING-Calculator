@@ -17,6 +17,8 @@ kotlin {
                 implementation(Libraries.SQLDelight.coroutines)
 
                 implementation(Libraries.Datetime.common)
+
+                implementation(Libraries.Koin.core)
             }
         }
         named("androidMain") {
