@@ -32,4 +32,11 @@ object Libraries {
 
         const val coroutines = "com.squareup.sqldelight:coroutines-extensions:$version"
     }
+
+    object Koin {
+        private const val version = "3.1.2"
+
+        const val core = "io.insert-koin:koin-core:$version"
+        const val android = "io.insert-koin:koin-android:$version"
+    }
 }
