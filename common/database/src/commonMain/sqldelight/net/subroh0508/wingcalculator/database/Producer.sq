@@ -3,3 +3,14 @@ CREATE TABLE IF NOT EXISTS Producer(
     name TEXT,
     isAnonymous INTEGER AS Boolean NOT NULL DEFAULT 0
 );
+
+addAnonymous:
+INSERT INTO Producer (isAnonymous)
+VALUES (1);
+
+selectAnonymous:
+SELECT *
+FROM Producer
+WHERE
+  isAnonymous = 1
+LIMIT 1;
