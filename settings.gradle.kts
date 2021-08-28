@@ -5,6 +5,7 @@ include(
     ":common:data:preset:model",
     ":common:data:preset:infra",
     ":common:data:producer:model",
+    ":common:data:producer:infra",
     ":common:database",
     ":common:utilities",
     ":android",
