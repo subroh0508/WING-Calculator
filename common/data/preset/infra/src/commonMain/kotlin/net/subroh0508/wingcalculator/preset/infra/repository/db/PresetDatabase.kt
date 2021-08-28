@@ -3,22 +3,17 @@ package net.subroh0508.wingcalculator.preset.infra.repository.db
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import net.subroh0508.wingcalculator.database.PresetForm
 import net.subroh0508.wingcalculator.database.PresetFormQueries
 
 internal class PresetDatabase(
     private val queries: PresetFormQueries,
 ) {
-    suspend fun get(id: Long, producerId: Long) = withContext(Dispatchers.Default) {
-        queries.select(id, producerId).asFlow().mapToOne().first()
-    }
+    suspend fun get(id: Long, producerId: Long) = queries.select(id, producerId).asFlow().mapToOne().first()
 
-    suspend fun search(producerId: Long, name: String) = withContext(Dispatchers.Default) {
-        queries.selectByName(producerId, name, DEFAULT_LIMIT).asFlow().mapToList().first()
-    }
+    suspend fun search(producerId: Long, name: String) = queries.selectByName(producerId, name, DEFAULT_LIMIT).asFlow().mapToList().first()
 
     suspend fun create(
         producerId: Long,
@@ -26,7 +21,7 @@ internal class PresetDatabase(
         pIdolStatus: List<Long>,
         sIdolStatuses: List<List<Long>>,
         comment: String?,
-    ) = withContext(Dispatchers.Default) {
+    ): PresetForm {
         queries.add(
             name,
             pIdolStatus[0], pIdolStatus[1], pIdolStatus[2], pIdolStatus[3],
@@ -39,7 +34,7 @@ internal class PresetDatabase(
             Clock.System.now().toEpochMilliseconds(),
         )
 
-        queries.selectOfLatestCreatedAt(producerId).asFlow().mapToOne().first()
+        return queries.selectOfLatestCreatedAt(producerId).asFlow().mapToOne().first()
     }
 
     suspend fun update(
@@ -49,7 +44,7 @@ internal class PresetDatabase(
         pIdolStatus: List<Long>,
         sIdolStatuses: List<List<Long>>,
         comment: String?,
-    ) = withContext(Dispatchers.Default) {
+    ): PresetForm {
         queries.update(
             name,
             pIdolStatus[0], pIdolStatus[1], pIdolStatus[2], pIdolStatus[3],
@@ -63,7 +58,7 @@ internal class PresetDatabase(
             id,
         )
 
-        get(id, producerId)
+        return get(id, producerId)
     }
 
     companion object {

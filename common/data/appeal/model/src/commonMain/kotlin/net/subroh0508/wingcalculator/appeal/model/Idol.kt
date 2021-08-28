@@ -5,6 +5,8 @@ sealed class Idol {
     abstract val dance: Dance
     abstract val visual: Visual
 
+    open fun toList() = listOf(vocal.value, dance.value, visual.value)
+
     data class Produce(
         override val vocal: Vocal = Vocal(0),
         override val dance: Dance = Dance(0),
