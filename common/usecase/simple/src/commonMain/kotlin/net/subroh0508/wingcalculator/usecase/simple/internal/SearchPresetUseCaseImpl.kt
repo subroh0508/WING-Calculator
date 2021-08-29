@@ -10,7 +10,7 @@ internal class SearchPresetUseCaseImpl(
     private val producerRepository: ProducerRepository,
     private val presetRepository: PresetRepository,
 ) : SearchPresetUseCase {
-    override suspend fun execute(name: String) = withContext(Dispatchers.Default) {
+    override suspend fun execute(name: String?) = withContext(Dispatchers.Default) {
         presetRepository.search(name, producerRepository.fetchCurrent().id)
     }
 }

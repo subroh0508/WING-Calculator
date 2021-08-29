@@ -18,7 +18,6 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTabl
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
-import kotlin.math.abs
 
 private enum class AppealType(val text: String) {
     VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール");
@@ -33,7 +32,7 @@ private enum class AppealType(val text: String) {
 fun SimpleCalculateResult() {
     var appealTypeState by remember { mutableStateOf(AppealType.VOCAL) }
 
-    val uiModel = SimpleCalculatorProviderContext.current
+    val (_, uiModel) = SimpleCalculatorProviderContext.current
 
     Column {
         TotalAppealsTable(

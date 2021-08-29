@@ -13,42 +13,16 @@ import net.subroh0508.wingcalculator.appeal.model.Dance
 import net.subroh0508.wingcalculator.appeal.model.Idol
 import net.subroh0508.wingcalculator.appeal.model.Visual
 import net.subroh0508.wingcalculator.appeal.model.Vocal
+import net.subroh0508.wingcalculator.composeui.pages.simple.provideInputFormDispatcher
 
 @Composable
 fun SimpleUnitForm(modifier: Modifier = Modifier) {
-    val uiModel = SimpleCalculatorProviderContext.current
-    val onChangeUiModel = SimpleCalculatorDispatcherContext.current
+    val (uiModel, dispatch) = provideInputFormDispatcher()
 
     val (_, sIdols) = uiModel.form
 
-    val handleOnPIdolStateChange = remember(uiModel) {
-        { vo: Int?, da: Int?, vi: Int? ->
-            onChangeUiModel(uiModel.input(
-                pIdol = Idol.Produce(
-                    vo?.let(::Vocal) ?: uiModel.form.pIdol.vocal,
-                    da?.let(::Dance) ?: uiModel.form.pIdol.dance,
-                    vi?.let(::Visual) ?: uiModel.form.pIdol.visual,
-                ),
-            ))
-        }
-    }
-    val handleOnSIdolStateChange = remember(uiModel) {
-        { index: Int, vo: Int?, da: Int?, vi: Int? ->
-            val newSIdol = uiModel.form.sIdols[index].let {
-                Idol.Support(
-                    vo?.let(::Vocal) ?: it.vocal,
-                    da?.let(::Dance) ?: it.dance,
-                    vi?.let(::Visual) ?: it.visual,
-                )
-            }
-
-            onChangeUiModel(
-                uiModel.input(
-                    sIdols = uiModel.form.sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
-                ),
-            )
-        }
-    }
+    val handleOnPIdolStateChange = remember(uiModel) { { vo: Int?, da: Int?, vi: Int? -> dispatch(vo, da, vi) } }
+    val handleOnSIdolStateChange = remember(uiModel) { { index: Int, vo: Int?, da: Int?, vi: Int? -> dispatch(index, vo, da, vi) } }
 
     Column(modifier = modifier) {
         IdolStatusBox(

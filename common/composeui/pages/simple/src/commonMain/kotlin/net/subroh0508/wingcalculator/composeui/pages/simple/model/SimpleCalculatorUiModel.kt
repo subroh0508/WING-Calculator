@@ -5,7 +5,7 @@ import net.subroh0508.wingcalculator.appeal.model.*
 data class SimpleCalculatorUiModel(
     val form: Form = Form(),
     val query: Query = Query.Closed,
-    val suggests: List<Pair<String, Form>> = listOf(),
+    val suggests: List<Pair<Long, Form>> = listOf(),
 ) {
     val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio) ->
         TotalAppeals(
@@ -27,6 +27,7 @@ data class SimpleCalculatorUiModel(
         buff: Buff = form.buff,
         appealJudge: AppealJudge = form.appealJudge,
         interestRatio: InterestRatio = form.interestRatio,
+        comment: String? = form.comment,
     ) = copy(
         form = Form(
             pIdol,
@@ -36,12 +37,14 @@ data class SimpleCalculatorUiModel(
             buff,
             appealJudge,
             interestRatio,
+            comment = comment,
         ),
     )
 
-    fun input(query: String?) = if (this.query is Query.Closed) this else copy(query = Query.Opened(query))
+    fun inputQuery(query: String?) = if (this.query is Query.Closed) this else copy(query = Query.Opened(query))
+    fun inputFormName(name: String?) = copy(form = form.copy(name = name))
 
-    fun select(suggest: Pair<String, Form>) = copy(
+    fun select(suggest: Pair<Long, Form>) = copy(
         query = Query.Closed,
         suggests = listOf(suggest),
     )
@@ -54,6 +57,8 @@ data class SimpleCalculatorUiModel(
         val buff: Buff = Buff(listOf(0.0)),
         val appealJudge: AppealJudge = AppealJudge(AppealJudge.Factor.GOOD),
         val interestRatio: InterestRatio = InterestRatio(listOf(1.0)),
+        val name: String? = null,
+        val comment: String? = null,
     )
 
     sealed class Query {

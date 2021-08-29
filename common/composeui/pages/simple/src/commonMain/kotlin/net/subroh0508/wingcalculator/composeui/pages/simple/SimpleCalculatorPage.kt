@@ -4,43 +4,43 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.components.di.KoinComponent
-import net.subroh0508.wingcalculator.composeui.components.di.getKoin
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorDrawer
-import net.subroh0508.wingcalculator.core.pages.SimpleCalculatorModule
-
-typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
+import net.subroh0508.wingcalculator.usecase.simple.di.SimpleCalculatorDomainModule
+import org.koin.core.Koin
 
 val SimpleCalculatorProviderContext = compositionLocalOf(
-    defaultFactory = ::SimpleCalculatorUiModel,
+    defaultFactory = { Pair<Koin?, SimpleCalculatorUiModel>(null, SimpleCalculatorUiModel()) },
 )
 val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispatcher>(
     defaultFactory = { {} },
 )
 
 @Composable
-fun SimpleCalculatorPage() = KoinComponent(SimpleCalculatorModule) {
-    // Module読み込んだらProviderで流すようにしたい
+fun SimpleCalculatorPage() {
     AppTheme {
-        SimpleCalculatorUiModelProvider {
+        SimpleCalculatorContainer(SimpleCalculatorUiModel()) {
             SimpleCalculatorDrawer()
         }
     }
 }
 
 @Composable
-private fun SimpleCalculatorUiModelProvider(
+private fun SimpleCalculatorContainer(
+    initUiModel: SimpleCalculatorUiModel,
     content: @Composable () -> Unit,
 ) {
-    var uiModel by remember { mutableStateOf(SimpleCalculatorUiModel()) }
+    var uiModel by remember { mutableStateOf(initUiModel) }
 
-    CompositionLocalProvider(
-        SimpleCalculatorProviderContext provides uiModel,
-    ) {
+    KoinComponent(SimpleCalculatorDomainModule) {
         CompositionLocalProvider(
             SimpleCalculatorDispatcherContext provides { uiModel = it },
-            content = content,
-        )
+        ) {
+            CompositionLocalProvider(
+                SimpleCalculatorProviderContext provides (it to uiModel),
+                content = content,
+            )
+        }
     }
 }

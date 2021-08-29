@@ -18,9 +18,8 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.Colla
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.SearchBarState
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
-import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
-import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
+import net.subroh0508.wingcalculator.composeui.pages.simple.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
 
 @Composable
@@ -28,8 +27,7 @@ fun SimpleCalculatorBackLayerContent(
     frontLayerHeight: Dp,
     onAppBarNavigationClick: () -> Unit,
 ) {
-    val uiModel = SimpleCalculatorProviderContext.current
-    val onChangeUiModel = SimpleCalculatorDispatcherContext.current
+    val (uiModel, dispatch) = provideSearchPresetDispatcher()
 
     val (_, query, suggestions) = uiModel
 
@@ -41,16 +39,14 @@ fun SimpleCalculatorBackLayerContent(
                     query.toSearchBarState(),
                     onNavigationClick = onAppBarNavigationClick,
                     onSearchBarStateChange = {
-                        onChangeUiModel(
-                            uiModel.copy(
-                                query = when (it) {
-                                    SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened()
-                                    SearchBarState.CLOSED -> SimpleCalculatorUiModel.Query.Closed
-                                },
-                            ),
+                        dispatch(
+                            when (it) {
+                                SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened()
+                                SearchBarState.CLOSED -> SimpleCalculatorUiModel.Query.Closed
+                            },
                         )
                     },
-                    onQueryChange = { onChangeUiModel(uiModel.input(it)) },
+                    onQueryChange = { dispatch(it) },
                     backgroundColor = MaterialTheme.colors.background,
                     elevation = 0.dp,
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
@@ -80,7 +76,7 @@ fun SimpleCalculatorBackLayerContent(
                     constraints,
                     query.text,
                     suggestions,
-                ) { onChangeUiModel(uiModel.select(it)) }
+                ) { dispatch(it) }
             }
         }
     }
@@ -98,8 +94,8 @@ private fun ColumnScope.Forms(constraints: Modifier, frontLayerHeight: Dp) {
 private fun ColumnScope.SuggestList(
     constraints: Modifier,
     query: String?,
-    suggestions: List<Pair<String, SimpleCalculatorUiModel.Form>>,
-    onClick: (Pair<String, SimpleCalculatorUiModel.Form>) -> Unit,
+    suggestions: List<Pair<Long, SimpleCalculatorUiModel.Form>>,
+    onClick: (Pair<Long, SimpleCalculatorUiModel.Form>) -> Unit,
 ) {
     Divider(constraints)
     if (query != null && suggestions.isEmpty())
@@ -113,11 +109,11 @@ private fun ColumnScope.SuggestList(
         )
     else
         LazyColumn(modifier = constraints) {
-            suggestions.forEachIndexed { index, (name, form) ->
+            suggestions.forEachIndexed { index, (id, form) ->
                 item(index) {
                     ListItem(
-                        text = { Text(name) },
-                        modifier = Modifier.clickable { onClick(name to form) },
+                        text = { Text(form.name ?: "") },
+                        modifier = Modifier.clickable { onClick(id to form) },
                     )
                 }
             }

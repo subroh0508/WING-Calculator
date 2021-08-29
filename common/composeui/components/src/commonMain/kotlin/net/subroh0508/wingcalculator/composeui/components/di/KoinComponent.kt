@@ -3,29 +3,23 @@
 package net.subroh0508.wingcalculator.composeui.components.di
 
 import androidx.compose.runtime.*
+import org.koin.core.Koin
 import org.koin.core.module.Module
 
 @Composable
 fun KoinComponent(
     module: List<Module>,
-    content: @Composable () -> Unit,
+    content: @Composable (Koin?) -> Unit,
 ) {
     val koin = getKoin()
-
-    var koinLoadState by remember { mutableStateOf(false) }
+    var koinLoadState: Koin? by remember { mutableStateOf(null) }
 
     DisposableEffect(koin) {
         koin.loadModules(module)
-        koinLoadState = true
+        koinLoadState = koin
 
-        onDispose {
-            koin.unloadModules(module)
-        }
+        onDispose { koin.unloadModules(module) }
     }
 
-    if (!koinLoadState) {
-        return
-    }
-
-    content()
+    content(koinLoadState)
 }

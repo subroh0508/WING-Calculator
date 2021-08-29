@@ -12,7 +12,7 @@ internal class PresetRepositoryImpl(
     private val database: PresetDatabase,
 ) : PresetRepository {
     override suspend fun fetch(id: Long, producerId: Long) = database.get(id, producerId).toEntity()
-    override suspend fun search(name: String, producerId: Long) = database.search(producerId, name).map { it.toEntity() }
+    override suspend fun search(name: String?, producerId: Long) = database.search(producerId, name ?: "").map { it.toEntity() }
 
     override suspend fun save(
         producerId: Long,
