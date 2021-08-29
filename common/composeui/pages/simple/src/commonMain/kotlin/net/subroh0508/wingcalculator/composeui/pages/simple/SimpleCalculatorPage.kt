@@ -3,9 +3,12 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.composeui.components.di.KoinComponent
+import net.subroh0508.wingcalculator.composeui.components.di.getKoin
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorDrawer
+import net.subroh0508.wingcalculator.core.pages.SimpleCalculatorModule
 
 typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
 
@@ -17,7 +20,8 @@ val SimpleCalculatorDispatcherContext = compositionLocalOf<SimpleCalculatorDispa
 )
 
 @Composable
-fun SimpleCalculatorPage() {
+fun SimpleCalculatorPage() = KoinComponent(SimpleCalculatorModule) {
+    // Module読み込んだらProviderで流すようにしたい
     AppTheme {
         SimpleCalculatorUiModelProvider {
             SimpleCalculatorDrawer()

@@ -9,11 +9,16 @@ plugins {
 
 kotlin {
     jvm(configure = KotlinJvmTarget::withJava)
+
     sourceSets {
         named("jvmMain") {
             dependencies {
+                implementation(project(":common:core"))
                 implementation(project(":common:composeui:pages:simple"))
+
                 implementation(compose.desktop.currentOs)
+
+                implementation(Libraries.Koin.core)
             }
         }
     }

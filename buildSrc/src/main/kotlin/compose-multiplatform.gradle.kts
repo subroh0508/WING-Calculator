@@ -1,5 +1,4 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.kotlin.gradle.targets.js.dsl.KotlinJsTargetDsl
 
 plugins {
     kotlin("multiplatform")
@@ -20,11 +19,15 @@ kotlin {
 
         named("commonMain") {
             dependencies {
+                implementation(project(":common:core"))
+
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)
                 implementation(compose.ui)
                 implementation(compose.materialIconsExtended)
+
+                implementation(Libraries.Koin.core)
             }
         }
 
