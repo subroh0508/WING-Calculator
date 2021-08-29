@@ -1,4 +1,5 @@
 include(
+    ":common:core",
     ":common:composeui:components",
     ":common:composeui:pages:simple",
     ":common:data:appeal:model",
