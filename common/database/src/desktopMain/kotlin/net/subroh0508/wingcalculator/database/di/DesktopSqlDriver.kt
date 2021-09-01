@@ -10,7 +10,10 @@ actual object SqlDriver {
     actual val Module: Module get() = module {
         single<SqlDriver> {
             JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-                .also(WingCalculatorDatabase.Schema::create)
+                .also {
+                    WingCalculatorDatabase.Schema.create(it)
+                    WingCalculatorDatabase.Schema.migrate(it, 0, WingCalculatorDatabase.Schema.version)
+                }
         }
     }
 }

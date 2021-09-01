@@ -1,0 +1,20 @@
+INSERT INTO PresetForm (
+    name,
+    pVocal, pDance, pVisual, pMental,
+    s1Vocal, s1Dance, s1Visual,
+    s2Vocal, s2Dance, s2Visual,
+    s3Vocal, s3Dance, s3Visual,
+    s4Vocal, s4Dance, s4Visual,
+    comment, producer,
+    createdAt, lastModified
+)
+VALUES (
+   'サンプル',
+   50, 50, 50, 50,
+   150, 150, 150,
+   150, 150, 150,
+   150, 150, 150,
+   150, 150, 150,
+   'サンプルのデータです', 1,
+   1524535380, 1524535380
+);
