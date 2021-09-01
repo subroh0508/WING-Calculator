@@ -92,7 +92,7 @@ data class TotalAppeals(
                 status is Dance,
                 status is Visual,
         ).map { excellent ->
-            floor(floor(floor(base * buff * appealRatio) * appealJudge.copy(excellent = excellent)) * interestRatio).toInt()
+            floor(floor(floor(base * buff * appealJudge.copy(excellent = excellent)) * appealRatio) * interestRatio).toInt()
         }
     }
 }
