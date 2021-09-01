@@ -19,7 +19,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.provideInputFormDisp
 fun SimpleUnitForm(modifier: Modifier = Modifier) {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
-    val (_, sIdols) = uiModel.form
+    val (pIdol, sIdols) = uiModel.form
 
     val handleOnPIdolStateChange = remember(uiModel) { { vo: Int?, da: Int?, vi: Int? -> dispatch(vo, da, vi) } }
     val handleOnSIdolStateChange = remember(uiModel) { { index: Int, vo: Int?, da: Int?, vi: Int? -> dispatch(index, vo, da, vi) } }
@@ -27,12 +27,14 @@ fun SimpleUnitForm(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         IdolStatusBox(
             "プロデュースアイドル",
+            pIdol.toList(),
             handleOnPIdolStateChange,
         )
-        sIdols.forEachIndexed { i, _ ->
+        sIdols.forEachIndexed { i, sIdol ->
             Spacer(modifier = Modifier.height(16.dp))
             IdolStatusBox(
                 "サポートアイドル(${i + 1})",
+                sIdol.toList(),
                 { vo, da, vi -> handleOnSIdolStateChange(i, vo, da, vi) },
             )
         }

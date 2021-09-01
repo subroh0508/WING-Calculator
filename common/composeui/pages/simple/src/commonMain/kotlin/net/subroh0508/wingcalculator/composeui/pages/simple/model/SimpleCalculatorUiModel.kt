@@ -46,6 +46,7 @@ data class SimpleCalculatorUiModel(
 
     fun select(suggest: Pair<Long, Form>) = copy(
         query = Query.Closed,
+        form = suggest.second,
         suggests = listOf(suggest),
     )
 
