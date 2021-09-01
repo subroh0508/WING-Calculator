@@ -1,12 +1,14 @@
 CREATE TABLE IF NOT EXISTS Producer(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
-    isAnonymous INTEGER AS Boolean NOT NULL DEFAULT 0
+    isAnonymous INTEGER AS Boolean NOT NULL DEFAULT 0,
+    createdAt INTEGER NOT NULL,
+    lastModified INTEGER NOT NULL
 );
 
 addAnonymous:
-INSERT INTO Producer (isAnonymous)
-VALUES (1);
+INSERT INTO Producer (isAnonymous, createdAt, lastModified)
+VALUES (1, :createdAt, :createdAt);
 
 selectAnonymous:
 SELECT *

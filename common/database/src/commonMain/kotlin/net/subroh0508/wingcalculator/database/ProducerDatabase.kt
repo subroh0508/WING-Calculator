@@ -4,6 +4,7 @@ import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToOne
 import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import kotlinx.coroutines.flow.first
+import kotlinx.datetime.Clock
 
 class ProducerDatabase(
     private val queries: ProducerQueries,
@@ -15,7 +16,7 @@ class ProducerDatabase(
             return anonymous
         }
 
-        queries.addAnonymous()
+        queries.addAnonymous(Clock.System.now().toEpochMilliseconds())
         return queries.selectAnonymous().asFlow().mapToOne().first()
     }
 }
