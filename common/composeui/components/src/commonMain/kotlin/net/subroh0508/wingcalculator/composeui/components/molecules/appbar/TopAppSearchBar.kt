@@ -82,7 +82,9 @@ private fun RowScope.OpenedSearchBarContent(
         BasicTextField(
             text ?: "",
             onValueChange = { onQueryChange(it.takeIf(String::isNotBlank)) },
-            singleLine = true,
+            // @see: https://github.com/JetBrains/compose-jb/issues/364
+            // singleLine = true,
+            maxLines = 1,
             modifier = Modifier.fillMaxWidth()
                 .padding(end = 16.dp)
                 .align(Alignment.CenterStart),
