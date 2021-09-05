@@ -34,7 +34,7 @@ fun SimpleCalculatorBackLayerContent(
     var expandSaveMenu by remember { mutableStateOf(false) }
     var saveMode by remember { mutableStateOf<MenuForSave?>(null) }
 
-    val (_, query, suggestions) = uiModel
+    val (form, query, suggestions) = uiModel
 
     when (saveMode) {
         MenuForSave.CREATE -> SimplePresetCreateDialog { saveMode = null }
@@ -45,13 +45,13 @@ fun SimpleCalculatorBackLayerContent(
         CollapsingTopAppBarContainer(
             appBar = { appBarModifier ->
                 TopAppSearchBar(
-                    query.text,
+                    uiModel.searchBarText,
                     query.toSearchBarState(),
                     onNavigationClick = onAppBarNavigationClick,
                     onSearchBarStateChange = {
                         dispatch(
                             when (it) {
-                                SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened()
+                                SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened(form.name)
                                 SearchBarState.CLOSED -> SimpleCalculatorUiModel.Query.Closed
                             },
                         )
@@ -74,6 +74,7 @@ fun SimpleCalculatorBackLayerContent(
 
                         MenuForSave(
                             expandSaveMenu,
+                            uiModel.isSelectedSuggestion,
                             onClick = { saveMode = it },
                             onDismissRequest = { expandSaveMenu = false },
                         )
@@ -105,13 +106,18 @@ private enum class MenuForSave(val label: String) {
 @Composable
 private fun MenuForSave(
     expanded: Boolean,
+    enableUpdate: Boolean,
     onClick: (MenuForSave) -> Unit,
     onDismissRequest: () -> Unit,
 ) = DropdownMenu(
     expanded,
     onDismissRequest = onDismissRequest,
 ) {
-    MenuForSave.values().forEachIndexed { i, item ->
+    val items = MenuForSave.values().filter {
+        enableUpdate || it != MenuForSave.UPDATE
+    }
+
+    items.forEachIndexed { i, item ->
         DropdownMenuItem(
             onClick = {
                 onDismissRequest()
@@ -165,3 +171,9 @@ private fun SimpleCalculatorUiModel.Query.toSearchBarState() = when (this) {
     is SimpleCalculatorUiModel.Query.Opened -> SearchBarState.OPENED
     is SimpleCalculatorUiModel.Query.Closed -> SearchBarState.CLOSED
 }
+
+private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
+    is SimpleCalculatorUiModel.Query.Opened -> query.text
+    is SimpleCalculatorUiModel.Query.Closed -> form.name
+}
+private val SimpleCalculatorUiModel.isSelectedSuggestion get() = suggests.size == 1

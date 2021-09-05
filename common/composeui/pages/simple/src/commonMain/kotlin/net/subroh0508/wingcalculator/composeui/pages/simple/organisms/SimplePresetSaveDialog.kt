@@ -7,7 +7,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.dialog.FormDialog
-import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.provideCreatePresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.provideUpdatePresetDispatcher
 
@@ -15,9 +14,9 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.provideUpdatePresetD
 fun SimplePresetCreateDialog(
     onClose: () -> Unit,
 ) {
-    val (uiModel, createUseCase) = provideCreatePresetDispatcher()
+    val (_, createUseCase) = provideCreatePresetDispatcher()
 
-    SimplePresetSaveDialog(uiModel.form, onClose, createUseCase)
+    SimplePresetSaveDialog(null, onClose, createUseCase)
 }
 
 @Composable
@@ -26,16 +25,16 @@ fun SimplePresetUpdateDialog(
 ) {
     val (uiModel, updateUseCase) = provideUpdatePresetDispatcher()
 
-    SimplePresetSaveDialog(uiModel.form, onClose, updateUseCase)
+    SimplePresetSaveDialog(uiModel.form.name, onClose, updateUseCase)
 }
 
 @Composable
 private fun SimplePresetSaveDialog(
-    form: SimpleCalculatorUiModel.Form,
+    name: String?,
     onClose: () -> Unit,
     onClickSave: (String) -> Unit,
 ) {
-    var presetName by remember(form.name) { mutableStateOf(form.name ?: "") }
+    var presetName by remember(name) { mutableStateOf(name ?: "") }
 
     FormDialog(
         onDismissRequest = onClose,

@@ -46,6 +46,7 @@ fun TopAppSearchBar(
             onQueryChange = onQueryChange,
         )
         SearchBarState.CLOSED -> ClosedSearchBarContent(
+            text,
             onNavigationClick,
             onSearchBarClick = { onSearchBarStateChange(SearchBarState.OPENED) },
             actions,
@@ -94,6 +95,7 @@ private fun RowScope.OpenedSearchBarContent(
 
 @Composable
 private fun RowScope.ClosedSearchBarContent(
+    placeHolder: String?,
     onNavigationClick: () -> Unit,
     onSearchBarClick: () -> Unit,
     actions: @Composable () -> Unit = {},
@@ -115,8 +117,8 @@ private fun RowScope.ClosedSearchBarContent(
         )
     }
     Text(
-        "プリセットを検索",
-        color = MaterialTheme.colors.onSurface.copy(alpha = 0.6F),
+        placeHolder ?: "プリセットを検索",
+        color = MaterialTheme.colors.onSurface.copy(alpha = if (placeHolder == null) 0.6F else 1.0F),
         modifier = Modifier.weight(1F)
             .padding(end = 16.dp),
     )
