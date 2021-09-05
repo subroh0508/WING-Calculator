@@ -60,16 +60,21 @@ fun IdolStatusBox(
                 onChangeValue = { s -> status = status.copy(visual = s) },
                 modifier = Modifier.weight(1F),
             )
-            StatusField(
-                status.mental,
-                label = "Me",
-                focusedColor = mentalColor,
-                onChangeValue = { s -> status = status.copy(mental = s) },
-                modifier = Modifier.weight(1F),
-            )
+            if (defaultStatus.containsMental)
+                StatusField(
+                    status.mental,
+                    label = "Me",
+                    focusedColor = mentalColor,
+                    onChangeValue = { s -> status = status.copy(mental = s) },
+                    modifier = Modifier.weight(1F),
+                )
+            else
+                Spacer(Modifier.weight(1F).padding(horizontal = 4.dp))
         }
     }
 }
+
+private val List<Int>.containsMental get() = size == 4
 
 @Composable
 private fun StatusField(
