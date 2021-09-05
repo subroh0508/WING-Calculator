@@ -21,15 +21,15 @@ private val STATUS_NUMBER_REGEX = """^(0|[1-9][0-9]{0,4})*$""".toRegex()
 fun IdolStatusBox(
     label: String,
     defaultStatus: List<Int>,
-    onValueChange: (Int?, Int?, Int?) -> Unit,
+    onValueChange: (Int?, Int?, Int?, Int?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var status by remember(defaultStatus) { mutableStateOf(IdolStatus(defaultStatus)) }
 
     LaunchedEffect(status) {
-        val (vocal, dance, visual) = status.toInt()
+        val (vocal, dance, visual, mental) = status.toInt()
 
-        onValueChange(vocal, dance, visual)
+        onValueChange(vocal, dance, visual, mental)
     }
 
     Column(modifier = modifier) {

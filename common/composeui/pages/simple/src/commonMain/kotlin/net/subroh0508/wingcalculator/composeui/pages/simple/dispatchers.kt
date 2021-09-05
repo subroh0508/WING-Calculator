@@ -23,7 +23,7 @@ interface SearchPresetDispatcher {
 }
 
 interface InputFormDispatcher {
-    operator fun invoke(vo: Int?, da: Int?, vi: Int?)
+    operator fun invoke(vo: Int?, da: Int?, vi: Int?, me: Int?)
     operator fun invoke(index: Int, vo: Int?, da: Int?, vi: Int?)
     operator fun invoke(week: Week)
     operator fun invoke(appealRatio: AppealRatio)
@@ -73,12 +73,13 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
     val dispatcher = SimpleCalculatorDispatcherContext.current
 
     return uiModel to object : InputFormDispatcher {
-        override fun invoke(vo: Int?, da: Int?, vi: Int?) = dispatcher(
+        override fun invoke(vo: Int?, da: Int?, vi: Int?, me: Int?) = dispatcher(
             uiModel.input(
                 pIdol = Idol.Produce(
                     vo?.let(::Vocal) ?: uiModel.form.pIdol.vocal,
                     da?.let(::Dance) ?: uiModel.form.pIdol.dance,
                     vi?.let(::Visual) ?: uiModel.form.pIdol.visual,
+                    me ?: uiModel.form.pIdol.mental,
                 ),
             )
         )
@@ -127,6 +128,8 @@ fun provideCreatePresetDispatcher(): Pair<SimpleCalculatorUiModel, CreatePresetD
 
         if (name != null) {
             scope.launch {
+                println(name)
+                println(pIdol)
                 val preset = createPresetUseCase?.execute(name, pIdol, sIdols, comment) ?: return@launch
 
                 dispatcher(uiModel.copy())

@@ -11,7 +11,10 @@ sealed class Idol {
         override val vocal: Vocal = Vocal(0),
         override val dance: Dance = Dance(0),
         override val visual: Visual = Visual(0),
-    ) : Idol()
+        val mental: Int = 0,
+    ) : Idol() {
+        override fun toList() = listOf(vocal.value, dance.value, visual.value, mental)
+    }
 
     data class Support(
         override val vocal: Vocal = Vocal(0),
