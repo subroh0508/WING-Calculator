@@ -32,9 +32,9 @@ fun SimplePresetUpdateDialog(
 private fun SimplePresetSaveDialog(
     name: String?,
     onClose: () -> Unit,
-    onClickSave: (String) -> Unit,
+    onClickSave: (String?) -> Unit,
 ) {
-    var presetName by remember(name) { mutableStateOf(name ?: "") }
+    var presetName by remember(name) { mutableStateOf(name) }
 
     FormDialog(
         onDismissRequest = onClose,
@@ -54,7 +54,7 @@ private fun SimplePresetSaveDialog(
         },
     ) {
         OutlinedTextField(
-            presetName,
+            presetName ?: "",
             onValueChange = { presetName = it },
         )
     }
