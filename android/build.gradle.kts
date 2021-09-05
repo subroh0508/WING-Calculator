@@ -5,6 +5,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":common:core"))
     implementation(project(":common:composeui:pages:simple"))
 
     implementation(compose.runtime)
@@ -14,4 +15,6 @@ dependencies {
     implementation(Libraries.Jetpack.appCompat)
     implementation(Libraries.Jetpack.core)
     implementation(Libraries.Jetpack.activityCompose)
+
+    implementation(Libraries.Koin.core)
 }

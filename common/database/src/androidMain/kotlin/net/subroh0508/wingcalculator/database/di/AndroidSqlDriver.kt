@@ -17,6 +17,6 @@ actual object SqlDriver {
     }
 
     fun factoryModule(context: Context) = module {
-        SqlDriverFactory(context)
+        single { SqlDriverFactory(context) }
     }
 }

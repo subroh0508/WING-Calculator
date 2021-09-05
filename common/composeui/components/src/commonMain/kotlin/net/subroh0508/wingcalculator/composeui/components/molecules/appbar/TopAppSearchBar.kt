@@ -33,7 +33,7 @@ fun TopAppSearchBar(
     contentPadding: PaddingValues = AppBarDefaults.ContentPadding,
     modifier: Modifier = Modifier,
     actions: @Composable () -> Unit = {},
-) = TopAppBar (
+) = TopAppBar(
     backgroundColor = backgroundColor,
     elevation = elevation,
     contentPadding = contentPadding,
