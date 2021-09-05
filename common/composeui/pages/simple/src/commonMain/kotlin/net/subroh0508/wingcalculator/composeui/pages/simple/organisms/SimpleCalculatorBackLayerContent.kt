@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -176,4 +175,4 @@ private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
     is SimpleCalculatorUiModel.Query.Opened -> query.text
     is SimpleCalculatorUiModel.Query.Closed -> form.name
 }
-private val SimpleCalculatorUiModel.isSelectedSuggestion get() = suggests.size == 1
+private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null

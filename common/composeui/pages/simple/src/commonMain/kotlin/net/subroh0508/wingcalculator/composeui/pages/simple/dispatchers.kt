@@ -12,7 +12,6 @@ import net.subroh0508.wingcalculator.usecase.simple.SearchPresetUseCase
 import net.subroh0508.wingcalculator.usecase.simple.UpdatePresetUseCase
 
 typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
-typealias InputFormNameDispatcher = (String) -> Unit
 typealias CreatePresetDispatcher = (String?) -> Unit
 typealias UpdatePresetDispatcher = (String?) -> Unit
 
@@ -108,14 +107,6 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
 }
 
 @Composable
-fun provideInputNameDispatcher(): Pair<SimpleCalculatorUiModel, InputFormNameDispatcher> {
-    val (_, uiModel) = SimpleCalculatorProviderContext.current
-    val dispatcher = SimpleCalculatorDispatcherContext.current
-
-    return uiModel to { name -> dispatcher(uiModel.inputFormName(name)) }
-}
-
-@Composable
 fun provideCreatePresetDispatcher(): Pair<SimpleCalculatorUiModel, CreatePresetDispatcher> {
     val (koin, uiModel) = SimpleCalculatorProviderContext.current
     val dispatcher = SimpleCalculatorDispatcherContext.current
@@ -124,7 +115,7 @@ fun provideCreatePresetDispatcher(): Pair<SimpleCalculatorUiModel, CreatePresetD
     val createPresetUseCase: CreatePresetUseCase? = remember(koin) { koin?.getOrNull() }
 
     return uiModel to { name ->
-        val (pIdol, sIdols, _, _, _, _, _, _, comment) = uiModel.form
+        val (pIdol, sIdols, _, _, _, _, _, _, _, comment) = uiModel.form
 
         dispatcher(uiModel.inputFormName(name))
         if (name != null) {
@@ -146,9 +137,7 @@ fun provideUpdatePresetDispatcher(): Pair<SimpleCalculatorUiModel, UpdatePresetD
     val updatePresetUseCase: UpdatePresetUseCase? = remember(koin) { koin?.getOrNull() }
 
     return uiModel to { name ->
-        val (id, _) = uiModel.suggests.firstOrNull() ?: (null to null)
-
-        val (pIdol, sIdols, _, _, _, _, _, _, comment) = uiModel.form
+        val (pIdol, sIdols, _, _, _, _, _, id, _, comment) = uiModel.form
 
         dispatcher(uiModel.inputFormName(name))
         if (id != null && name != null) {

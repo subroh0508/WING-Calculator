@@ -37,6 +37,7 @@ data class SimpleCalculatorUiModel(
             buff,
             appealJudge,
             interestRatio,
+            id = form.id,
             name = form.name,
             comment = comment,
         ),
@@ -47,10 +48,10 @@ data class SimpleCalculatorUiModel(
 
     fun select(suggest: Pair<Long, Form>) = copy(
         query = Query.Closed,
-        form = suggest.second.let { (pIdol, sIdols, _, _, _, _, _, name, comment) ->
-            form.copy(pIdol = pIdol, sIdols = sIdols, name = name, comment = comment)
+        form = suggest.second.let { (pIdol, sIdols, _, _, _, _, _, _, name, comment) ->
+            form.copy(pIdol = pIdol, sIdols = sIdols, id = suggest.first, name = name, comment = comment)
         },
-        suggests = listOf(suggest),
+        suggests = listOf(),
     )
 
     data class Form(
@@ -61,6 +62,7 @@ data class SimpleCalculatorUiModel(
         val buff: Buff = Buff(listOf(0.0)),
         val appealJudge: AppealJudge = AppealJudge(AppealJudge.Factor.GOOD),
         val interestRatio: InterestRatio = InterestRatio(listOf(1.0)),
+        val id: Long? = null,
         val name: String? = null,
         val comment: String? = null,
     )
