@@ -7,13 +7,7 @@ import org.koin.dsl.module
 
 actual object SqlDriver {
     actual val Module get() = module {
-        single {
-            get<SqlDriverFactory>().create()
-                .also {
-                    WingCalculatorDatabase.Schema.create(it)
-                    WingCalculatorDatabase.Schema.migrate(it, 0, WingCalculatorDatabase.Schema.version)
-                }
-        }
+        single { get<SqlDriverFactory>().create() }
     }
 
     fun factoryModule(context: Context) = module {

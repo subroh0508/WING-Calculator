@@ -1,10 +1,9 @@
 package net.subroh0508.wingcalculator.database.di
 
-import net.subroh0508.wingcalculator.database.WingCalculatorDatabase
+import net.subroh0508.wingcalculator.database.MigrationExecutor
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
-object WingCalculatorDatabases {
-    val Module get() = module {
-        single { WingCalculatorDatabase(get()) }
-    }
+expect object WingCalculatorDatabases {
+    val Module: Module
 }

@@ -29,6 +29,8 @@ compose.desktop {
         mainClass = "net.subroh0508.wingcalculator.desktop.MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            // @see: https://github.com/JetBrains/compose-jb/issues/381#issuecomment-779049719
+            modules("java.sql")
             packageName = "jvm"
             packageVersion = "1.0.0"
         }
