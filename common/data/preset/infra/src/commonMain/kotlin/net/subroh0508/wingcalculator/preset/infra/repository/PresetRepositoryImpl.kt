@@ -47,7 +47,7 @@ internal class PresetRepositoryImpl(
     private fun PresetForm.toEntity() = Preset(
         id,
         name,
-        Idol.Produce(Vocal(pVocal.toInt()), Dance(pDance.toInt()), Visual(pVisual.toInt())),
+        Idol.Produce(Vocal(pVocal.toInt()), Dance(pDance.toInt()), Visual(pVisual.toInt()), pMental.toInt()),
         listOf(
             Idol.Support(Vocal(s1Vocal.toInt()), Dance(s1Dance.toInt()), Visual(s1Visual.toInt())),
             Idol.Support(Vocal(s2Vocal.toInt()), Dance(s2Dance.toInt()), Visual(s2Visual.toInt())),

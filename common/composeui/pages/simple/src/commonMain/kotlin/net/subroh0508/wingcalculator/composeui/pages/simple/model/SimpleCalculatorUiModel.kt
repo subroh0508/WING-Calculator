@@ -37,6 +37,7 @@ data class SimpleCalculatorUiModel(
             buff,
             appealJudge,
             interestRatio,
+            name = form.name,
             comment = comment,
         ),
     )
@@ -46,7 +47,9 @@ data class SimpleCalculatorUiModel(
 
     fun select(suggest: Pair<Long, Form>) = copy(
         query = Query.Closed,
-        form = suggest.second,
+        form = suggest.second.let { (pIdol, sIdols, _, _, _, _, _, name, comment) ->
+            form.copy(pIdol = pIdol, sIdols = sIdols, name = name, comment = comment)
+        },
         suggests = listOf(suggest),
     )
 

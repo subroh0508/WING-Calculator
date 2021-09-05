@@ -35,14 +35,17 @@ internal actual fun ExpectFormDialog(
         color = backgroundColor,
         contentColor = contentColor,
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 24.dp).
-                    width(IntrinsicSize.Max),
-        ) {
-            Spacer(Modifier.height(24.dp))
-            title?.let { FormDialogTitle(it) }
-            Spacer(Modifier.height(24.dp))
-            content()
+        Column(modifier = Modifier.width(IntrinsicSize.Max)) {
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+            ) {
+                Spacer(Modifier.height(24.dp))
+                title?.let { FormDialogTitle(it) }
+                Spacer(Modifier.height(24.dp))
+                content()
+            }
+
             Spacer(Modifier.height(28.dp))
             FormDialogButtons(confirmButton, dismissButton)
         }

@@ -13,8 +13,8 @@ import net.subroh0508.wingcalculator.usecase.simple.UpdatePresetUseCase
 
 typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
 typealias InputFormNameDispatcher = (String) -> Unit
-typealias CreatePresetDispatcher = () -> Unit
-typealias UpdatePresetDispatcher = () -> Unit
+typealias CreatePresetDispatcher = (String?) -> Unit
+typealias UpdatePresetDispatcher = (String?) -> Unit
 
 interface SearchPresetDispatcher {
     operator fun invoke(text: String?)
@@ -123,13 +123,12 @@ fun provideCreatePresetDispatcher(): Pair<SimpleCalculatorUiModel, CreatePresetD
     val scope = rememberCoroutineScope()
     val createPresetUseCase: CreatePresetUseCase? = remember(koin) { koin?.getOrNull() }
 
-    return uiModel to {
-        val (pIdol, sIdols, _, _, _, _, _, name, comment) = uiModel.form
+    return uiModel to { name ->
+        val (pIdol, sIdols, _, _, _, _, _, _, comment) = uiModel.form
 
+        dispatcher(uiModel.inputFormName(name))
         if (name != null) {
             scope.launch {
-                println(name)
-                println(pIdol)
                 val preset = createPresetUseCase?.execute(name, pIdol, sIdols, comment) ?: return@launch
 
                 dispatcher(uiModel.copy())
@@ -146,11 +145,12 @@ fun provideUpdatePresetDispatcher(): Pair<SimpleCalculatorUiModel, UpdatePresetD
     val scope = rememberCoroutineScope()
     val updatePresetUseCase: UpdatePresetUseCase? = remember(koin) { koin?.getOrNull() }
 
-    return uiModel to {
+    return uiModel to { name ->
         val (id, _) = uiModel.suggests.firstOrNull() ?: (null to null)
 
-        val (pIdol, sIdols, _, _, _, _, _, name, comment) = uiModel.form
+        val (pIdol, sIdols, _, _, _, _, _, _, comment) = uiModel.form
 
+        dispatcher(uiModel.inputFormName(name))
         if (id != null && name != null) {
             scope.launch {
                 val preset = updatePresetUseCase?.execute(id, name, pIdol, sIdols, comment) ?: return@launch

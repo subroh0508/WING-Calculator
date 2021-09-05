@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
+import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarContainer
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.SearchBarState
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
@@ -28,8 +31,15 @@ fun SimpleCalculatorBackLayerContent(
     onAppBarNavigationClick: () -> Unit,
 ) {
     val (uiModel, dispatch) = provideSearchPresetDispatcher()
+    var expandSaveMenu by remember { mutableStateOf(false) }
+    var saveMode by remember { mutableStateOf<MenuForSave?>(null) }
 
     val (_, query, suggestions) = uiModel
+
+    when (saveMode) {
+        MenuForSave.CREATE -> SimplePresetCreateDialog { saveMode = null }
+        MenuForSave.UPDATE -> SimplePresetUpdateDialog { saveMode = null }
+    }
 
     SimpleCalculatorBoxWithConstraints { constraints ->
         CollapsingTopAppBarContainer(
@@ -53,13 +63,19 @@ fun SimpleCalculatorBackLayerContent(
                     modifier = appBarModifier.then(constraints),
                 ) {
                     IconButton(
-                        onClick = {},
+                        onClick = { expandSaveMenu = true },
                         modifier = Modifier.padding(4.dp),
                     ) {
                         Icon(
-                            Icons.Default.Save,
-                            contentDescription = "save",
+                            Icons.Default.MoreVert,
+                            contentDescription = "menu_save",
                             modifier = Modifier.size(24.dp),
+                        )
+
+                        MenuForSave(
+                            expandSaveMenu,
+                            onClick = { saveMode = it },
+                            onDismissRequest = { expandSaveMenu = false },
                         )
                     }
                 }
@@ -78,6 +94,31 @@ fun SimpleCalculatorBackLayerContent(
                     suggestions,
                 ) { dispatch(it) }
             }
+        }
+    }
+}
+
+private enum class MenuForSave(val label: String) {
+    CREATE("新規作成"), UPDATE("更新")
+}
+
+@Composable
+private fun MenuForSave(
+    expanded: Boolean,
+    onClick: (MenuForSave) -> Unit,
+    onDismissRequest: () -> Unit,
+) = DropdownMenu(
+    expanded,
+    onDismissRequest = onDismissRequest,
+) {
+    MenuForSave.values().forEachIndexed { i, item ->
+        DropdownMenuItem(
+            onClick = {
+                onDismissRequest()
+                onClick(item)
+            },
+        ) {
+            Text(item.label)
         }
     }
 }
