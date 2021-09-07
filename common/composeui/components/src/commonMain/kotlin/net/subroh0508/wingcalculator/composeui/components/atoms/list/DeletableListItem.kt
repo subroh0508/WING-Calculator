@@ -2,9 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.components.atoms.list
 
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.ListItem
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
@@ -18,7 +16,11 @@ fun DeletableListItem(
 ) = ListItem(
     trailing = {
         IconButton(onClick = onDeleteClick) {
-            Icon(Icons.Default.Delete, contentDescription = "delete")
+            Icon(
+                Icons.Default.Delete,
+                contentDescription = "delete",
+                tint = LocalContentColor.current.copy(alpha = 0.6F),
+            )
         }
     },
     text = text,

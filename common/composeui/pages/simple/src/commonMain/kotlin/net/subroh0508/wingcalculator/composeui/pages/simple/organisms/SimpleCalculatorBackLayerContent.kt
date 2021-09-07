@@ -14,12 +14,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.atoms.list.DeletableListItem
+import net.subroh0508.wingcalculator.composeui.components.atoms.list.Footer
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarContainer
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.SearchBarState
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
+import net.subroh0508.wingcalculator.composeui.components.molecules.list.LazyColumnWithFooter
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
@@ -92,7 +95,9 @@ fun SimpleCalculatorBackLayerContent(
                     constraints,
                     query.text,
                     suggestions,
-                ) { dispatch(it) }
+                    onDeleteClick = {  },
+                    onClick = { dispatch(it) },
+                )
             }
         }
     }
@@ -142,28 +147,24 @@ private fun ColumnScope.SuggestList(
     query: String?,
     suggestions: List<Pair<Long, SimpleCalculatorUiModel.Form>>,
     onClick: (Pair<Long, SimpleCalculatorUiModel.Form>) -> Unit,
+    onDeleteClick: (Pair<Long, SimpleCalculatorUiModel.Form>) -> Unit,
 ) {
     Divider(constraints)
-    if (query != null && suggestions.isEmpty())
-        Text(
-            "条件に一致するプリセットが見つかりません",
-            style = MaterialTheme.typography.subtitle1,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.fillMaxWidth()
-                .padding(16.dp),
-        )
-    else
-        LazyColumn(modifier = constraints) {
-            suggestions.forEachIndexed { index, (id, form) ->
-                item(index) {
-                    ListItem(
-                        text = { Text(form.name ?: "") },
-                        modifier = Modifier.clickable { onClick(id to form) },
-                    )
-                }
-            }
+    LazyColumnWithFooter(
+        suggestions,
+        modifier = constraints,
+        footer = {
+            Footer(
+                query != null && suggestions.isEmpty(),
+                "条件に一致するプリセットが見つかりません",
+            )
         }
+    ) { _, (id, form) ->
+        DeletableListItem(
+            onDeleteClick = { onDeleteClick(id to form) },
+            modifier = Modifier.clickable { onClick(id to form) },
+        ) { Text(form.name ?: "") }
+    }
 }
 
 private fun SimpleCalculatorUiModel.Query.toSearchBarState() = when (this) {
