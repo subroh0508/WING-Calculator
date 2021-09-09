@@ -59,6 +59,8 @@ class PresetDatabase(
         return get(id, producerId)
     }
 
+    fun delete(id: Long, producerId: Long) = queries.delete(id, producerId)
+
     companion object {
         private const val DEFAULT_LIMIT = 30L
     }

@@ -44,6 +44,8 @@ internal class PresetRepositoryImpl(
         comment,
     ).toEntity()
 
+    override suspend fun delete(id: Long, producerId: Long) = database.delete(id, producerId)
+
     private fun PresetForm.toEntity() = Preset(
         id,
         name,
