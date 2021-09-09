@@ -92,7 +92,7 @@ fun SimpleCalculatorBackLayerContent(
                     constraints,
                     query.text,
                     suggestions,
-                    onDeleteClick = {  },
+                    onDeleteClick = { (id, _) -> dispatch(id) },
                     onClick = { dispatch(it) },
                 )
             }

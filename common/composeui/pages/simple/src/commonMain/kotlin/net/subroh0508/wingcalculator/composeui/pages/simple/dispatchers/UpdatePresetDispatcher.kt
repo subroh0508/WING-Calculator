@@ -27,7 +27,7 @@ fun provideUpdatePresetDispatcher(): Pair<SimpleCalculatorUiModel, UpdatePresetD
             scope.launch {
                 val preset = updatePresetUseCase?.execute(id, name, pIdol, sIdols, comment) ?: return@launch
 
-                dispatcher(uiModel.copy())
+                dispatcher(uiModel.select(preset))
             }
         }
     }

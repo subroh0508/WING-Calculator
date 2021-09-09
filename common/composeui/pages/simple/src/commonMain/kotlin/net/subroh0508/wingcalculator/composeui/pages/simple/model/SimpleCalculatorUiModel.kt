@@ -1,6 +1,7 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.model
 
 import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.preset.model.Preset
 
 data class SimpleCalculatorUiModel(
     val form: Form = Form(),
@@ -46,12 +47,25 @@ data class SimpleCalculatorUiModel(
     fun inputQuery(query: String?) = if (this.query is Query.Closed) this else copy(query = Query.Opened(query))
     fun inputFormName(name: String?) = copy(form = form.copy(name = name))
 
-    fun select(suggest: Pair<Long, Form>) = copy(
+    fun update(presets: List<Preset>) = copy(suggests = presets.map { it.toSuggest() })
+    fun select(preset: Preset) = select(preset.toSuggest())
+    fun select(suggestion: Pair<Long, Form>) = copy(
         query = Query.Closed,
-        form = suggest.second.let { (pIdol, sIdols, _, _, _, _, _, _, name, comment) ->
-            form.copy(pIdol = pIdol, sIdols = sIdols, id = suggest.first, name = name, comment = comment)
+        form = suggestion.let { (id, form) ->
+            val (pIdol, sIdols, _, _, _, _, _, _, name, comment) = form
+
+            form.copy(pIdol = pIdol, sIdols = sIdols, id = id, name = name, comment = comment)
         },
         suggests = listOf(),
+    )
+    fun delete(id: Long) = copy(
+        query = if (form.id == id && query is Query.Opened) Query.Opened() else query,
+        form = if (form.id == id) form.copy(id = null, name = null, comment = null) else form,
+        suggests = suggests.filterNot { (presetId, _) -> presetId == id },
+    )
+
+    private fun Preset.toSuggest() = id to Form(
+        pIdol, sIdols, name = name, comment = comment,
     )
 
     data class Form(
