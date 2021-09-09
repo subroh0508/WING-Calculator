@@ -7,7 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.molecules.IdolStatusBox
-import net.subroh0508.wingcalculator.composeui.pages.simple.provideInputFormDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 
 @Composable
 fun SimpleUnitForm(modifier: Modifier = Modifier) {

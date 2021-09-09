@@ -7,8 +7,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.dialog.FormDialog
-import net.subroh0508.wingcalculator.composeui.pages.simple.provideCreatePresetDispatcher
-import net.subroh0508.wingcalculator.composeui.pages.simple.provideUpdatePresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideCreatePresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideUpdatePresetDispatcher
 
 @Composable
 fun SimplePresetCreateDialog(

@@ -4,14 +4,11 @@ package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.list.DeletableListItem
@@ -23,8 +20,8 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.Searc
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.components.molecules.list.LazyColumnWithFooter
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
-import net.subroh0508.wingcalculator.composeui.pages.simple.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
 
 @Composable
