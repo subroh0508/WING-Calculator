@@ -32,7 +32,9 @@ private class MigrationExecutor(private val driver: SqlDriver) {
         get() {
             val sqlCursor = driver.executeQuery(null, "PRAGMA user_version;", 0, null)
                 .apply(SqlCursor::next)
-            return sqlCursor.getLong(0)?.toInt() ?: 0
+            val version = sqlCursor.getLong(0)?.toInt() ?: 0
+            sqlCursor.close()
+            return version
         }
         private set(version) {
             driver.execute(null, "PRAGMA user_version = $version;", 0, null)
