@@ -1,19 +1,15 @@
 package net.subroh0508.wingcalculator.database
 
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOne
-import kotlinx.coroutines.flow.first
 import kotlinx.datetime.Clock
 
 class PresetDatabase(
     private val queries: PresetFormQueries,
 ) {
-    suspend fun get(id: Long, producerId: Long) = queries.select(id, producerId).asFlow().mapToOne().first()
+    fun get(id: Long, producerId: Long) = queries.select(id, producerId).executeAsOne()
 
-    suspend fun search(producerId: Long, name: String) = queries.selectByName(producerId, name, DEFAULT_LIMIT).asFlow().mapToList().first()
+    fun search(producerId: Long, name: String) = queries.selectByName(producerId, name, DEFAULT_LIMIT).executeAsList()
 
-    suspend fun create(
+    fun create(
         producerId: Long,
         name: String,
         pIdolStatus: List<Long>,
@@ -32,10 +28,10 @@ class PresetDatabase(
             Clock.System.now().toEpochMilliseconds(),
         )
 
-        return queries.selectOfLatestCreatedAt(producerId).asFlow().mapToOne().first()
+        return queries.selectOfLatestCreatedAt(producerId).executeAsOne()
     }
 
-    suspend fun update(
+    fun update(
         id: Long,
         producerId: Long,
         name: String,
@@ -59,7 +55,7 @@ class PresetDatabase(
         return get(id, producerId)
     }
 
-    fun delete(id: Long, producerId: Long) = queries.delete(id, producerId)
+    fun delete(id: Long, producerId: Long) = queries.delete(producerId, id)
 
     companion object {
         private const val DEFAULT_LIMIT = 30L
