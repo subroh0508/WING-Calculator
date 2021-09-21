@@ -16,23 +16,27 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SwitchableTextArea(
     text: String?,
-    onTextChanged: (String?) -> Unit,
-    onSaveClick: () -> Unit = {},
+    onTextChanged: (String?) -> Unit = {},
+    onSaveClick: (String?) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     var editable by remember { mutableStateOf(false) }
+    var inputText by remember(text) { mutableStateOf(text) }
 
     if (editable) {
         OutlinedTextField(
-            text ?: "",
-            { s -> onTextChanged(s.takeIf(String::isNotBlank)) },
+            inputText ?: "",
+            { s ->
+                inputText = s.takeIf(String::isNotBlank)
+                onTextChanged(s.takeIf(String::isNotBlank))
+            },
             label = { Text("メモ") },
             placeholder = { Text("メモを入力") },
             trailingIcon = {
                 IconButton(
                     onClick = {
                         editable = false
-                        onSaveClick()
+                        onSaveClick(inputText?.takeIf(String::isNotBlank))
                     }
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
             },

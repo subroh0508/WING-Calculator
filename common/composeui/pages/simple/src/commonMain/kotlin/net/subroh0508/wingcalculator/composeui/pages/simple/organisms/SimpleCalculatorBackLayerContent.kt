@@ -135,7 +135,10 @@ private fun ColumnScope.Forms(constraints: Modifier, frontLayerHeight: Dp) {
     SimpleUnitForm(constraints)
     Divider(constraints.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
     SimpleBuffForm(constraints)
+    Spacer(Modifier.height(40.dp))
+    SimpleCommentForm(constraints)
     Spacer(Modifier.height(frontLayerHeight + 32.dp))
+
 }
 
 @Composable
