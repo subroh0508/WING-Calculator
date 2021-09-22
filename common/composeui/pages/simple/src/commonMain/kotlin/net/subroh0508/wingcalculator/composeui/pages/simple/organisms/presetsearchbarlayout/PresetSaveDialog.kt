@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.presetsearchbarlayout
 
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -14,18 +14,18 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideU
 fun SimplePresetCreateDialog(
     onClose: () -> Unit,
 ) {
-    val (_, createUseCase) = provideCreatePresetDispatcher()
+    val (_, dispatch) = provideCreatePresetDispatcher()
 
-    SimplePresetSaveDialog(null, onClose, createUseCase)
+    SimplePresetSaveDialog(null, onClose, dispatch)
 }
 
 @Composable
 fun SimplePresetUpdateDialog(
     onClose: () -> Unit,
 ) {
-    val (uiModel, updateUseCase) = provideUpdatePresetDispatcher()
+    val (uiModel, dispatch) = provideUpdatePresetDispatcher()
 
-    SimplePresetSaveDialog(uiModel.form.name, onClose, updateUseCase)
+    SimplePresetSaveDialog(uiModel.form.name, onClose, dispatch)
 }
 
 @Composable
