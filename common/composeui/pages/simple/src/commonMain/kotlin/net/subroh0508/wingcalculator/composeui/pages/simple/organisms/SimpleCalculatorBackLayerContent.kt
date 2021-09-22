@@ -20,6 +20,8 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.Searc
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.components.molecules.list.LazyColumnWithFooter
+import net.subroh0508.wingcalculator.composeui.components.molecules.menu.DropdownMenuItem
+import net.subroh0508.wingcalculator.composeui.components.molecules.menu.ExpandableDropdownMenu
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
@@ -61,23 +63,11 @@ fun SimpleCalculatorBackLayerContent(
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
                     modifier = appBarModifier.then(constraints),
                 ) {
-                    IconButton(
-                        onClick = { expandSaveMenu = true },
-                        modifier = Modifier.padding(4.dp),
-                    ) {
-                        Icon(
-                            Icons.Default.MoreVert,
-                            contentDescription = "menu_save",
-                            modifier = Modifier.size(24.dp),
-                        )
-
-                        MenuForSave(
-                            expandSaveMenu,
-                            uiModel.isSelectedSuggestion,
-                            onClick = { saveMode = it },
-                            onDismissRequest = { expandSaveMenu = false },
-                        )
+                    val items = MenuForSave.values().filter {
+                        uiModel.isSelectedSuggestion || it != MenuForSave.UPDATE
                     }
+
+                    ExpandableDropdownMenu(items, onClick = { saveMode = it })
                 }
             },
             appBarHeight = TopAppSearchBarHeight,
@@ -100,34 +90,8 @@ fun SimpleCalculatorBackLayerContent(
     }
 }
 
-private enum class MenuForSave(val label: String) {
+private enum class MenuForSave(override val label: String) : DropdownMenuItem {
     CREATE("新規作成"), UPDATE("更新")
-}
-
-@Composable
-private fun MenuForSave(
-    expanded: Boolean,
-    enableUpdate: Boolean,
-    onClick: (MenuForSave) -> Unit,
-    onDismissRequest: () -> Unit,
-) = DropdownMenu(
-    expanded,
-    onDismissRequest = onDismissRequest,
-) {
-    val items = MenuForSave.values().filter {
-        enableUpdate || it != MenuForSave.UPDATE
-    }
-
-    items.forEachIndexed { i, item ->
-        DropdownMenuItem(
-            onClick = {
-                onDismissRequest()
-                onClick(item)
-            },
-        ) {
-            Text(item.label)
-        }
-    }
 }
 
 @Composable
