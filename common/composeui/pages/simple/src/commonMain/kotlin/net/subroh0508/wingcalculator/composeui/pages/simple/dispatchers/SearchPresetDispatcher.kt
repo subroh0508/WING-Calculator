@@ -8,14 +8,12 @@ import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
-import net.subroh0508.wingcalculator.preset.model.Preset
 import net.subroh0508.wingcalculator.usecase.simple.DeletePresetUseCase
 import net.subroh0508.wingcalculator.usecase.simple.SearchPresetUseCase
 
 interface SearchPresetDispatcher {
     operator fun invoke(text: String?)
     operator fun invoke(query: SimpleCalculatorUiModel.Query)
-    operator fun invoke(suggestion: Pair<Long, SimpleCalculatorUiModel.Form>)
     operator fun invoke(id: Long)
 }
 
@@ -39,7 +37,6 @@ fun provideSearchPresetDispatcher(): Pair<SimpleCalculatorUiModel, SearchPresetD
     return uiModel to object : SearchPresetDispatcher {
         override fun invoke(text: String?) = dispatcher(uiModel.inputQuery(text))
         override fun invoke(query: SimpleCalculatorUiModel.Query) = dispatcher(uiModel.copy(query = query))
-        override fun invoke(suggestion: Pair<Long, SimpleCalculatorUiModel.Form>) = dispatcher(uiModel.select(suggestion))
 
         override fun invoke(id: Long) {
             scope.launch {
