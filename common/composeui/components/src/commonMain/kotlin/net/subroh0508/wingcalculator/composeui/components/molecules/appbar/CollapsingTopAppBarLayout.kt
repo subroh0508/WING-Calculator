@@ -22,7 +22,7 @@ import kotlin.math.roundToInt
 private val DefaultAppBarHeight = 56.dp
 
 @Composable
-fun CollapsingTopAppBarContainer(
+fun CollapsingTopAppBarLayout(
     appBar: @Composable (Modifier) -> Unit,
     appBarHeight: Dp = DefaultAppBarHeight,
     isCollapsingEnable: Boolean = true,

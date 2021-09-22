@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.presetsearchbarlayout
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.MaterialTheme
@@ -13,6 +13,8 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.menu.Dropdow
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.ExpandableDropdownMenu
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSearchPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimplePresetCreateDialog
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimplePresetUpdateDialog
 
 private enum class MenuForSave(override val label: String) : DropdownMenuItem {
     CREATE("新規作成"), UPDATE("更新")
@@ -26,7 +28,7 @@ fun PresetSearchBar(
     val (uiModel, dispatch) = provideSearchPresetDispatcher()
     var saveMode by remember { mutableStateOf<MenuForSave?>(null) }
 
-    val (form, query, suggestions) = uiModel
+    val (form, query, _) = uiModel
 
     when (saveMode) {
         MenuForSave.CREATE -> SimplePresetCreateDialog { saveMode = null }

@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.presetsearchbarlayout
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.ColumnScope
