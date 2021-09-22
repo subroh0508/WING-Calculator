@@ -19,6 +19,8 @@ kotlin {
 
         named("commonMain") {
             dependencies {
+                implementation(project(":common:utilities"))
+
                 implementation(compose.runtime)
                 implementation(compose.foundation)
                 implementation(compose.material)

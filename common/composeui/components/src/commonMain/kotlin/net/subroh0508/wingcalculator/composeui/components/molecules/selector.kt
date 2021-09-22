@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
-import java.time.format.TextStyle
+import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 
 @Composable
 fun <E: Enum<*>> WeekSelector(
@@ -78,7 +78,7 @@ fun AppealRatioSelector(
         )
         DropdownSelector(
             selectedRatio,
-            APPEAL_RATIO_RANGE.map { "%.1f倍".format(it * 0.1) },
+            APPEAL_RATIO_RANGE.map { "${(it * 0.1).toFixed(1)}倍" },
             onClick = { onChange(APPEAL_RATIO_RANGE.toList()[it] * 0.1) },
         )
     }
