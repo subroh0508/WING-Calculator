@@ -22,7 +22,9 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAp
 import net.subroh0508.wingcalculator.composeui.components.molecules.list.LazyColumnWithFooter
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.DropdownMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.ExpandableDropdownMenu
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideDeletePresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSearchPresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSelectPresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBoxWithConstraints
 
@@ -31,44 +33,18 @@ fun SimpleCalculatorBackLayerContent(
     frontLayerHeight: Dp,
     onAppBarNavigationClick: () -> Unit,
 ) {
-    val (uiModel, dispatch) = provideSearchPresetDispatcher()
-    var expandSaveMenu by remember { mutableStateOf(false) }
-    var saveMode by remember { mutableStateOf<MenuForSave?>(null) }
+    val (uiModel, dispatchSelect) = provideSelectPresetDispatcher()
+    val (_, dispatchDelete) = provideDeletePresetDispatcher()
 
-    val (form, query, suggestions) = uiModel
-
-    when (saveMode) {
-        MenuForSave.CREATE -> SimplePresetCreateDialog { saveMode = null }
-        MenuForSave.UPDATE -> SimplePresetUpdateDialog { saveMode = null }
-    }
+    val (_, query, suggestions) = uiModel
 
     SimpleCalculatorBoxWithConstraints { constraints ->
         CollapsingTopAppBarContainer(
             appBar = { appBarModifier ->
-                TopAppSearchBar(
-                    uiModel.searchBarText,
-                    query.toSearchBarState(),
-                    onNavigationClick = onAppBarNavigationClick,
-                    onSearchBarStateChange = {
-                        dispatch(
-                            when (it) {
-                                SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened(form.name)
-                                SearchBarState.CLOSED -> SimpleCalculatorUiModel.Query.Closed
-                            },
-                        )
-                    },
-                    onQueryChange = { dispatch(it) },
-                    backgroundColor = MaterialTheme.colors.background,
-                    elevation = 0.dp,
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+                PresetSearchBar(
+                    onAppBarNavigationClick,
                     modifier = appBarModifier.then(constraints),
-                ) {
-                    val items = MenuForSave.values().filter {
-                        uiModel.isSelectedSuggestion || it != MenuForSave.UPDATE
-                    }
-
-                    ExpandableDropdownMenu(items, onClick = { saveMode = it })
-                }
+                )
             },
             appBarHeight = TopAppSearchBarHeight,
             isCollapsingEnable = query is SimpleCalculatorUiModel.Query.Closed,
@@ -82,23 +58,18 @@ fun SimpleCalculatorBackLayerContent(
                     constraints,
                     query.text,
                     suggestions,
-                    onDeleteClick = { (id, _) -> dispatch(id) },
-                    onClick = { dispatch(it) },
+                    onDeleteClick = { (id, _) -> dispatchDelete(id) },
+                    onClick = { dispatchSelect(it) },
                 )
             }
         }
     }
 }
 
-private enum class MenuForSave(override val label: String) : DropdownMenuItem {
-    CREATE("新規作成"), UPDATE("更新")
-}
-
 @Composable
 private fun ColumnScope.Forms(constraints: Modifier, frontLayerHeight: Dp) {
     CalculatorForm(constraints)
     Spacer(Modifier.height(frontLayerHeight + 32.dp))
-
 }
 
 @Composable
@@ -126,14 +97,3 @@ private fun ColumnScope.SuggestList(
         ) { Text(form.name ?: "") }
     }
 }
-
-private fun SimpleCalculatorUiModel.Query.toSearchBarState() = when (this) {
-    is SimpleCalculatorUiModel.Query.Opened -> SearchBarState.OPENED
-    is SimpleCalculatorUiModel.Query.Closed -> SearchBarState.CLOSED
-}
-
-private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
-    is SimpleCalculatorUiModel.Query.Opened -> query.text
-    is SimpleCalculatorUiModel.Query.Closed -> form.name
-}
-private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null
