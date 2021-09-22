@@ -1,16 +1,19 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.molecules.IdolStatusBox
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 
 @Composable
-fun SimpleUnitForm(modifier: Modifier = Modifier) {
+fun UnitStatusForm(modifier: Modifier = Modifier) {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
     val (pIdol, sIdols) = uiModel.form

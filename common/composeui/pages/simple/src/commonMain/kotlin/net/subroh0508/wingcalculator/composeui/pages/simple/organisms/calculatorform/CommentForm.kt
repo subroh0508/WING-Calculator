@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,7 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.textarea.Swi
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideUpdatePresetCommentDispatcher
 
 @Composable
-fun SimpleCommentForm(modifier: Modifier = Modifier) {
+fun CommentForm(modifier: Modifier = Modifier) {
     val (uiModel, dispatch) = provideUpdatePresetCommentDispatcher()
 
     SwitchableTextArea(

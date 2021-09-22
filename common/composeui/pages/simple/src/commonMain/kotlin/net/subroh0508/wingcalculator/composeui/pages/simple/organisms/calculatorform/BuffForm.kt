@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -11,7 +11,7 @@ import net.subroh0508.wingcalculator.appeal.model.*
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 
 @Composable
-fun SimpleBuffForm(modifier: Modifier = Modifier) {
+fun BuffForm(modifier: Modifier = Modifier) {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
     val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
