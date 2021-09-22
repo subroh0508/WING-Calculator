@@ -8,8 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.launch
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculatorBackLayerContent
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.SimpleCalculatorFrontLayerContent
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 @Composable
 actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
@@ -24,7 +23,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
         BackdropScaffold(
             appBar = {},
             backLayerContent = {
-                SimpleCalculatorBackLayerContent(
+                BackLayerContent(
                     if (backdropScaffoldState.isConcealed)
                         frontLayerHeightState
                     else
@@ -40,7 +39,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
             },
             backLayerBackgroundColor = MaterialTheme.colors.background,
             frontLayerContent = {
-                SimpleCalculatorFrontLayerContent(
+                CalculatorResultLayout(
                     BackdropScaffoldDefaults.HeaderHeight,
                     onChangeHeight = { frontLayerHeightState = it },
                     backdropScaffoldState.isConcealed,
