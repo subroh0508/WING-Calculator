@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTable
+import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.Switcher
 import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherLabel
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
@@ -18,7 +19,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProv
 fun CalculateResultTable() {
     var appealTypeState by remember { mutableStateOf(AppealType.VOCAL) }
 
-    val (_, uiModel) = SimpleCalculatorProviderContext.current
+    val uiModel = SimpleCalculatorProviderContext.current.uiModel
 
     Column {
         TotalAppealsTable(

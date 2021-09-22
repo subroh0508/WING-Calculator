@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarLayout
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
@@ -22,9 +23,7 @@ fun PresetSearchBarLayout(
     onAppBarNavigationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val (_, uiModel) = SimpleCalculatorProviderContext.current
-
-    val (_, query, _) = uiModel
+    val query = SimpleCalculatorProviderContext.current.uiModel.query
 
     CollapsingTopAppBarLayout(
         appBar = { AppBarContent(onAppBarNavigationClick, it.then(modifier)) },

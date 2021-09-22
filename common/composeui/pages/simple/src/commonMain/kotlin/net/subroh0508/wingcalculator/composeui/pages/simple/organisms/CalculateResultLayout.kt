@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLayerHeader
+import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout.CalculateResultTable
@@ -25,7 +26,7 @@ fun CalculatorResultLayout(
     isConcealed: Boolean? = null,
     onClickIcon: () -> Unit = {},
 ) {
-    val (_, uiModel) = SimpleCalculatorProviderContext.current
+    val uiModel = SimpleCalculatorProviderContext.current.uiModel
 
     val verticalScrollState = rememberScrollState(0)
 
