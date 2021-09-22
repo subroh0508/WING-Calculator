@@ -10,6 +10,8 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalc
 import net.subroh0508.wingcalculator.usecase.simple.di.SimpleCalculatorDomainModule
 import org.koin.core.Koin
 
+typealias SimpleCalculatorDispatcher = (SimpleCalculatorUiModel) -> Unit
+
 val SimpleCalculatorProviderContext = compositionLocalOf(
     defaultFactory = { Pair<Koin?, SimpleCalculatorUiModel>(null, SimpleCalculatorUiModel()) },
 )
