@@ -15,10 +15,10 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculator
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.UnitStatusForm
 
 @Composable
-fun ColumnScope.CalculatorForm(constraints: Modifier) {
-    UnitStatusForm(constraints)
-    Divider(constraints.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
-    BuffForm(constraints)
+fun ColumnScope.CalculatorForm(modifier: Modifier) {
+    UnitStatusForm(modifier)
+    Divider(modifier.padding(top = 24.dp, bottom = 16.dp, start = 8.dp, end = 8.dp))
+    BuffForm(modifier)
     Spacer(Modifier.height(40.dp))
-    CommentForm(constraints)
+    CommentForm(modifier)
 }
