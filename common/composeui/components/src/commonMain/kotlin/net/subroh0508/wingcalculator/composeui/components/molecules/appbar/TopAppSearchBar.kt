@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +25,7 @@ enum class SearchBarState {
 @Composable
 fun TopAppSearchBar(
     text: String? = null,
+    placeHolder: String = "",
     searchBarState: SearchBarState,
     onNavigationClick: () -> Unit,
     onSearchBarStateChange: (SearchBarState) -> Unit,
@@ -41,12 +43,12 @@ fun TopAppSearchBar(
 ) {
     when (searchBarState) {
         SearchBarState.OPENED -> OpenedSearchBarContent(
-            text,
+            text, placeHolder,
             onArrowBackClick = { onSearchBarStateChange(SearchBarState.CLOSED) },
             onQueryChange = onQueryChange,
         )
         SearchBarState.CLOSED -> ClosedSearchBarContent(
-            text,
+            text, placeHolder,
             onNavigationClick,
             onSearchBarClick = { onSearchBarStateChange(SearchBarState.OPENED) },
             actions,
@@ -57,6 +59,7 @@ fun TopAppSearchBar(
 @Composable
 private fun RowScope.OpenedSearchBarContent(
     text: String?,
+    placeHolder: String,
     onArrowBackClick: () -> Unit,
     onQueryChange: (String?) -> Unit,
 ) {
@@ -73,7 +76,7 @@ private fun RowScope.OpenedSearchBarContent(
     Box(modifier = Modifier.weight(1F)) {
         if (text == null) {
             Text(
-                "プリセットを検索",
+                placeHolder,
                 style = MaterialTheme.typography.button,
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.6F),
                 modifier = Modifier.padding(end = 16.dp),
@@ -91,11 +94,22 @@ private fun RowScope.OpenedSearchBarContent(
                 .align(Alignment.CenterStart),
         )
     }
+    IconButton(
+        onClick = { onQueryChange(null) },
+        modifier = Modifier.padding(start = 8.dp),
+    ) {
+        Icon(
+            Icons.Default.Clear,
+            contentDescription = "clear",
+            modifier = Modifier.size(24.dp),
+        )
+    }
 }
 
 @Composable
 private fun RowScope.ClosedSearchBarContent(
-    placeHolder: String?,
+    text: String?,
+    placeHolder: String,
     onNavigationClick: () -> Unit,
     onSearchBarClick: () -> Unit,
     actions: @Composable () -> Unit = {},
@@ -117,8 +131,8 @@ private fun RowScope.ClosedSearchBarContent(
         )
     }
     Text(
-        placeHolder ?: "プリセットを検索",
-        color = MaterialTheme.colors.onSurface.copy(alpha = if (placeHolder == null) 0.6F else 1.0F),
+        text ?: placeHolder,
+        color = MaterialTheme.colors.onSurface.copy(alpha = if (text == null) 0.6F else 1.0F),
         modifier = Modifier.weight(1F)
             .padding(end = 16.dp),
     )

@@ -35,6 +35,7 @@ fun PresetSearchBar(
 
     TopAppSearchBar(
         uiModel.searchBarText,
+        "プリセットを検索",
         query.toSearchBarState(),
         onNavigationClick = onNavigationClick,
         onSearchBarStateChange = {
