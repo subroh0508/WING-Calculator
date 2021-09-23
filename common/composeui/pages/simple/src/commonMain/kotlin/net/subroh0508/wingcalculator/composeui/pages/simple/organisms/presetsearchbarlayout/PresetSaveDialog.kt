@@ -8,7 +8,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.dialog.FormDialog
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideCreatePresetDispatcher
-import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideUpdatePresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 
 @Composable
 fun SimplePresetCreateDialog(
@@ -23,9 +23,9 @@ fun SimplePresetCreateDialog(
 fun SimplePresetUpdateDialog(
     onClose: () -> Unit,
 ) {
-    val (uiModel, dispatch) = provideUpdatePresetDispatcher()
+    val (uiModel, dispatch) = provideInputFormDispatcher()
 
-    SimplePresetSaveDialog(uiModel.form.name, onClose, dispatch)
+    SimplePresetSaveDialog(uiModel.form.name, onClose) { dispatch(name = it) }
 }
 
 @Composable
@@ -38,7 +38,7 @@ private fun SimplePresetSaveDialog(
 
     FormDialog(
         onDismissRequest = onClose,
-        title = { Text("プリセットを保存") },
+        title = { Text("プリセット名を入力") },
         confirmButton = {
             TextButton(onClick = {
                 onClickSave(presetName)

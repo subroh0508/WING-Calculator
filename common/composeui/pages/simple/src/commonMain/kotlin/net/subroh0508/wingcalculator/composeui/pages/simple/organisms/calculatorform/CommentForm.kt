@@ -14,7 +14,7 @@ fun CommentForm() {
 
     SwitchableTextArea(
         uiModel.form.comment,
-        onSaveClick = { dispatch(it) },
+        onSaveClick = { dispatch(comment = it) },
         modifier = Modifier.fillMaxWidth(),
     )
 }

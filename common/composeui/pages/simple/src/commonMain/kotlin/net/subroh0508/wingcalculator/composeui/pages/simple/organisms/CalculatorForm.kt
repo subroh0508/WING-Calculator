@@ -22,12 +22,7 @@ fun ColumnScope.CalculatorForm(
     frontLayerHeight: Dp,
     modifier: Modifier = Modifier,
 ) {
-    val (uiModel, dispatch) = provideSavePresetDispatcher()
-
-    LaunchedEffect(uiModel.form) {
-        delay(THROTTLED_TIME_MILLIS)
-        dispatch()
-    }
+    AutoSaveEffect()
 
     Column(modifier.padding(horizontal = 8.dp)) {
         UnitStatusForm()
@@ -36,5 +31,15 @@ fun ColumnScope.CalculatorForm(
         Spacer(Modifier.height(40.dp))
         CommentForm()
         Spacer(Modifier.height(frontLayerHeight + 32.dp))
+    }
+}
+
+@Composable
+private fun AutoSaveEffect() {
+    val (uiModel, dispatch) = provideSavePresetDispatcher()
+
+    LaunchedEffect(uiModel.form) {
+        delay(THROTTLED_TIME_MILLIS)
+        dispatch()
     }
 }

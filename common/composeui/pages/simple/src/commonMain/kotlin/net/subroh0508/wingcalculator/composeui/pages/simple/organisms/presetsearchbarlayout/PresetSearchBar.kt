@@ -15,7 +15,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideS
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 
 private enum class MenuForSave(override val label: String) : DropdownMenuItem {
-    CREATE("新規作成"), UPDATE("更新")
+    CREATE("新規プリセット"), UPDATE("プリセット名変更")
 }
 
 @Composable
@@ -69,4 +69,4 @@ private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
     is SimpleCalculatorUiModel.Query.Opened -> query.text
     is SimpleCalculatorUiModel.Query.Closed -> form.name
 }
-private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null
+private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null && form.name != null

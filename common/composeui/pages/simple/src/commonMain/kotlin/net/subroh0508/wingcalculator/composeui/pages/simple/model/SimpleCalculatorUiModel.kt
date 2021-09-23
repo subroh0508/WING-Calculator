@@ -28,6 +28,7 @@ data class SimpleCalculatorUiModel(
         buff: Buff = form.buff,
         appealJudge: AppealJudge = form.appealJudge,
         interestRatio: InterestRatio = form.interestRatio,
+        name: String? = form.name,
         comment: String? = form.comment,
     ) = copy(
         form = Form(
@@ -39,7 +40,7 @@ data class SimpleCalculatorUiModel(
             appealJudge,
             interestRatio,
             id = form.id,
-            name = form.name,
+            name = name,
             comment = comment,
         ),
     )

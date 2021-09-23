@@ -22,7 +22,7 @@ fun provideCreatePresetDispatcher(): Pair<SimpleCalculatorUiModel, CreatePresetD
     return uiModel to { name ->
         val (pIdol, sIdols, _, _, _, _, _, _, _, comment) = uiModel.form
 
-        dispatcher(uiModel.inputFormName(name))
+        dispatcher(uiModel.input(name = name))
         if (name != null) {
             scope.launch {
                 val preset = createPresetUseCase?.execute(name, pIdol, sIdols, comment) ?: return@launch
