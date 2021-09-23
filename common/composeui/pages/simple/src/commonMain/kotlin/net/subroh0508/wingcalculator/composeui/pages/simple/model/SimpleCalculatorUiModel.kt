@@ -46,7 +46,6 @@ data class SimpleCalculatorUiModel(
     )
 
     fun inputQuery(query: String?) = if (this.query is Query.Closed) this else copy(query = Query.Opened(query))
-    fun inputFormName(name: String?) = copy(form = form.copy(name = name))
 
     fun update(presets: List<Preset>) = copy(suggests = presets.map { it.toSuggest() })
     fun select(preset: Preset) = select(preset.toSuggest())
@@ -55,7 +54,7 @@ data class SimpleCalculatorUiModel(
         form = suggestion.let { (id, form) ->
             val (pIdol, sIdols, _, _, _, _, _, _, name, comment) = form
 
-            form.copy(pIdol = pIdol, sIdols = sIdols, id = id, name = name, comment = comment)
+            this.form.copy(pIdol = pIdol, sIdols = sIdols, id = id, name = name, comment = comment)
         },
         suggests = listOf(),
     )
