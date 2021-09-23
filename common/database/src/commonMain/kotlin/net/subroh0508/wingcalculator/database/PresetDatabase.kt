@@ -7,6 +7,8 @@ class PresetDatabase(
 ) {
     fun get(id: Long, producerId: Long) = queries.select(id, producerId).executeAsOne()
 
+    fun getBlankName(producerId: Long) = queries.selectOfBlankName(producerId).executeAsOneOrNull()
+
     fun search(producerId: Long, name: String) = queries.selectByName(producerId, name, DEFAULT_LIMIT).executeAsList()
 
     fun create(

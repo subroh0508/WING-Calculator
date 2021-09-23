@@ -35,9 +35,16 @@ selectByName:
 SELECT *
 FROM PresetForm
 WHERE
-  producer = :producerId AND name LIKE ('%' || :name || '%')
+  producer = :producerId AND name LIKE ('%' || :name || '%') AND name <> ''
 ORDER BY selectCount DESC
 LIMIT :limit;
+
+selectOfBlankName:
+SELECT *
+FROM PresetForm
+WHERE
+  producer = :producerId AND name = ''
+LIMIT 1;
 
 selectOfLatestCreatedAt:
 SELECT *

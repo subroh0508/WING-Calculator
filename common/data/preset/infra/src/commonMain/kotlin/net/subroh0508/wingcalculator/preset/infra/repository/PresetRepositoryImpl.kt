@@ -12,6 +12,7 @@ internal class PresetRepositoryImpl(
     private val database: PresetDatabase,
 ) : PresetRepository {
     override suspend fun fetch(id: Long, producerId: Long) = database.get(id, producerId).toEntity()
+    override suspend fun fetchBlankName(producerId: Long) = database.getBlankName(producerId)?.toEntity()
     override suspend fun search(name: String?, producerId: Long) = database.search(producerId, name ?: "").map { it.toEntity() }
 
     override suspend fun save(
@@ -48,7 +49,7 @@ internal class PresetRepositoryImpl(
 
     private fun PresetForm.toEntity() = Preset(
         id,
-        name,
+        name.takeIf(String::isNotBlank),
         Idol.Produce(Vocal(pVocal.toInt()), Dance(pDance.toInt()), Visual(pVisual.toInt()), pMental.toInt()),
         listOf(
             Idol.Support(Vocal(s1Vocal.toInt()), Dance(s1Dance.toInt()), Visual(s1Visual.toInt())),
