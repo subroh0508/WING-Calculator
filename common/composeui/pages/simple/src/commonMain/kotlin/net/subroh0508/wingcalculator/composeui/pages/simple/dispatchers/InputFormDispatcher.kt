@@ -25,7 +25,7 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
 
     val (form) = uiModel
 
-    val handleOnProduceIdolStatusChanged = remember(form.pIdol) {
+    val handleOnProduceIdolStatusChanged = remember(uiModel) {
         { vo: Int?, da: Int?, vi: Int?, me: Int? ->
             val pIdol = Idol.Produce(
                 vo?.let(::Vocal) ?: form.pIdol.vocal,
@@ -37,7 +37,7 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
             dispatcher(uiModel.input(pIdol = pIdol))
         }
     }
-    val handleOnSupportIdolStatusChanged = remember(*form.sIdols.toTypedArray()) {
+    val handleOnSupportIdolStatusChanged = remember(uiModel) {
         { index: Int, vo: Int?, da: Int?, vi: Int?  ->
             val sIdols = form.sIdols.mapIndexed { i, sIdol ->
                 if (i != index) return@mapIndexed sIdol

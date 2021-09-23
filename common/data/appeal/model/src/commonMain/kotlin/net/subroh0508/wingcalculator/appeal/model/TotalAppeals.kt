@@ -56,9 +56,13 @@ data class TotalAppeals(
                 pStatus, BaseAppeal.Produce(pStatus, sStatus, week),
                 buff, appealRatio, appealJudge, interestRatio,
             )
-            val sTotalAppeals = sStatus.map { s ->
+            val sTotalAppeals = sStatus.mapIndexed { index, s ->
                 calculateAppeal(
-                    s, BaseAppeal.Support(listOf(s) + (sStatus - s), pStatus, week),
+                    s, BaseAppeal.Support(
+                        listOf(s) + sStatus.toMutableList().apply { removeAt(index) },
+                        pStatus,
+                        week,
+                    ),
                     buff, appealRatio, appealJudge, interestRatio,
                 )
             }
