@@ -1,6 +1,7 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import net.subroh0508.wingcalculator.appeal.model.*
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
@@ -22,33 +23,39 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
     val uiModel = SimpleCalculatorProviderContext.current.uiModel
     val dispatcher = SimpleCalculatorDispatcherContext.current
 
-    return uiModel to object : InputFormDispatcher {
-        override fun invoke(vo: Int?, da: Int?, vi: Int?, me: Int?) = dispatcher(
-            uiModel.input(
-                pIdol = Idol.Produce(
-                    vo?.let(::Vocal) ?: uiModel.form.pIdol.vocal,
-                    da?.let(::Dance) ?: uiModel.form.pIdol.dance,
-                    vi?.let(::Visual) ?: uiModel.form.pIdol.visual,
-                    me ?: uiModel.form.pIdol.mental,
-                ),
-            )
-        )
+    val (form) = uiModel
 
-        override fun invoke(index: Int, vo: Int?, da: Int?, vi: Int?) {
-            val newSIdol = uiModel.form.sIdols[index].let {
+    val handleOnProduceIdolStatusChanged = remember(form.pIdol) {
+        { vo: Int?, da: Int?, vi: Int?, me: Int? ->
+            val pIdol = Idol.Produce(
+                vo?.let(::Vocal) ?: form.pIdol.vocal,
+                da?.let(::Dance) ?: form.pIdol.dance,
+                vi?.let(::Visual) ?: form.pIdol.visual,
+                me ?: form.pIdol.mental,
+            )
+
+            dispatcher(uiModel.input(pIdol = pIdol))
+        }
+    }
+    val handleOnSupportIdolStatusChanged = remember(*form.sIdols.toTypedArray()) {
+        { index: Int, vo: Int?, da: Int?, vi: Int?  ->
+            val sIdols = form.sIdols.mapIndexed { i, sIdol ->
+                if (i != index) return@mapIndexed sIdol
+
                 Idol.Support(
-                    vo?.let(::Vocal) ?: it.vocal,
-                    da?.let(::Dance) ?: it.dance,
-                    vi?.let(::Visual) ?: it.visual,
+                    vo?.let(::Vocal) ?: sIdol.vocal,
+                    da?.let(::Dance) ?: sIdol.dance,
+                    vi?.let(::Visual) ?: sIdol.visual,
                 )
             }
 
-            dispatcher(
-                uiModel.input(
-                    sIdols = uiModel.form.sIdols.mapIndexed { i, sIdol -> if (i == index) newSIdol else sIdol },
-                ),
-            )
+            dispatcher(uiModel.input(sIdols = sIdols))
         }
+    }
+
+    return uiModel to object : InputFormDispatcher {
+        override fun invoke(vo: Int?, da: Int?, vi: Int?, me: Int?) = handleOnProduceIdolStatusChanged(vo, da, vi, me)
+        override fun invoke(index: Int, vo: Int?, da: Int?, vi: Int?) = handleOnSupportIdolStatusChanged(index, vo, da, vi)
         override fun invoke(week: Week) = dispatcher(uiModel.input(week = week))
         override fun invoke(appealRatio: AppealRatio) = dispatcher(uiModel.input(appealRatio = appealRatio))
         override fun invoke(buff: Buff) = dispatcher(uiModel.input(buff = buff))
