@@ -13,6 +13,7 @@ fun NumberField(
     onChangeValue: (String) -> Unit,
     label: String? = null,
     enabled: Boolean = true,
+    backgroundColor: Color = Color.Transparent,
     focusedColor: Color = MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
     regex: Regex? = null,
     modifier: Modifier = Modifier,
@@ -23,8 +24,10 @@ fun NumberField(
     enabled = enabled,
     singleLine = true,
     modifier = modifier,
-    colors = TextFieldDefaults.textFieldColors(
-        focusedIndicatorColor = focusedColor,
+    colors = TextFieldDefaults.outlinedTextFieldColors(
+        backgroundColor = backgroundColor,
+        cursorColor = focusedColor,
+        focusedBorderColor = focusedColor,
         focusedLabelColor = focusedColor,
     ),
 )

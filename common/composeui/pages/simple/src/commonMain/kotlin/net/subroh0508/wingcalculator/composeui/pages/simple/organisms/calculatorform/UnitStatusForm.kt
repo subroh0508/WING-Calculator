@@ -122,6 +122,7 @@ private fun StatusField(
 ) = NumberField(
     value,
     label = label,
+    backgroundColor = MaterialTheme.colors.surface,
     focusedColor = focusedColor,
     regex = STATUS_NUMBER_REGEX,
     onChangeValue = onChangeValue,

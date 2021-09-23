@@ -107,6 +107,7 @@ fun BuffRatioField(
         NumberField(
             ratio,
             label = "バフ補正: $total",
+            backgroundColor = MaterialTheme.colors.surface,
             onChangeValue = { ratio = it },
             regex = BUFF_RATIO_REGEX,
             modifier = Modifier.fillMaxWidth(),
@@ -165,6 +166,7 @@ fun InterestRatioField(
         NumberField(
             ratio,
             label = "興味度: $total",
+            backgroundColor = MaterialTheme.colors.surface,
             onChangeValue = { ratio = it },
             regex = INTEREST_RATIO_REGEX,
             modifier = Modifier.fillMaxWidth(),
