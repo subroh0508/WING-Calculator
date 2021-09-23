@@ -15,7 +15,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculator
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.CommentForm
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.UnitStatusForm
 
-private const val THLOTTELED_TIME_MILLIS = 500L
+private const val THROTTLED_TIME_MILLIS = 500L
 
 @Composable
 fun ColumnScope.CalculatorForm(
@@ -25,7 +25,7 @@ fun ColumnScope.CalculatorForm(
     val (uiModel, dispatch) = provideSavePresetDispatcher()
 
     LaunchedEffect(uiModel.form) {
-        delay(THLOTTELED_TIME_MILLIS)
+        delay(THROTTLED_TIME_MILLIS)
         dispatch()
     }
 

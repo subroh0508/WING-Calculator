@@ -24,10 +24,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
             appBar = {},
             backLayerContent = {
                 BackLayerContent(
-                    if (backdropScaffoldState.isConcealed)
-                        frontLayerHeightState
-                    else
-                        BackdropScaffoldDefaults.HeaderHeight,
+                    frontLayerHeightState
                 ) {
                     coroutineScope.launch {
                         if (drawerState.isOpen)
