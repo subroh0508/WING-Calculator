@@ -11,20 +11,34 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 interface SwitcherLabel {
     val text: String
 }
 
+enum class SwitcherOrientation(
+    val startIcon: ImageVector,
+    val endIcon: ImageVector,
+    val startDescription: String = "back",
+    val endDescription: String = "forward",
+) {
+    VERTICAL(Icons.Default.KeyboardArrowUp, Icons.Default.KeyboardArrowDown),
+    HORIZONTAL(Icons.Default.KeyboardArrowLeft, Icons.Default.KeyboardArrowRight);
+}
+
 @Composable
 fun <T: SwitcherLabel> ColumnScope.Switcher(
     type: T,
+    orientation: SwitcherOrientation,
     onClickBack: () -> Unit,
     onClickForward: () -> Unit,
 ) = Row(
@@ -35,8 +49,8 @@ fun <T: SwitcherLabel> ColumnScope.Switcher(
         onClick = onClickBack
     ) {
         Icon(
-            Icons.Default.KeyboardArrowLeft,
-            contentDescription = "back",
+            orientation.startIcon,
+            contentDescription = orientation.startDescription,
             modifier = Modifier.size(24.dp),
         )
     }
@@ -50,8 +64,8 @@ fun <T: SwitcherLabel> ColumnScope.Switcher(
         onClick = onClickForward
     ) {
         Icon(
-            Icons.Default.KeyboardArrowRight,
-            contentDescription = "forward",
+            orientation.endIcon,
+            contentDescription = orientation.endDescription,
             modifier = Modifier.size(24.dp),
         )
     }

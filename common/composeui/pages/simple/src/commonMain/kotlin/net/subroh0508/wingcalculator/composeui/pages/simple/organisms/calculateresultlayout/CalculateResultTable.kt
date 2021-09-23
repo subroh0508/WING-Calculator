@@ -13,6 +13,7 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTabl
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.Switcher
 import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherLabel
+import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherOrientation
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 
 @Composable
@@ -34,6 +35,7 @@ fun CalculateResultTable() {
         )
         Switcher(
             appealTypeState,
+            SwitcherOrientation.HORIZONTAL,
             onClickBack = { appealTypeState = appealTypeState.previous() },
             onClickForward = { appealTypeState = appealTypeState.next() },
         )

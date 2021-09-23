@@ -24,6 +24,8 @@ val SimpleCalculatorProviderContext = compositionLocalOf(
 
 @Composable
 fun SimpleCalculatorPage() {
+    // TODO 値の永続化タイミングをプリセット名変更 → リアルタイムに変更
+    // TODO 保存されたプリセットが残り1件の時は作成できないように or 名前空欄のプリセットが検索から除外されるように
     AppTheme {
         KoinComponentContainer(
             SimpleCalculatorUiModel(),
