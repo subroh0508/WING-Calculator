@@ -11,7 +11,6 @@ typealias SavePresetDispatcher = suspend () -> Unit
 @Composable
 fun provideSavePresetDispatcher(): Pair<SimpleCalculatorUiModel, SavePresetDispatcher> {
     val (koin, uiModel) = SimpleCalculatorProviderContext.current
-    val dispatcher = SimpleCalculatorDispatcherContext.current
 
     val savePresetUseCase: SavePresetUseCase? = remember(koin) { koin?.getOrNull() }
 
@@ -19,13 +18,12 @@ fun provideSavePresetDispatcher(): Pair<SimpleCalculatorUiModel, SavePresetDispa
         suspend {
             val (pIdol, sIdols, _, _, _, _, _, id, name, comment) = uiModel.form
 
-            val preset =
-                if (id != null && name != null)
-                    savePresetUseCase?.execute(id, name, pIdol, sIdols, comment)
-                else
-                    savePresetUseCase?.execute(pIdol, sIdols, comment)
+            if (id != null && name != null)
+                savePresetUseCase?.execute(id, name, pIdol, sIdols, comment)
+            else
+                savePresetUseCase?.execute(pIdol, sIdols, comment)
 
-           preset?.let { dispatcher(uiModel.select(it)) } ?: Unit
+            Unit
         }
     }
 
