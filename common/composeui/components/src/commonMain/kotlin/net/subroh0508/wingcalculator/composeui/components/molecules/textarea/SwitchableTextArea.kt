@@ -89,7 +89,7 @@ private fun TextAreaContent(
             )
         }
 
-        BasicTextField(
+        OutlinedTextField(
             text ?: "",
             onValueChange = { onTextChanged(it.takeIf(String::isNotBlank)) },
             modifier = Modifier.fillMaxWidth(),
