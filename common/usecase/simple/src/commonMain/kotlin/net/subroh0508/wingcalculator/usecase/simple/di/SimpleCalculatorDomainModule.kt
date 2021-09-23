@@ -12,6 +12,7 @@ import net.subroh0508.wingcalculator.usecase.simple.internal.UpdatePresetUseCase
 import org.koin.dsl.module
 
 val SimpleCalculatorDomainModule get() = PresetRepositories.Module + ProducerRepositories.Module + module {
+    single<FetchLatestModifiedPresetUseCase> { FetchLatestModifiedPresetUseCaseImpl(get(), get()) }
     single<SearchPresetUseCase> { SearchPresetUseCaseImpl(get(), get()) }
     single<CreatePresetUseCase> { CreatePresetUseCaseImpl(get(), get()) }
     single<SavePresetUseCase> { SavePresetUseCaseImpl(get(), get()) }

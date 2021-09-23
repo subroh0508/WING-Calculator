@@ -54,6 +54,14 @@ WHERE
 ORDER BY createdAt DESC
 LIMIT 1;
 
+selectOfLatestModified:
+SELECT *
+FROM PresetForm
+WHERE
+  producer = :producerId
+ORDER BY lastModified DESC
+LIMIT 1;
+
 add:
 INSERT INTO PresetForm (
   name,

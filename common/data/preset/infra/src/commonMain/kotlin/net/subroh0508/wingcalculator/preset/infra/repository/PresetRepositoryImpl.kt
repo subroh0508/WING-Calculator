@@ -13,6 +13,7 @@ internal class PresetRepositoryImpl(
 ) : PresetRepository {
     override suspend fun fetch(id: Long, producerId: Long) = database.get(id, producerId).toEntity()
     override suspend fun fetchBlankName(producerId: Long) = database.getBlankName(producerId)?.toEntity()
+    override suspend fun fetchLatestModified(producerId: Long) = database.getLatestModified(producerId)?.toEntity()
     override suspend fun search(name: String?, producerId: Long) = database.search(producerId, name ?: "").map { it.toEntity() }
 
     override suspend fun save(

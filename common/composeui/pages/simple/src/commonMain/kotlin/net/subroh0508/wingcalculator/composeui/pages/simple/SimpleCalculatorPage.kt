@@ -8,6 +8,7 @@ import net.subroh0508.wingcalculator.composeui.components.di.UiModelDispatcher
 import net.subroh0508.wingcalculator.composeui.components.di.UiModelProvider
 import net.subroh0508.wingcalculator.composeui.components.di.emptyUiModelDispatcher
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorDrawer
 import net.subroh0508.wingcalculator.usecase.simple.di.SimpleCalculatorDomainModule
@@ -32,6 +33,16 @@ fun SimpleCalculatorPage() {
             SimpleCalculatorDomainModule,
             SimpleCalculatorDispatcherContext,
             SimpleCalculatorProviderContext,
-        ) { SimpleCalculatorDrawer() }
+        ) { PageContent() }
     }
+}
+
+@Composable
+private fun PageContent() {
+    val (koin, _) = SimpleCalculatorProviderContext.current
+    val (_, dispatch) = provideFetchLatestModifiedPresetUseCase()
+
+    LaunchedEffect(koin) { dispatch() }
+
+    SimpleCalculatorDrawer()
 }
