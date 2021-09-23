@@ -11,45 +11,43 @@ import net.subroh0508.wingcalculator.appeal.model.*
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 
 @Composable
-fun BuffForm(modifier: Modifier = Modifier) {
+fun ColumnScope.BuffForm() {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
     val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
 
-    Column(modifier = modifier.padding(horizontal = 8.dp)) {
-        WeekSelector(
-            week.season,
-            week.week,
-            Week.Season.values(),
-            !listOf(Week.Season.SEMI_FINAL, Week.Season.FINAL).contains(week.season),
-            onChange = { season, week -> dispatch(Week(season, week)) },
+    WeekSelector(
+        week.season,
+        week.week,
+        Week.Season.values(),
+        !listOf(Week.Season.SEMI_FINAL, Week.Season.FINAL).contains(week.season),
+        onChange = { season, week -> dispatch(Week(season, week)) },
+    )
+    Spacer(Modifier.height(16.dp))
+    Row {
+        AppealRatioSelector(
+            appealRatio.toString(),
+            onChange = { ratio -> dispatch(AppealRatio(ratio)) },
+            modifier = Modifier.weight(1F),
         )
-        Spacer(Modifier.height(16.dp))
-        Row {
-            AppealRatioSelector(
-                appealRatio.toString(),
-                onChange = { ratio -> dispatch(AppealRatio(ratio)) },
-                modifier = Modifier.weight(1F),
-            )
-            Spacer(Modifier.width(8.dp))
-            AppealJudgeSelector(
-                appealJudge.factor,
-                AppealJudge.Factor.values(),
-                onChange = { factor -> dispatch(AppealJudge(factor)) },
-                modifier = Modifier.weight(1F),
-            )
-        }
-        Spacer(Modifier.height(16.dp))
-        BuffRatioField(
-            buff.toString(),
-            buff.total(),
-            onChange = { ratio -> dispatch(Buff(ratio)) },
-        )
-        Spacer(Modifier.height(16.dp))
-        InterestRatioField(
-            interestRatio.toString(),
-            interestRatio.total(),
-            onChange = { ratio -> dispatch(InterestRatio(ratio)) },
+        Spacer(Modifier.width(8.dp))
+        AppealJudgeSelector(
+            appealJudge.factor,
+            AppealJudge.Factor.values(),
+            onChange = { factor -> dispatch(AppealJudge(factor)) },
+            modifier = Modifier.weight(1F),
         )
     }
+    Spacer(Modifier.height(16.dp))
+    BuffRatioField(
+        buff.toString(),
+        buff.total(),
+        onChange = { ratio -> dispatch(Buff(ratio)) },
+    )
+    Spacer(Modifier.height(16.dp))
+    InterestRatioField(
+        interestRatio.toString(),
+        interestRatio.total(),
+        onChange = { ratio -> dispatch(InterestRatio(ratio)) },
+    )
 }
