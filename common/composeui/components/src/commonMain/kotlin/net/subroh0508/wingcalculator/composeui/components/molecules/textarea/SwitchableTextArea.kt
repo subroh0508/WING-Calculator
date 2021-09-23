@@ -80,21 +80,12 @@ private fun TextAreaContent(
         return
     }
 
-    Box(modifier) {
-        if (text == null) {
-            Text(
-                "メモを入力",
-                style = MaterialTheme.typography.button,
-                color = MaterialTheme.colors.onSurface.copy(alpha = 0.6F),
-            )
-        }
-
-        OutlinedTextField(
-            text ?: "",
-            onValueChange = { onTextChanged(it.takeIf(String::isNotBlank)) },
-            modifier = Modifier.fillMaxWidth(),
-        )
-    }
+    OutlinedTextField(
+        text ?: "",
+        onValueChange = { onTextChanged(it.takeIf(String::isNotBlank)) },
+        placeholder = { Text("メモを入力") },
+        modifier = modifier.fillMaxWidth(),
+    )
 }
 
 @Composable
