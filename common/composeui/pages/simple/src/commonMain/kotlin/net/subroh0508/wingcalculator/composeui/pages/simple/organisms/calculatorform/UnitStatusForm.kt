@@ -47,7 +47,7 @@ private fun ColumnScope.SupportIdolStatusForm(
 ) {
     var status by remember(form.id) { mutableStateOf(IdolStatus(form.sIdols[index])) }
 
-    IdolStatusForm("サポートアイドル(${index + 1})", status) { status = it }
+    IdolStatusForm("サポートアイドル", status, index) { status = it }
 }
 
 @Composable
@@ -63,13 +63,13 @@ private fun ColumnScope.IdolStatusForm(
         val (vocal, dance, visual, mental) = status.toInt()
 
         if (index == null)
-            dispatch(vocal, dance, visual, mental)
+            dispatch(vo = vocal, da = dance, vi = visual, me = mental)
         else
-            dispatch(index, vocal, dance, visual)
+            dispatch(index = index, vo = vocal, da = dance, vi = visual)
     }
 
     Text(
-        label,
+        label + (index?.let { "(${it + 1})" } ?: ""),
         style = MaterialTheme.typography.subtitle1,
     )
     Row {
