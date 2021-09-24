@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.appframe.constraints.SimpleCalculatorPageConstraints
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawer
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsibleDrawerState
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
