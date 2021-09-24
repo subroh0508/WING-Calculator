@@ -1,5 +1,7 @@
 package net.subroh0508.wingcalculator.appeal.model
 
+import net.subroh0508.wingcalculator.utilities.JvmInline
+
 sealed interface Status
 
 @JvmInline
