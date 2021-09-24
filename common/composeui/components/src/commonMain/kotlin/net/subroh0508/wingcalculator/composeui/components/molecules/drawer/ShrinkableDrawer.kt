@@ -31,16 +31,16 @@ private val SHRINKABLE_DRAWER_CONTENT_EXPANDED_WIDTH = 256.dp
 enum class ShrinkableDrawerValue { Shrink, Expand }
 
 class ShrinkableDrawerState(
-    initValue: ShrinkableDrawerValue,
+    initValue: DrawerValue,
 ) {
-    var currentValue: ShrinkableDrawerValue by mutableStateOf(initValue)
+    var currentValue: DrawerValue by mutableStateOf(initValue)
         private set
 
-    fun open() { currentValue = ShrinkableDrawerValue.Expand }
-    fun close() { currentValue = ShrinkableDrawerValue.Shrink }
+    fun open() { currentValue = DrawerValue.Open }
+    fun close() { currentValue = DrawerValue.Closed }
 
-    val isOpen get() = currentValue == ShrinkableDrawerValue.Expand
-    val isClose get() = currentValue == ShrinkableDrawerValue.Shrink
+    val isOpen get() = currentValue == DrawerValue.Open
+    val isClosed get() = currentValue == DrawerValue.Closed
 
     companion object {
         fun Saver() = Saver(
@@ -52,7 +52,7 @@ class ShrinkableDrawerState(
 
 @Composable
 fun rememberShrinkableDrawerState(
-    initValue: ShrinkableDrawerValue,
+    initValue: DrawerValue,
 ) = rememberSaveable(saver = ShrinkableDrawerState.Saver()) {
     ShrinkableDrawerState(initValue)
 }
@@ -60,10 +60,10 @@ fun rememberShrinkableDrawerState(
 enum class ShrinkableDrawerVariant { Persist, Modal }
 
 @Composable
-fun PersistShrinkableDrawer(
-    drawerContent: @Composable () -> Unit,
+fun ShrinkablePersistDrawer(
+    drawerContent: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
-    drawerState: ShrinkableDrawerState = rememberShrinkableDrawerState(ShrinkableDrawerValue.Shrink),
+    drawerState: ShrinkableDrawerState = rememberShrinkableDrawerState(DrawerValue.Closed),
     drawerBackgroundColor: Color = MaterialTheme.colors.surface,
     drawerContentColor: Color = contentColorFor(drawerBackgroundColor),
     content: @Composable () -> Unit,
@@ -73,10 +73,10 @@ fun PersistShrinkableDrawer(
 )
 
 @Composable
-fun ModalShrinkableDrawer(
-    drawerContent: @Composable () -> Unit,
+fun ShrinkableModalDrawer(
+    drawerContent: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
-    drawerState: ShrinkableDrawerState = rememberShrinkableDrawerState(ShrinkableDrawerValue.Shrink),
+    drawerState: ShrinkableDrawerState = rememberShrinkableDrawerState(DrawerValue.Closed),
     drawerBackgroundColor: Color = MaterialTheme.colors.surface,
     drawerContentColor: Color = contentColorFor(drawerBackgroundColor),
     drawerElevation: Dp = DrawerDefaults.Elevation,
@@ -90,7 +90,7 @@ fun ModalShrinkableDrawer(
 @Composable
 fun ShrinkableDrawer(
     variant: ShrinkableDrawerVariant,
-    drawerContent: @Composable () -> Unit,
+    drawerContent: @Composable ColumnScope.() -> Unit,
     modifier: Modifier = Modifier,
     drawerState: ShrinkableDrawerState,
     drawerBackgroundColor: Color,
@@ -102,8 +102,8 @@ fun ShrinkableDrawer(
     val transition = updateTransition(drawerState.currentValue)
     val drawerContentWidth by transition.animateDp { state ->
         when (state) {
-            ShrinkableDrawerValue.Shrink -> SHRINKABLE_DRAWER_CONTENT_SHRINK_WIDTH
-            ShrinkableDrawerValue.Expand -> SHRINKABLE_DRAWER_CONTENT_EXPANDED_WIDTH
+            DrawerValue.Closed -> SHRINKABLE_DRAWER_CONTENT_SHRINK_WIDTH
+            DrawerValue.Open -> SHRINKABLE_DRAWER_CONTENT_EXPANDED_WIDTH
         }
     }
 
@@ -146,7 +146,7 @@ private fun PersistDrawerLayout(
     drawerContentWidth: Dp,
     drawerBackgroundColor: Color,
     drawerContentColor: Color,
-    drawerContent: @Composable () -> Unit,
+    drawerContent: @Composable ColumnScope.() -> Unit,
     content: @Composable () -> Unit,
 ) = Row(
     Modifier.sizeIn(
@@ -165,8 +165,9 @@ private fun PersistDrawerLayout(
             ),
         color = drawerBackgroundColor,
         contentColor = drawerContentColor,
-        content = drawerContent,
-    )
+    ) {
+        Column(Modifier.fillMaxSize(), content = drawerContent)
+    }
     Box(
         Modifier.heightIn(min = drawerHeight, max = drawerHeight)
             .fillMaxWidth(),
@@ -184,7 +185,7 @@ private fun ModalDrawerLayout(
     drawerContentColor: Color,
     drawerElevation: Dp,
     drawerState: ShrinkableDrawerState,
-    drawerContent: @Composable () -> Unit,
+    drawerContent: @Composable ColumnScope.() -> Unit,
     scrimColor: Color,
     content: @Composable () -> Unit,
 ) = Box(
@@ -212,7 +213,7 @@ private fun ModalDrawerLayout(
         contentColor = drawerContentColor,
         elevation = elevation,
     ) {
-        drawerContent()
+        Column(Modifier.fillMaxSize(), content = drawerContent)
     }
 }
 
