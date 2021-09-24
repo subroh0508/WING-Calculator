@@ -13,7 +13,7 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.Shrin
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState<LayoutConstraints>) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState) {
     val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -41,7 +41,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState<LayoutCo
                 CalculatorResultLayout(
                     BackdropScaffoldDefaults.HeaderHeight,
                     onChangeHeight = { frontLayerHeightState = it },
-                    backdropScaffoldState.isConcealed,
+                    isConcealed = backdropScaffoldState.isConcealed,
                 ) {
                     coroutineScope.launch {
                         if (backdropScaffoldState.isConcealed)

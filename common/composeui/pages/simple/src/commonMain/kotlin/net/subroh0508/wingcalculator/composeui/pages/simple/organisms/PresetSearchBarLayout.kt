@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarLayout
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
@@ -16,8 +17,8 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.presetsear
 
 @Composable
 fun PresetSearchBarLayout(
-    frontLayerHeight: Dp,
-    onAppBarNavigationClick: () -> Unit,
+    frontLayerHeight: Dp = 0.dp,
+    onAppBarNavigationClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val query = SimpleCalculatorProviderContext.current.uiModel.query

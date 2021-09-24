@@ -12,7 +12,7 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.Respo
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState<LayoutConstraints>) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState) {
     var frontLayerHeightState by remember { mutableStateOf(BackdropScaffoldDefaults.HeaderHeight) }
 
     val coroutineScope = rememberCoroutineScope()

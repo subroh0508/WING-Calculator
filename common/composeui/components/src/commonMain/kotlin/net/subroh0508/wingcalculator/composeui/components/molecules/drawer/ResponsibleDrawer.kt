@@ -16,13 +16,11 @@ interface DrawerConstraints {
     val drawer: DrawerType
 }
 
-class ResponsibleDrawerState<T: DrawerConstraints> private constructor(
-    val constraints: T,
-    val modalDrawerState: DrawerState? = null,
-    val shrinkableDrawerState: ShrinkableDrawerState? = null,
+class ResponsibleDrawerState private constructor(
+    internal val modalDrawerState: DrawerState? = null,
+    internal val shrinkableDrawerState: ShrinkableDrawerState? = null,
 ) {
-    constructor(constraints: T, initValue: DrawerValue) : this(
-        constraints,
+    constructor(constraints: DrawerConstraints, initValue: DrawerValue) : this(
         if (constraints.drawer == DrawerType.Modal) DrawerState(initValue) else null,
         if (constraints.drawer != DrawerType.Modal) ShrinkableDrawerState(initValue) else null
     )
@@ -61,7 +59,7 @@ class ResponsibleDrawerState<T: DrawerConstraints> private constructor(
         }
 
     companion object {
-        fun <T: DrawerConstraints> Saver(constraints: T) = Saver<ResponsibleDrawerState<T>, DrawerValue>(
+        fun Saver(constraints: DrawerConstraints) = Saver<ResponsibleDrawerState, DrawerValue>(
             save = { it.currentValue },
             restore = { ResponsibleDrawerState(constraints, it) },
         )
@@ -79,20 +77,21 @@ fun <T: DrawerConstraints> rememberResponsibleDrawerState(
 
 @Composable
 fun <T: DrawerConstraints> ResponsibleDrawer(
-    drawerState: ResponsibleDrawerState<T>,
+    constraints: T,
+    drawerState: ResponsibleDrawerState,
     drawerContent: @Composable ColumnScope.() -> Unit,
     content: @Composable (T) -> Unit,
-) = when (drawerState.constraints.drawer) {
+) = when (constraints.drawer) {
     DrawerType.Modal -> ModalDrawer(
         drawerContent,
         drawerState = drawerState.modalDrawerState!!,
-    ) { content(drawerState.constraints) }
+    ) { content(constraints) }
     DrawerType.ShrinkableModal -> ShrinkableModalDrawer(
         drawerContent,
         drawerState = drawerState.shrinkableDrawerState!!,
-    ) { content(drawerState.constraints) }
+    ) { content(constraints) }
     DrawerType.ShrinkablePersist -> ShrinkablePersistDrawer(
         drawerContent,
         drawerState = drawerState.shrinkableDrawerState!!,
-    ) { content(drawerState.constraints) }
+    ) { content(constraints) }
 }

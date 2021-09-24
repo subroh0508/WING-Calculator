@@ -11,8 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.*
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 enum class LayoutConstraints(
     override val drawer: DrawerType,
@@ -36,43 +36,60 @@ enum class LayoutConstraints(
 
 @Composable
 fun SimpleCalculatorDrawer() = BoxWithConstraints {
-    val drawerState = rememberResponsibleDrawerState(
-        LayoutConstraints(maxWidth),
-        DrawerValue.Closed,
-    )
+    val constraints = LayoutConstraints(maxWidth)
+    val drawerState = rememberResponsibleDrawerState(constraints, DrawerValue.Closed)
 
     ResponsibleDrawer(
+        constraints,
         drawerContent = {
-            Column {
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier.padding(end = 8.dp),
-                ) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "back",
-                        modifier = Modifier.size(24.dp),
-                    )
-                }
+            IconButton(
+                onClick = {},
+                modifier = Modifier.padding(end = 8.dp),
+            ) {
+                Icon(
+                    Icons.Default.ArrowBack,
+                    contentDescription = "back",
+                    modifier = Modifier.size(24.dp),
+                )
+            }
 
-                Row {
-                    Icon(
-                        Icons.Default.Settings,
-                        contentDescription = "back",
-                        modifier = Modifier.size(48.dp)
-                            .padding(12.dp),
-                    )
+            Row {
+                Icon(
+                    Icons.Default.Settings,
+                    contentDescription = "back",
+                    modifier = Modifier.size(48.dp)
+                        .padding(12.dp),
+                )
 
-                    Text(
-                        "アプリ設定",
-                        softWrap = false,
-                        modifier = Modifier.weight(1F),
-                    )
-                }
+                Text(
+                    "アプリ設定",
+                    softWrap = false,
+                    modifier = Modifier.weight(1F),
+                )
             }
         },
         drawerState = drawerState,
     ) {
+        SimpleCalculatorDrawerLayout(it, drawerState)
+    }
+}
+
+@Composable
+private fun SimpleCalculatorDrawerLayout(
+    constraints: LayoutConstraints,
+    drawerState: ResponsibleDrawerState,
+) {
+    if (constraints.panelCount == 1) {
         SimpleCalculatorBackdrop(drawerState)
+        return
+    }
+
+    Row {
+        BackLayerContent(modifier = Modifier.weight(1F))
+        CalculatorResultLayout(
+            BackdropScaffoldDefaults.HeaderHeight,
+            constraints.panelCount,
+            modifier = Modifier.weight(1F),
+        )
     }
 }

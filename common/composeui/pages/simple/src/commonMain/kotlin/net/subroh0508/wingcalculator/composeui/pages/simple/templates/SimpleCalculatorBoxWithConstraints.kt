@@ -10,8 +10,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SimpleCalculatorBoxWithConstraints(
+    modifier: Modifier = Modifier,
     content: @Composable (Modifier) -> Unit,
-) = BoxWithConstraints {
+) = BoxWithConstraints(modifier) {
     val constraintsModifier = when {
         maxWidth < 640.dp -> Modifier.requiredSizeIn(minWidth = 320.dp)
         else -> Modifier.requiredSizeIn(maxWidth = 640.dp)
