@@ -18,7 +18,7 @@ fun main() {
         Window(
             onCloseRequest = ::exitApplication,
             title = "WING Calculator",
-            state = WindowState(size = WindowSize(320.dp, 800.dp)),
+            state = WindowState(size = WindowSize(576.dp, 800.dp)),
         ) {
             SimpleCalculatorPage()
         }

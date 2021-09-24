@@ -8,10 +8,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
 import kotlinx.coroutines.launch
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ShrinkableDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: DrawerState) {
+actual fun SimpleCalculatorBackdrop(drawerState: ShrinkableDrawerState) {
     val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val coroutineScope = rememberCoroutineScope()
 
