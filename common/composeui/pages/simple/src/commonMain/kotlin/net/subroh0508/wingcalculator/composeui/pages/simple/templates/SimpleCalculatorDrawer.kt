@@ -9,16 +9,39 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ShrinkableDrawer
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ShrinkableDrawerValue
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberShrinkableDrawerState
+import androidx.compose.ui.unit.max
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.*
+
+enum class LayoutConstraints(
+    override val drawer: DrawerType,
+    val panelCount: Int,
+    private val range: ClosedRange<Dp>,
+) : DrawerConstraints, ClosedRange<Dp> by range {
+    ONE_PANEL_MODAL(DrawerType.Modal, 1, 0.dp..368.dp),
+    ONE_PANEL_SHRINKABLE_MODAL(DrawerType.ShrinkableModal, 1, 369.dp..688.dp),
+    TWO_PANELS_SHRINKABLE_MODAL(DrawerType.ShrinkableModal, 2, 689.dp..896.dp),
+    TWO_PANELS_SHRINKABLE_PERSIST(DrawerType.ShrinkablePersist, 2, 897.dp..Dp.Infinity);
+
+    companion object {
+        operator fun invoke(maxWidth: Dp) = when (maxWidth) {
+            in ONE_PANEL_MODAL -> ONE_PANEL_MODAL
+            in ONE_PANEL_SHRINKABLE_MODAL -> ONE_PANEL_SHRINKABLE_MODAL
+            in TWO_PANELS_SHRINKABLE_MODAL -> TWO_PANELS_SHRINKABLE_MODAL
+            else -> TWO_PANELS_SHRINKABLE_PERSIST
+        }
+    }
+}
 
 @Composable
-fun SimpleCalculatorDrawer() {
-    val drawerState = rememberShrinkableDrawerState(ShrinkableDrawerValue.Shrink)
+fun SimpleCalculatorDrawer() = BoxWithConstraints {
+    val drawerState = rememberResponsibleDrawerState(
+        LayoutConstraints(maxWidth),
+        DrawerValue.Closed,
+    )
 
-    ShrinkableDrawer(
+    ResponsibleDrawer(
         drawerContent = {
             Column {
                 IconButton(
@@ -48,7 +71,7 @@ fun SimpleCalculatorDrawer() {
                 }
             }
         },
-        drawerState = drawerState
+        drawerState = drawerState,
     ) {
         SimpleCalculatorBackdrop(drawerState)
     }

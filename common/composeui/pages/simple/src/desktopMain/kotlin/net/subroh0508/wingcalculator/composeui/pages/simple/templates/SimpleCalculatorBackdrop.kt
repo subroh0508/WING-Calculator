@@ -8,11 +8,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.components.atoms.StaticBackdrop
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ShrinkableDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ShrinkableDrawerState) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState<LayoutConstraints>) {
     var frontLayerHeightState by remember { mutableStateOf(BackdropScaffoldDefaults.HeaderHeight) }
 
     val coroutineScope = rememberCoroutineScope()
