@@ -3,8 +3,6 @@
 package net.subroh0508.wingcalculator.composeui.appframe.constraints
 
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 
 actual operator fun SimpleCalculatorPageConstraints.Companion.invoke(maxWidth: Dp) = when (maxWidth) {
     in SimpleCalculatorPageConstraints.ONE_PANEL_MODAL,

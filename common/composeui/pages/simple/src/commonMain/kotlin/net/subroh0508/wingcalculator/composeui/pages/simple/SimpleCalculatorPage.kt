@@ -2,7 +2,9 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.di.*
@@ -51,7 +53,7 @@ private fun PageContent(
         return
     }
 
-    Row {
+    Row(Modifier.background(color = MaterialTheme.colors.background)) {
         BackLayerContent(modifier = Modifier.weight(1F))
         FrontLayerContent(modifier = Modifier.weight(1F))
     }

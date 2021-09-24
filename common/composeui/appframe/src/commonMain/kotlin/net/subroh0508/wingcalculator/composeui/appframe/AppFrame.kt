@@ -26,8 +26,6 @@ fun AppFrame() = AppTheme {
 
         val drawerState = rememberResponsibleDrawerState(page.constraints, DrawerValue.Closed)
 
-        println(maxWidth)
-        println(page.constraints)
         ResponsibleDrawer(
             page.constraints,
             drawerContent = {
