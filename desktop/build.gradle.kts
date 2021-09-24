@@ -14,7 +14,7 @@ kotlin {
         named("jvmMain") {
             dependencies {
                 implementation(project(":common:core"))
-                implementation(project(":common:composeui:pages:simple"))
+                implementation(project(":common:composeui:appframe"))
 
                 implementation(compose.desktop.currentOs)
 

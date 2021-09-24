@@ -1,6 +1,7 @@
 include(
     ":common:core",
     ":common:composeui:components",
+    ":common:composeui:appframe",
     ":common:composeui:pages:simple",
     ":common:usecase:simple",
     ":common:data:appeal:model",

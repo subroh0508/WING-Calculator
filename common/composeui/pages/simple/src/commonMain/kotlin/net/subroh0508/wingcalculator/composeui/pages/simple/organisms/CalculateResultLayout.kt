@@ -21,29 +21,23 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalc
 
 @Composable
 fun CalculatorResultLayout(
-    headerHeight: Dp,
-    panelCount: Int = 1,
-    onChangeHeight: (Dp) -> Unit = {},
-    isConcealed: Boolean? = null,
+    headerContent: @Composable ColumnScope.(Modifier) -> Unit,
+    onChangeHeight: (Dp) -> Unit,
     modifier: Modifier = Modifier,
-    onClickIcon: () -> Unit = {},
 ) {
-    val uiModel = SimpleCalculatorProviderContext.current.uiModel
-
     val verticalScrollState = rememberScrollState(0)
 
-    if (panelCount == 1 && uiModel.query is SimpleCalculatorUiModel.Query.Opened) {
-        return
-    }
+    if (SimpleCalculatorProviderContext.current.uiModel.isResultTableHidden) return
 
-    SimpleCalculatorBoxWithConstraints(modifier) { constraints ->
-        with (LocalDensity.current) {
-            Column(Modifier.onGloballyPositioned { onChangeHeight(it.size.height.toDp()) }) {
-                FrontLayerHeader("計算結果", headerHeight, isConcealed, onClickIcon)
-                Divider(constraints.padding(horizontal = 8.dp))
-                Box(modifier = constraints.verticalScroll(verticalScrollState)) {
-                    CalculateResultTable()
-                }
+    with (LocalDensity.current) {
+        Column(
+            Modifier.onGloballyPositioned {
+                onChangeHeight(it.size.height.toDp())
+            }
+        ) {
+            headerContent(modifier)
+            Box(modifier.verticalScroll(verticalScrollState)) {
+                CalculateResultTable()
             }
         }
     }

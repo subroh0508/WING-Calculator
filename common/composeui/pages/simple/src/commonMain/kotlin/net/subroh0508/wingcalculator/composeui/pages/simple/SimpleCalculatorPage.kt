@@ -2,15 +2,16 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.*
-import net.subroh0508.wingcalculator.composeui.components.di.KoinComponentContainer
-import net.subroh0508.wingcalculator.composeui.components.di.UiModelDispatcher
-import net.subroh0508.wingcalculator.composeui.components.di.UiModelProvider
-import net.subroh0508.wingcalculator.composeui.components.di.emptyUiModelDispatcher
-import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
+import androidx.compose.ui.Modifier
+import net.subroh0508.wingcalculator.composeui.components.di.*
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
-import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorDrawer
+import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackdrop
+import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
+import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
 import net.subroh0508.wingcalculator.usecase.simple.di.SimpleCalculatorDomainModule
 
 typealias SimpleCalculatorDispatcher = UiModelDispatcher<SimpleCalculatorUiModel>
@@ -24,23 +25,35 @@ val SimpleCalculatorProviderContext = compositionLocalOf(
 )
 
 @Composable
-fun SimpleCalculatorPage() {
-    AppTheme {
-        KoinComponentContainer(
-            SimpleCalculatorUiModel(),
-            SimpleCalculatorDomainModule,
-            SimpleCalculatorDispatcherContext,
-            SimpleCalculatorProviderContext,
-        ) { PageContent() }
-    }
-}
+fun SimpleCalculatorPage(
+    panelsCount: Int,
+    drawerState: ResponsibleDrawerState,
+) = KoinComponentContainer(
+    SimpleCalculatorUiModel(panelsCount = panelsCount),
+    SimpleCalculatorDomainModule,
+    SimpleCalculatorDispatcherContext,
+    SimpleCalculatorProviderContext,
+) { PageContent(panelsCount, drawerState) }
+
 
 @Composable
-private fun PageContent() {
+private fun PageContent(
+    panelsCount: Int,
+    drawerState: ResponsibleDrawerState,
+) {
     val (koin, _) = SimpleCalculatorProviderContext.current
     val (_, dispatch) = provideFetchLatestModifiedPresetUseCase()
 
     LaunchedEffect(koin) { dispatch() }
 
-    SimpleCalculatorDrawer()
+    if (panelsCount == 1) {
+        SimpleCalculatorBackdrop(drawerState)
+        return
+    }
+
+    Row {
+        BackLayerContent(modifier = Modifier.weight(1F))
+        FrontLayerContent(modifier = Modifier.weight(1F))
+    }
 }
+

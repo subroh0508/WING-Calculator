@@ -7,6 +7,7 @@ data class SimpleCalculatorUiModel(
     val form: Form = Form(),
     val query: Query = Query.Closed,
     val suggests: List<Pair<Long, Form>> = listOf(),
+    val panelsCount: Int = 1,
 ) {
     val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio) ->
         TotalAppeals(
@@ -19,6 +20,8 @@ data class SimpleCalculatorUiModel(
             interestRatio,
         )
     }
+
+    val isResultTableHidden = panelsCount == 1 && query is Query.Opened
 
     fun input(
         pIdol: Idol.Produce = form.pIdol,
