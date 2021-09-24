@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.di.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
+import net.subroh0508.wingcalculator.composeui.pages.simple.model.Panels
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackdrop
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
@@ -28,19 +29,19 @@ val SimpleCalculatorProviderContext = compositionLocalOf(
 
 @Composable
 fun SimpleCalculatorPage(
-    panelsCount: Int,
+    panel: Panels,
     drawerState: ResponsibleDrawerState,
 ) = KoinComponentContainer(
-    SimpleCalculatorUiModel(panelsCount = panelsCount),
+    SimpleCalculatorUiModel(panel = panel),
     SimpleCalculatorDomainModule,
     SimpleCalculatorDispatcherContext,
     SimpleCalculatorProviderContext,
-) { PageContent(panelsCount, drawerState) }
+) { PageContent(panel, drawerState) }
 
 
 @Composable
 private fun PageContent(
-    panelsCount: Int,
+    panel: Panels,
     drawerState: ResponsibleDrawerState,
 ) {
     val (koin, _) = SimpleCalculatorProviderContext.current
@@ -48,14 +49,12 @@ private fun PageContent(
 
     LaunchedEffect(koin) { dispatch() }
 
-    if (panelsCount == 1) {
-        SimpleCalculatorBackdrop(drawerState)
-        return
-    }
-
-    Row(Modifier.background(color = MaterialTheme.colors.background)) {
-        BackLayerContent(modifier = Modifier.weight(1F))
-        FrontLayerContent(modifier = Modifier.weight(1F))
+    when (panel) {
+        Panels.ONE -> SimpleCalculatorBackdrop(drawerState)
+        Panels.TWO -> Row(Modifier.background(color = MaterialTheme.colors.background)) {
+            BackLayerContent(modifier = Modifier.weight(1F))
+            FrontLayerContent(modifier = Modifier.weight(1F))
+        }
     }
 }
 

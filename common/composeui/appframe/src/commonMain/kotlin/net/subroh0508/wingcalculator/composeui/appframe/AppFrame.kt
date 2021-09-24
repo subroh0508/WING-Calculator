@@ -59,7 +59,7 @@ fun AppFrame() = AppTheme {
             content = {
                 when (page) {
                     is Pages.SimpleCalculator -> SimpleCalculatorPage(
-                        (page.constraints as SimpleCalculatorPageConstraints).panelCounts, drawerState
+                        (page.constraints as SimpleCalculatorPageConstraints).panel, drawerState
                     )
                 }
             },
