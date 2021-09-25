@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.di.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
-import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
+import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideLoadSimpleCalculatorUiModelDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.Panels
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackdrop
@@ -38,20 +38,21 @@ fun SimpleCalculatorPage(
     SimpleCalculatorDomainModule,
     SimpleCalculatorDispatcherContext,
     SimpleCalculatorProviderContext,
-) { PageContent(panel, drawerState) }
+) { PageContent(panel, drawer, drawerState) }
 
 
 @Composable
 private fun PageContent(
     panel: Panels,
+    drawer: DrawerType,
     drawerState: ResponsiveDrawerState,
 ) {
-    val (koin, _) = SimpleCalculatorProviderContext.current
-    val (_, dispatch) = provideFetchLatestModifiedPresetUseCase()
+    val koin = SimpleCalculatorProviderContext.current.koin
+    val (uiModel, dispatch) = provideLoadSimpleCalculatorUiModelDispatcher()
 
-    LaunchedEffect(koin) { dispatch() }
+    LaunchedEffect(koin, panel, drawer) { dispatch(panel, drawer) }
 
-    when (panel) {
+    when (uiModel.panel) {
         Panels.ONE -> SimpleCalculatorBackdrop(drawerState)
         Panels.TWO -> Row(Modifier.background(color = MaterialTheme.colors.background)) {
             BackLayerContent(modifier = Modifier.weight(1F))

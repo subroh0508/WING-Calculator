@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
-
 private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
 private val HEADERS = listOf("P", "S1", "S2", "S3", "S4")
 

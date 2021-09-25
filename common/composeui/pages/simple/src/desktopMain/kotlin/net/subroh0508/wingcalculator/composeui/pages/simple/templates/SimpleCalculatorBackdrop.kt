@@ -42,7 +42,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
         frontLayerContent = {
             FrontLayerContent(
                 headerContent = { DesktopBackdropFrontLayerHeader(it) },
-                onChangeHeight = { frontLayerHeightState = it },
+                onHeightChange = { frontLayerHeightState = it },
             )
         },
     )

@@ -3,7 +3,9 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,32 +19,50 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherOrie
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 
 @Composable
-fun CalculateResultTable() {
-    var appealTypeState by remember { mutableStateOf(AppealType.VOCAL) }
-
-    val uiModel = SimpleCalculatorProviderContext.current.uiModel
-
-    Column {
-        TotalAppealsTable(
-            uiModel.totalAppeals.toTableData().let { (vo, da, vi) ->
-                when (appealTypeState) {
-                    AppealType.VOCAL -> vo
-                    AppealType.DANCE -> da
-                    AppealType.VISUAL -> vi
-                }
-            },
-            modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
+fun CalculateResultTables(
+    vararg appealType: AppealType,
+    modifier: Modifier = Modifier,
+    onAppealTypeChanged: ((AppealType) -> Unit),
+) = Column {
+    appealType.forEachIndexed { i, type ->
+        CalculateResultTable(
+            type,
+            SimpleCalculatorProviderContext.current.uiModel.totalAppeals,
+            if (appealType.size == 1) onAppealTypeChanged else null,
         )
-        Switcher(
-            appealTypeState,
-            SwitcherOrientation.HORIZONTAL,
-            onClickBack = { appealTypeState = appealTypeState.previous() },
-            onClickForward = { appealTypeState = appealTypeState.next() },
-        )
+
+        if (appealType.size != 1 && i < (appealType.size - 1)) Divider(modifier)
     }
 }
 
-private enum class AppealType(override val text: String) : SwitcherLabel {
+@Composable
+private fun ColumnScope.CalculateResultTable(
+    appealType: AppealType,
+    totalAppeals: TotalAppeals,
+    onAppealTypeChanged: ((AppealType) -> Unit)? = null,
+) {
+    fun onClickBack(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.previous())
+    fun onClickForward(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.next())
+
+    TotalAppealsTable(
+        totalAppeals.toTableData().let { (vo, da, vi) ->
+            when (appealType) {
+                AppealType.VOCAL -> vo
+                AppealType.DANCE -> da
+                AppealType.VISUAL -> vi
+            }
+        },
+        modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
+    )
+    Switcher(
+        appealType,
+        SwitcherOrientation.HORIZONTAL,
+        onClickBack = onAppealTypeChanged?.let { { onClickBack(appealType) } },
+        onClickForward = onAppealTypeChanged?.let { { onClickForward(appealType) } },
+    )
+}
+
+enum class AppealType(override val text: String) : SwitcherLabel {
     VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール");
 
     operator fun component1() = text

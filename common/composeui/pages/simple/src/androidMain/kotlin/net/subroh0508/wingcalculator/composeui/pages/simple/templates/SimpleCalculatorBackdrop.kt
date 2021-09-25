@@ -52,7 +52,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
                             constraints,
                         )
                     },
-                    onChangeHeight = { frontLayerHeightState = it },
+                    onHeightChange = { frontLayerHeightState = it },
                 )
             },
             scaffoldState = backdropScaffoldState,
