@@ -158,15 +158,18 @@ private fun PersistDrawerLayout(
 ) {
     Surface(
         modifier = Modifier.width(drawerContentWidth)
-            .heightIn(min = drawerHeight, max = drawerHeight)
-            .borderEnd(
-                MaterialTheme.colors.onSurface.copy(alpha = 0.12F),
-                with (LocalDensity.current) { 1.dp.toPx() },
-            ),
+            .heightIn(min = drawerHeight, max = drawerHeight),
         color = drawerBackgroundColor,
         contentColor = drawerContentColor,
     ) {
-        Column(Modifier.fillMaxSize(), content = drawerContent)
+        Column(
+            Modifier.fillMaxSize()
+                .borderEnd(
+                    MaterialTheme.colors.onSurface.copy(alpha = 0.12F),
+                    with (LocalDensity.current) { 1.dp.toPx() },
+                ),
+            content = drawerContent,
+        )
     }
     Box(
         Modifier.heightIn(min = drawerHeight, max = drawerHeight)
