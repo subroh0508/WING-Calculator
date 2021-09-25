@@ -67,6 +67,6 @@ private fun SimpleCalculatorUiModel.Query.toSearchBarState() = when (this) {
 
 private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
     is SimpleCalculatorUiModel.Query.Opened -> query.text
-    is SimpleCalculatorUiModel.Query.Closed -> form.name
+    is SimpleCalculatorUiModel.Query.Closed -> form.name?.let { "プリセット名: $it" }
 }
 private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null && form.name != null
