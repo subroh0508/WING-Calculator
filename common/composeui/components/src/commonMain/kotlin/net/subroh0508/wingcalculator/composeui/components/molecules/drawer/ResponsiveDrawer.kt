@@ -16,7 +16,7 @@ interface DrawerConstraints {
     val drawer: DrawerType
 }
 
-class ResponsibleDrawerState private constructor(
+class ResponsiveDrawerState private constructor(
     internal val modalDrawerState: DrawerState? = null,
     internal val shrinkableDrawerState: ShrinkableDrawerState? = null,
 ) {
@@ -63,26 +63,26 @@ class ResponsibleDrawerState private constructor(
         }
 
     companion object {
-        fun Saver(constraints: DrawerConstraints) = Saver<ResponsibleDrawerState, DrawerValue>(
+        fun Saver(constraints: DrawerConstraints) = Saver<ResponsiveDrawerState, DrawerValue>(
             save = { it.currentValue },
-            restore = { ResponsibleDrawerState(constraints, it) },
+            restore = { ResponsiveDrawerState(constraints, it) },
         )
     }
 }
 
 @Composable
-fun <T: DrawerConstraints> rememberResponsibleDrawerState(
+fun <T: DrawerConstraints> rememberResponsiveDrawerState(
     constraints: T,
     initValue: DrawerValue,
 ) = rememberSaveable(
     constraints,
-    saver = ResponsibleDrawerState.Saver(constraints),
-) { ResponsibleDrawerState(constraints, initValue) }
+    saver = ResponsiveDrawerState.Saver(constraints),
+) { ResponsiveDrawerState(constraints, initValue) }
 
 @Composable
-fun <T: DrawerConstraints> ResponsibleDrawer(
+fun <T: DrawerConstraints> ResponsiveDrawer(
     constraints: T,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     drawerContent: @Composable ColumnScope.() -> Unit,
     content: @Composable (T) -> Unit,
 ) = when (constraints.drawer) {

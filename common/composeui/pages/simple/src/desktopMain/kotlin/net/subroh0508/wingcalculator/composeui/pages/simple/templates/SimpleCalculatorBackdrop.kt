@@ -14,12 +14,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.components.atoms.StaticBackdrop
 import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLayerHeader
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ResponsibleDrawerState) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
     var frontLayerHeightState by remember { mutableStateOf(BackdropScaffoldDefaults.HeaderHeight) }
 
     val coroutineScope = rememberCoroutineScope()

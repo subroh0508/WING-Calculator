@@ -7,7 +7,6 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.MenuOpen
 import androidx.compose.runtime.Composable
@@ -19,11 +18,11 @@ import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerConstraints
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 
 @Composable
 fun ColumnScope.DrawerHeader(
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     constraints: DrawerConstraints,
 ) = when (drawerState.currentValue) {
     DrawerValue.Closed -> ClosedDrawerHeader(drawerState)
@@ -32,7 +31,7 @@ fun ColumnScope.DrawerHeader(
 
 @Composable
 private fun ColumnScope.ClosedDrawerHeader(
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
 ) {
     val scope = rememberCoroutineScope()
 
@@ -51,7 +50,7 @@ private fun ColumnScope.ClosedDrawerHeader(
 
 @Composable
 private fun ColumnScope.OpenDrawerHeader(
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     constraints: DrawerConstraints,
 ) {
     if (constraints.drawer != DrawerType.Modal) {

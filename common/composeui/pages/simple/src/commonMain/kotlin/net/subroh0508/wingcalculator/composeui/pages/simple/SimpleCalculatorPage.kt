@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.di.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.Panels
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
@@ -32,7 +32,7 @@ val SimpleCalculatorProviderContext = compositionLocalOf(
 fun SimpleCalculatorPage(
     panel: Panels,
     drawer: DrawerType,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
 ) = KoinComponentContainer(
     SimpleCalculatorUiModel(panel = panel, drawer = drawer),
     SimpleCalculatorDomainModule,
@@ -44,7 +44,7 @@ fun SimpleCalculatorPage(
 @Composable
 private fun PageContent(
     panel: Panels,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
 ) {
     val (koin, _) = SimpleCalculatorProviderContext.current
     val (_, dispatch) = provideFetchLatestModifiedPresetUseCase()

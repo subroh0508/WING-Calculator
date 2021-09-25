@@ -5,22 +5,19 @@ package net.subroh0508.wingcalculator.composeui.appframe
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerHeader
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerMenuItem
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawer
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsibleDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawer
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorPage
 
 @Composable
 fun AppFrame() = BoxWithConstraints {
     var page: Pages by rememberPage(maxWidth) { Pages.SimpleCalculator(maxWidth) }
-    val drawerState = rememberResponsibleDrawerState(page.constraints, DrawerValue.Closed)
+    val drawerState = rememberResponsiveDrawerState(page.constraints, DrawerValue.Closed)
 
     ThemedAppFrame(page, drawerState) { page = it }
 }
@@ -28,9 +25,9 @@ fun AppFrame() = BoxWithConstraints {
 @Composable
 private fun ThemedAppFrame(
     page: Pages,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     onPageChanged: (Pages) -> Unit,
-) = ResponsibleDrawer(
+) = ResponsiveDrawer(
     page.constraints,
     drawerContent = {
         DrawerHeader(drawerState, page.constraints)

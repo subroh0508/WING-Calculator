@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 
 private val DefaultMenuItemHeight = 56.dp
 
@@ -23,7 +23,7 @@ private val DefaultMenuItemHeight = 56.dp
 fun DrawerMenuItem(
     icon: Pair<ImageVector, String>,
     label: String,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     onClick: () -> Unit,
 ) = DrawerMenuItem(
     icon,
@@ -43,7 +43,7 @@ fun DrawerMenuItem(
 fun DrawerMenuItem(
     icon: Pair<ImageVector, String>,
     label: @Composable RowScope.() -> Unit,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     onClick: () -> Unit,
 ) = when (drawerState.currentValue) {
     DrawerValue.Closed -> ClosedDrawerMenuItem(icon, label, onClick)
@@ -76,7 +76,7 @@ private fun ClosedDrawerMenuItem(
 private fun OpenDrawerMenuItem(
     icon: Pair<ImageVector, String>,
     label: @Composable RowScope.() -> Unit,
-    drawerState: ResponsibleDrawerState,
+    drawerState: ResponsiveDrawerState,
     onClick: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
