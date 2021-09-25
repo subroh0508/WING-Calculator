@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.composeui.appframe.constraints.panel
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerHeader
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawer
