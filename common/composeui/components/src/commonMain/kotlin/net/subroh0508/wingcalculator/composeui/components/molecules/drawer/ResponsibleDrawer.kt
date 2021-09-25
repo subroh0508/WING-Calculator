@@ -53,7 +53,11 @@ class ResponsibleDrawerState private constructor(
         }
     val currentValue
         get() = when {
-            modalDrawerState != null -> modalDrawerState.currentValue
+            modalDrawerState != null ->
+                if (modalDrawerState.isAnimationRunning)
+                    DrawerValue.Open
+                else
+                    modalDrawerState.currentValue
             shrinkableDrawerState != null -> shrinkableDrawerState.currentValue
             else -> DrawerValue.Closed
         }
