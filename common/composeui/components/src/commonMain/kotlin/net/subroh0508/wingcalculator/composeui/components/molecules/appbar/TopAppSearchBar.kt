@@ -27,9 +27,9 @@ fun TopAppSearchBar(
     text: String? = null,
     placeHolder: String = "",
     searchBarState: SearchBarState,
-    onNavigationClick: () -> Unit,
     onSearchBarStateChange: (SearchBarState) -> Unit,
     onQueryChange: (String?) -> Unit,
+    onNavigationClick: (() -> Unit)? = null,
     backgroundColor: Color = MaterialTheme.colors.primarySurface,
     elevation: Dp = AppBarDefaults.TopAppBarElevation,
     contentPadding: PaddingValues = AppBarDefaults.ContentPadding,
@@ -49,8 +49,8 @@ fun TopAppSearchBar(
         )
         SearchBarState.CLOSED -> ClosedSearchBarContent(
             text, placeHolder,
-            onNavigationClick,
             onSearchBarClick = { onSearchBarStateChange(SearchBarState.OPENED) },
+            onNavigationClick,
             actions,
         )
     }
@@ -110,8 +110,8 @@ private fun RowScope.OpenedSearchBarContent(
 private fun RowScope.ClosedSearchBarContent(
     text: String?,
     placeHolder: String,
-    onNavigationClick: () -> Unit,
     onSearchBarClick: () -> Unit,
+    onNavigationClick: (() -> Unit)? = null,
     actions: @Composable () -> Unit = {},
 ) = OutlinedButton(
     onClick = onSearchBarClick,
@@ -120,16 +120,19 @@ private fun RowScope.ClosedSearchBarContent(
         contentColor = MaterialTheme.colors.onSurface,
     ),
 ) {
-    IconButton(
-        onClick = onNavigationClick,
-        modifier = Modifier.padding(4.dp),
-    ) {
-        Icon(
-            Icons.Default.Menu,
-            contentDescription = "navigation",
-            modifier = Modifier.size(24.dp),
-        )
-    }
+    if (onNavigationClick != null)
+        IconButton(
+            onClick = onNavigationClick,
+            modifier = Modifier.padding(4.dp),
+        ) {
+            Icon(
+                Icons.Default.Menu,
+                contentDescription = "navigation",
+                modifier = Modifier.size(24.dp),
+            )
+        }
+    else
+        Spacer(Modifier.width(16.dp))
     Text(
         text ?: placeHolder,
         color = MaterialTheme.colors.onSurface.copy(alpha = if (text == null) 0.6F else 1.0F),

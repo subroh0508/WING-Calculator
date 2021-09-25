@@ -9,12 +9,12 @@ import net.subroh0508.wingcalculator.composeui.appframe.constraints.LayoutConstr
 import net.subroh0508.wingcalculator.composeui.appframe.constraints.SimpleCalculatorPageConstraints
 import net.subroh0508.wingcalculator.composeui.appframe.constraints.invoke
 
-sealed class Pages<out T: LayoutConstraints> {
-    abstract val constraints: T
+sealed class Pages {
+    abstract val constraints: LayoutConstraints
 
     class SimpleCalculator private constructor(
         override val constraints: SimpleCalculatorPageConstraints,
-    ) : Pages<SimpleCalculatorPageConstraints>() {
+    ) : Pages() {
         constructor(maxWidth: Dp) : this(SimpleCalculatorPageConstraints(maxWidth))
     }
 }
@@ -22,5 +22,5 @@ sealed class Pages<out T: LayoutConstraints> {
 @Composable
 fun rememberPage(
     maxWidth: Dp,
-    init: () -> Pages<*>,
-): MutableState<Pages<*>> = remember(maxWidth) { mutableStateOf(init()) }
+    init: () -> Pages,
+) = remember(maxWidth) { mutableStateOf(init()) }

@@ -1,6 +1,7 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.model
 
 import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.preset.model.Preset
 
 data class SimpleCalculatorUiModel(
@@ -8,6 +9,7 @@ data class SimpleCalculatorUiModel(
     val query: Query = Query.Closed,
     val suggests: List<Pair<Long, Form>> = listOf(),
     val panel: Panels = Panels.ONE,
+    val drawer: DrawerType = DrawerType.Modal,
 ) {
     val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio) ->
         TotalAppeals(
@@ -22,6 +24,7 @@ data class SimpleCalculatorUiModel(
     }
 
     val isResultTableHidden = panel == Panels.ONE && query is Query.Opened
+    val isOpenDrawerButtonVisible = drawer == DrawerType.Modal
 
     fun input(
         pIdol: Idol.Produce = form.pIdol,

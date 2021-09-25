@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.di.*
+import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsibleDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideFetchLatestModifiedPresetUseCase
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.Panels
@@ -30,9 +31,10 @@ val SimpleCalculatorProviderContext = compositionLocalOf(
 @Composable
 fun SimpleCalculatorPage(
     panel: Panels,
+    drawer: DrawerType,
     drawerState: ResponsibleDrawerState,
 ) = KoinComponentContainer(
-    SimpleCalculatorUiModel(panel = panel),
+    SimpleCalculatorUiModel(panel = panel, drawer = drawer),
     SimpleCalculatorDomainModule,
     SimpleCalculatorDispatcherContext,
     SimpleCalculatorProviderContext,

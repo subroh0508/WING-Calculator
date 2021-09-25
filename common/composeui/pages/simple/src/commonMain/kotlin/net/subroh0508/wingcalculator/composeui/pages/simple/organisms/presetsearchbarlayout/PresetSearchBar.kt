@@ -37,7 +37,7 @@ fun PresetSearchBar(
         uiModel.searchBarText,
         "プリセットを検索",
         query.toSearchBarState(),
-        onNavigationClick = onNavigationClick,
+        onNavigationClick = if (uiModel.isOpenDrawerButtonVisible) onNavigationClick else null,
         onSearchBarStateChange = {
             dispatch(
                 when (it) {
