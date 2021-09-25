@@ -12,6 +12,7 @@ import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawer
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsiveDrawerState
+import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorPage
 
 @Composable
@@ -27,25 +28,27 @@ private fun ThemedAppFrame(
     page: Pages,
     drawerState: ResponsiveDrawerState,
     onPageChanged: (Pages) -> Unit,
-) = ResponsiveDrawer(
-    page.constraints,
-    drawerContent = {
-        DrawerHeader(drawerState, page.constraints)
-        Divider()
-        DrawerMenuItem(
-            Icons.Default.Settings to "Settings",
-            "アプリ設定",
-            drawerState,
-        ) {}
-    },
-    drawerState = drawerState,
-    content = {
-        when (page) {
-            is Pages.SimpleCalculator -> SimpleCalculatorPage(
-                page.constraints.panel,
-                page.constraints.drawer,
+) = AppTheme {
+    ResponsiveDrawer(
+        page.constraints,
+        drawerContent = {
+            DrawerHeader(drawerState, page.constraints)
+            Divider()
+            DrawerMenuItem(
+                Icons.Default.Settings to "Settings",
+                "アプリ設定",
                 drawerState,
-            )
-        }
-    },
-)
+            ) {}
+        },
+        drawerState = drawerState,
+        content = {
+            when (page) {
+                is Pages.SimpleCalculator -> SimpleCalculatorPage(
+                    page.constraints.panel,
+                    page.constraints.drawer,
+                    drawerState,
+                )
+            }
+        },
+    )
+}
