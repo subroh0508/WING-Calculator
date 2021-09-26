@@ -4,6 +4,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -59,20 +60,9 @@ private fun PageContent(
     when (uiModel.panel) {
         Panels.ONE -> SimpleCalculatorBackdrop(drawerState)
         Panels.TWO -> Row(Modifier.background(color = MaterialTheme.colors.background)) {
-            BackLayerContent(
-                modifier = Modifier.weight(1F)
-                    .borderEnd(1.dp),
-            )
-            FrontLayerContent(
-                modifier = Modifier.weight(1F)
-                    .borderEnd(1.dp),
-            )
+            BackLayerContent(modifier = Modifier.weight(1F))
+            Divider(Modifier.fillMaxHeight().width(1.dp))
+            FrontLayerContent(modifier = Modifier.weight(1F))
         }
     }
 }
-
-@Composable
-private fun Modifier.borderEnd(width: Dp) = borderEnd(
-    MaterialTheme.colors.onSurface.copy(alpha = 0.12F),
-    with (LocalDensity.current) { width.toPx() },
-)

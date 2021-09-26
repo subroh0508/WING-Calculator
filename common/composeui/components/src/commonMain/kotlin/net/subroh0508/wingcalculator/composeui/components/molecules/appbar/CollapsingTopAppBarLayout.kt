@@ -48,7 +48,11 @@ fun CollapsingTopAppBarLayout(
     if (isCollapsingEnable) {
         boxModifier = boxModifier.nestedScroll(nestedScrollConnection)
     }
-    val columnModifier = if (isCollapsingEnable) Modifier.verticalScroll(verticalScrollState) else Modifier
+    val columnModifier =
+        if (isCollapsingEnable)
+            Modifier.verticalScroll(verticalScrollState)
+        else
+            Modifier.fillMaxHeight()
 
     Box(modifier = boxModifier) {
         Column(modifier = columnModifier) {

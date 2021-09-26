@@ -3,17 +3,11 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.templates
 
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BackdropScaffoldDefaults
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.components.atoms.StaticBackdrop
-import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLayerHeader
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
@@ -40,16 +34,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
         },
         backLayerBackgroundColor = MaterialTheme.colors.background,
         frontLayerContent = {
-            FrontLayerContent(
-                headerContent = { DesktopBackdropFrontLayerHeader() },
-                onHeightChange = { frontLayerHeightState = it },
-            )
+            FrontLayerContent(onHeightChange = { frontLayerHeightState = it })
         },
     )
-}
-
-@Composable
-private fun ColumnScope.DesktopBackdropFrontLayerHeader() {
-    FrontLayerHeader("計算結果", BackdropScaffoldDefaults.HeaderHeight)
-    Divider(Modifier.padding(horizontal = 8.dp))
 }
