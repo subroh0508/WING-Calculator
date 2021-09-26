@@ -21,7 +21,7 @@ fun CalculateResultTables(
     vararg appealType: AppealType,
     modifier: Modifier = Modifier,
     onAppealTypeChanged: ((AppealType) -> Unit) = {},
-) = Column {
+) = Column(modifier) {
     appealType.forEachIndexed { i, type ->
         CalculateResultTable(
             type,
@@ -30,7 +30,7 @@ fun CalculateResultTables(
         )
 
         if (appealType.size != 1 && i < (appealType.size - 1)) {
-            Divider(modifier.padding(horizontal = 8.dp))
+            Divider(Modifier.padding(horizontal = 8.dp))
         }
     }
 }

@@ -41,7 +41,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
         backLayerBackgroundColor = MaterialTheme.colors.background,
         frontLayerContent = {
             FrontLayerContent(
-                headerContent = { DesktopBackdropFrontLayerHeader(it) },
+                headerContent = { DesktopBackdropFrontLayerHeader() },
                 onHeightChange = { frontLayerHeightState = it },
             )
         },
@@ -49,9 +49,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
 }
 
 @Composable
-private fun ColumnScope.DesktopBackdropFrontLayerHeader(
-    modifier: Modifier = Modifier,
-) {
+private fun ColumnScope.DesktopBackdropFrontLayerHeader() {
     FrontLayerHeader("計算結果", BackdropScaffoldDefaults.HeaderHeight)
-    Divider(modifier.padding(horizontal = 8.dp))
+    Divider(Modifier.padding(horizontal = 8.dp))
 }

@@ -45,11 +45,10 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
             backLayerBackgroundColor = MaterialTheme.colors.background,
             frontLayerContent = {
                 FrontLayerContent(
-                    headerContent = { constraints ->
+                    headerContent = {
                         AndroidBackdropFrontLayerHeader(
                             coroutineScope,
                             backdropScaffoldState,
-                            constraints,
                         )
                     },
                     onHeightChange = { frontLayerHeightState = it },
@@ -65,7 +64,6 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
 private fun ColumnScope.AndroidBackdropFrontLayerHeader(
     coroutineScope: CoroutineScope,
     backdropScaffoldState: BackdropScaffoldState,
-    modifier: Modifier = Modifier,
 ) {
     FrontLayerHeader(
         "計算結果",
@@ -80,7 +78,7 @@ private fun ColumnScope.AndroidBackdropFrontLayerHeader(
             }
         },
     )
-    Divider(modifier.padding(horizontal = 8.dp))
+    Divider(Modifier.padding(horizontal = 8.dp))
 }
 
 private fun calculatePeekHeight(maxHeight: Dp, frontLayerHeight: Dp): Dp {
