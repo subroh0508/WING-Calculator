@@ -7,6 +7,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.Panels
@@ -19,13 +20,13 @@ fun ColumnScope.CalculatorResultLayout(
     modifier: Modifier = Modifier,
 ) {
     val uiModel = SimpleCalculatorProviderContext.current.uiModel
+    val verticalScrollState = rememberScrollState(0)
 
     if (uiModel.panel == Panels.TWO) {
-        ScrollableCalculateResultTables(
-            *AppealType.values(),
-            headerContent = headerContent,
-            modifier = modifier,
-        )
+        Column(modifier.verticalScroll(verticalScrollState)) {
+            Spacer(Modifier.height(56.dp))
+            CalculateResultTables(*AppealType.values())
+        }
 
         return
     }
@@ -34,25 +35,8 @@ fun ColumnScope.CalculatorResultLayout(
 
     var appealType by remember { mutableStateOf(AppealType.VOCAL) }
 
-    ScrollableCalculateResultTables(
-        appealType,
-        headerContent = headerContent,
-        onAppealTypeChanged = { appealType = it },
-        modifier = modifier,
-    )
-}
-
-@Composable
-private fun ColumnScope.ScrollableCalculateResultTables(
-    vararg appealType: AppealType,
-    headerContent: @Composable ColumnScope.(Modifier) -> Unit,
-    onAppealTypeChanged: ((AppealType) -> Unit) = {},
-    modifier: Modifier = Modifier,
-) {
-    val verticalScrollState = rememberScrollState(0)
-
     headerContent(modifier)
     Box(modifier.verticalScroll(verticalScrollState)) {
-        CalculateResultTables(*appealType, onAppealTypeChanged = onAppealTypeChanged)
+        CalculateResultTables(appealType) { appealType = it }
     }
 }

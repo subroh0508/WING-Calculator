@@ -11,8 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.input.pointer.pointerInput
@@ -23,6 +21,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.Strings
+import net.subroh0508.wingcalculator.composeui.components.borderEnd
 import net.subroh0508.wingcalculator.composeui.components.getString
 
 private val SHRINKABLE_DRAWER_CONTENT_SHRINK_WIDTH = 48.dp
@@ -218,15 +217,6 @@ private fun ModalDrawerLayout(
     ) {
         Column(Modifier.fillMaxSize(), content = drawerContent)
     }
-}
-
-private fun Modifier.borderEnd(color: Color, width: Float) = drawBehind {
-    drawLine(
-        color,
-        start = Offset(size.width, 0F),
-        end = Offset(size.width, size.height),
-        strokeWidth = width,
-    )
 }
 
 @Composable

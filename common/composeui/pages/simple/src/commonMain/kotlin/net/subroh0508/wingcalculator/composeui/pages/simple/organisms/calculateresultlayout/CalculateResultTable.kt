@@ -2,9 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,7 +20,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProv
 fun CalculateResultTables(
     vararg appealType: AppealType,
     modifier: Modifier = Modifier,
-    onAppealTypeChanged: ((AppealType) -> Unit),
+    onAppealTypeChanged: ((AppealType) -> Unit) = {},
 ) = Column {
     appealType.forEachIndexed { i, type ->
         CalculateResultTable(
@@ -31,7 +29,9 @@ fun CalculateResultTables(
             if (appealType.size == 1) onAppealTypeChanged else null,
         )
 
-        if (appealType.size != 1 && i < (appealType.size - 1)) Divider(modifier)
+        if (appealType.size != 1 && i < (appealType.size - 1)) {
+            Divider(modifier.padding(horizontal = 8.dp))
+        }
     }
 }
 

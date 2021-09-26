@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.borderEnd
 import net.subroh0508.wingcalculator.composeui.components.di.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
@@ -55,9 +59,20 @@ private fun PageContent(
     when (uiModel.panel) {
         Panels.ONE -> SimpleCalculatorBackdrop(drawerState)
         Panels.TWO -> Row(Modifier.background(color = MaterialTheme.colors.background)) {
-            BackLayerContent(modifier = Modifier.weight(1F))
-            FrontLayerContent(modifier = Modifier.weight(1F))
+            BackLayerContent(
+                modifier = Modifier.weight(1F)
+                    .borderEnd(1.dp),
+            )
+            FrontLayerContent(
+                modifier = Modifier.weight(1F)
+                    .borderEnd(1.dp),
+            )
         }
     }
 }
 
+@Composable
+private fun Modifier.borderEnd(width: Dp) = borderEnd(
+    MaterialTheme.colors.onSurface.copy(alpha = 0.12F),
+    with (LocalDensity.current) { width.toPx() },
+)
