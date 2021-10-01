@@ -15,7 +15,8 @@ select:
 SELECT *
 FROM AppPreference
 WHERE
-  producer = :producerId;
+  producer = :producerId
+LIMIT 1;
 
 add:
 INSERT INTO AppPreference(
@@ -35,4 +36,4 @@ SET
   theme = :theme, tableType = :tableType,
   lastModified = :lastModified
 WHERE
-  producer = :producerId;
+  id = :id;
