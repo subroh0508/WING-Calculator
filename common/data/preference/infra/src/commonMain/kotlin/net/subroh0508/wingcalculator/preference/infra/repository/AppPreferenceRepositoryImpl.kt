@@ -7,7 +7,7 @@ import net.subroh0508.wingcalculator.database.AppPreference as DBAppPreference
 import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 internal class AppPreferenceRepositoryImpl(
-        private val database: AppPreferenceDatabase,
+    private val database: AppPreferenceDatabase,
 ) : AppPreferenceRepository {
     override suspend fun fetch(producerId: Long) = (database.get(producerId) ?: database.add(producerId)).toValueObject()
     override suspend fun update(producerId: Long, preference: AppPreference) = database.update(

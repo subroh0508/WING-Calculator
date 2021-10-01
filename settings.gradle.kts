@@ -3,6 +3,7 @@ include(
     ":common:composeui:components",
     ":common:composeui:appframe",
     ":common:composeui:pages:simple",
+    ":common:usecase:preference",
     ":common:usecase:simple",
     ":common:data:preference:model",
     ":common:data:preference:infra",
