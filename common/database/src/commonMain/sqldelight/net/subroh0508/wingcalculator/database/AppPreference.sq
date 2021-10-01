@@ -1,0 +1,38 @@
+import net.subroh0508.wingcalculator.database.Theme;
+import net.subroh0508.wingcalculator.database.TableType;
+
+CREATE TABLE IF NOT EXISTS AppPreference(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    theme TEXT AS Theme NOT NULL DEFAULT 'SYSTEM',
+    tableType TEXT AS TableType NOT NULL DEFAULT 'APPEAL',
+    producer INTEGER NOT NULL UNIQUE,
+    createdAt INTEGER NOT NULL,
+    lastModified INTEGER NOT NULL,
+    FOREIGN KEY(producer) REFERENCES Producer(id)
+);
+
+select:
+SELECT *
+FROM AppPreference
+WHERE
+  producer = :producerId;
+
+add:
+INSERT INTO AppPreference(
+  theme, tableType,
+  producer,
+  createdAt, lastModified
+)
+VALUES (
+  :theme, :tableType,
+  :producerId,
+  :createdAt, :createdAt
+);
+
+update:
+UPDATE AppPreference
+SET
+  theme = :theme, tableType = :tableType,
+  lastModified = :lastModified
+WHERE
+  producer = :producerId;
