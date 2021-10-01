@@ -9,8 +9,8 @@ class AppPreferenceDatabase(
 
     fun add(
             producerId: Long,
-            theme: Theme = Theme.SYSTEM,
-            tableType: TableType = TableType.APPEAL,
+            theme: DBTheme = DBTheme.SYSTEM,
+            tableType: DBTableType = DBTableType.APPEAL,
     ): AppPreference {
         queries.add(theme, tableType, producerId, Clock.System.now().toEpochMilliseconds())
 
@@ -19,8 +19,8 @@ class AppPreferenceDatabase(
 
     fun update(
             producerId: Long,
-            theme: Theme = Theme.SYSTEM,
-            tableType: TableType = TableType.APPEAL,
+            theme: DBTheme = DBTheme.SYSTEM,
+            tableType: DBTableType = DBTableType.APPEAL,
     ): AppPreference {
         val preference = get(producerId) ?: return add(producerId, theme, tableType)
 

@@ -4,6 +4,8 @@ include(
     ":common:composeui:appframe",
     ":common:composeui:pages:simple",
     ":common:usecase:simple",
+    ":common:data:preference:model",
+    ":common:data:preference:infra",
     ":common:data:appeal:model",
     ":common:data:preset:model",
     ":common:data:preset:infra",

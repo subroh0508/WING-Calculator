@@ -1,7 +1,9 @@
 package net.subroh0508.wingcalculator.database.di
 
+import com.squareup.sqldelight.EnumColumnAdapter
 import com.squareup.sqldelight.db.SqlCursor
 import com.squareup.sqldelight.db.SqlDriver
+import net.subroh0508.wingcalculator.database.AppPreference
 import net.subroh0508.wingcalculator.database.WingCalculatorDatabase
 import org.koin.dsl.module
 
@@ -25,7 +27,13 @@ private class MigrationExecutor(private val driver: SqlDriver) {
             version = schemaVersion
         }
 
-        return WingCalculatorDatabase(driver)
+        return WingCalculatorDatabase(
+                driver,
+                AppPreferenceAdapter = AppPreference.Adapter(
+                        themeAdapter = EnumColumnAdapter(),
+                        tableTypeAdapter = EnumColumnAdapter(),
+                ),
+        )
     }
 
     private var version: Int
