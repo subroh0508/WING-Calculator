@@ -1,10 +1,10 @@
-import net.subroh0508.wingcalculator.database.Theme;
-import net.subroh0508.wingcalculator.database.TableType;
+import net.subroh0508.wingcalculator.database.DBTheme;
+import net.subroh0508.wingcalculator.database.DBTableType;
 
 CREATE TABLE IF NOT EXISTS AppPreference(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    theme TEXT AS Theme NOT NULL DEFAULT 'SYSTEM',
-    tableType TEXT AS TableType NOT NULL DEFAULT 'APPEAL',
+    theme TEXT AS DBTheme NOT NULL DEFAULT 'SYSTEM',
+    tableType TEXT AS DBTableType NOT NULL DEFAULT 'APPEAL',
     producer INTEGER NOT NULL UNIQUE,
     createdAt INTEGER NOT NULL,
     lastModified INTEGER NOT NULL,
