@@ -10,16 +10,26 @@ import androidx.compose.runtime.*
 import net.subroh0508.wingcalculator.composeui.appframe.constraints.panel
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerHeader
 import net.subroh0508.wingcalculator.composeui.appframe.menu.DrawerMenuItem
+import net.subroh0508.wingcalculator.composeui.components.di.getKoin
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawer
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorPage
+import net.subroh0508.wingcalculator.usecase.preference.FetchAppPreferenceUseCase
 
 @Composable
 fun AppFrame() = BoxWithConstraints {
     var page: Pages by rememberPage(maxWidth) { Pages.SimpleCalculator(maxWidth) }
     val drawerState = rememberResponsiveDrawerState(page.constraints, DrawerValue.Closed)
+
+    val koin = getKoin()
+    val fetchAppPreferenceUseCase: FetchAppPreferenceUseCase = remember(koin) { koin.get() }
+
+    LaunchedEffect(koin) {
+        val preference = fetchAppPreferenceUseCase.execute()
+        println(preference)
+    }
 
     ThemedAppFrame(page, drawerState) { page = it }
 }

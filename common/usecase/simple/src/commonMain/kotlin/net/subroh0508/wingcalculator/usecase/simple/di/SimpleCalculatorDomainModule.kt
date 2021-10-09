@@ -1,7 +1,6 @@
 package net.subroh0508.wingcalculator.usecase.simple.di
 
 import net.subroh0508.wingcalculator.preset.infra.di.PresetRepositories
-import net.subroh0508.wingcalculator.producer.infra.di.ProducerRepositories
 import net.subroh0508.wingcalculator.usecase.simple.*
 import net.subroh0508.wingcalculator.usecase.simple.internal.*
 import net.subroh0508.wingcalculator.usecase.simple.internal.CreatePresetUseCaseImpl
@@ -10,7 +9,7 @@ import net.subroh0508.wingcalculator.usecase.simple.internal.SavePresetUseCaseIm
 import net.subroh0508.wingcalculator.usecase.simple.internal.SearchPresetUseCaseImpl
 import org.koin.dsl.module
 
-val SimpleCalculatorDomainModule get() = PresetRepositories.Module + ProducerRepositories.Module + module {
+val SimpleCalculatorDomainModule get() = PresetRepositories.Module + module {
     single<FetchLatestModifiedPresetUseCase> { FetchLatestModifiedPresetUseCaseImpl(get(), get()) }
     single<SearchPresetUseCase> { SearchPresetUseCaseImpl(get(), get()) }
     single<CreatePresetUseCase> { CreatePresetUseCaseImpl(get(), get()) }
