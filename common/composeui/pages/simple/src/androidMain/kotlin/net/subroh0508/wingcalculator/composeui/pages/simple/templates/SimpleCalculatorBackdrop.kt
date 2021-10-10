@@ -13,7 +13,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.B
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState, isResultTableHidden: Boolean) {
     val backdropScaffoldState = rememberBackdropScaffoldState(BackdropValue.Revealed)
     val coroutineScope = rememberCoroutineScope()
 
@@ -40,6 +40,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
             frontLayerContent = {
                 FrontLayerContent(
                     backdropScaffoldState.isConcealed,
+                    isResultTableHidden,
                     onHeightChange = { frontLayerHeightState = it },
                     onHeaderIconClick = {
                         coroutineScope.launch {

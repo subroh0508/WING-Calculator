@@ -13,7 +13,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.B
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
 
 @Composable
-actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
+actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState, isResultTableHidden: Boolean) {
     var frontLayerHeightState by remember { mutableStateOf(BackdropScaffoldDefaults.HeaderHeight) }
 
     val coroutineScope = rememberCoroutineScope()
@@ -34,7 +34,10 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState) {
         },
         backLayerBackgroundColor = MaterialTheme.colors.background,
         frontLayerContent = {
-            FrontLayerContent(onHeightChange = { frontLayerHeightState = it })
+            FrontLayerContent(
+                isResultTableHidden = isResultTableHidden,
+                onHeightChange = { frontLayerHeightState = it },
+            )
         },
     )
 }

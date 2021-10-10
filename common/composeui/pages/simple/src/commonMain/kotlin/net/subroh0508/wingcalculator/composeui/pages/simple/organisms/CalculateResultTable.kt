@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider

@@ -9,7 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.BackdropScaffoldDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -18,19 +19,21 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLayerHeader
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarLayout
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculatorResultLayout
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout.AppealType
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculateresultlayout.CalculateResultTables
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.AppealType
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculateResultTables
 
 @Composable
 fun FrontLayerContent(
     isConcealed: Boolean? = null,
+    isResultTableHidden: Boolean,
     onHeightChange: (Dp) -> Unit,
     onHeaderIconClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) = BoxWithConstraints(modifier) {
     val verticalScrollState = rememberScrollState(0)
     val constraint = widthConstraintsModifier
+
+    if (isResultTableHidden) return@BoxWithConstraints
 
     GloballyPositionedColumn(onHeightChange) {
         FrontLayerHeader(
@@ -58,7 +61,7 @@ fun FrontLayerContent(
     CollapsingTopAppBarLayout(
         appBar = {
             Column(it.background(MaterialTheme.colors.background)) {
-                FrontLayerHeader(TopAppSearchBarHeight, showHeader)
+                if (showHeader) FrontLayerHeader(TopAppSearchBarHeight)
             }
         },
         appBarHeight = headerHeight + 1.dp,
@@ -66,7 +69,7 @@ fun FrontLayerContent(
         modifier = widthConstraintsModifier,
     ) {
         when(showOneTable) {
-            true -> CalculatorResultLayout(Modifier.fillMaxHeight())
+            true -> CalculatorResultLayout(modifier = Modifier.fillMaxHeight())
             false -> CalculateResultTables(*AppealType.values())
         }
     }
@@ -86,12 +89,21 @@ private fun GloballyPositionedColumn(
 @Composable
 private fun ColumnScope.FrontLayerHeader(
     headerHeight: Dp,
-    isVisible: Boolean = true,
     isConcealed: Boolean? = null,
     onIconClick: () -> Unit = {},
 ) {
-    if (!isVisible) return
-
     FrontLayerHeader("計算結果", headerHeight, isConcealed, onClickIcon = onIconClick)
     Divider(Modifier.padding(horizontal = 8.dp))
+}
+
+@Composable
+private fun CalculatorResultLayout(modifier: Modifier = Modifier) {
+    var appealType by remember { mutableStateOf(AppealType.VOCAL) }
+
+    Box(modifier) {
+        CalculateResultTables(
+            appealType,
+            modifier = Modifier.align(Alignment.Center),
+        ) { appealType = it }
+    }
 }

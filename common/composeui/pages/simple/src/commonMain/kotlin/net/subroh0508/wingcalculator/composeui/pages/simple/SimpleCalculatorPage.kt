@@ -6,12 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.composeui.components.borderEnd
 import net.subroh0508.wingcalculator.composeui.components.di.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
@@ -58,11 +56,13 @@ private fun PageContent(
     LaunchedEffect(koin, panel, drawer) { dispatch(panel, drawer) }
 
     when (uiModel.panel) {
-        Panels.ONE -> SimpleCalculatorBackdrop(drawerState)
-        Panels.TWO -> Row(Modifier.background(color = MaterialTheme.colors.background)) {
-            BackLayerContent(modifier = Modifier.weight(1F))
-            Divider(Modifier.fillMaxHeight().width(1.dp))
-            FrontLayerContent(modifier = Modifier.weight(1F))
+        Panels.ONE -> SimpleCalculatorBackdrop(drawerState, uiModel.isResultTableHidden)
+        Panels.TWO -> Surface(contentColor = MaterialTheme.colors.onSurface) {
+            Row(Modifier.background(color = MaterialTheme.colors.background)) {
+                BackLayerContent(modifier = Modifier.weight(1F))
+                Divider(Modifier.fillMaxHeight().width(1.dp))
+                FrontLayerContent(modifier = Modifier.weight(1F))
+            }
         }
     }
 }
