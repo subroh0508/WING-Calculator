@@ -2,6 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.components.themes
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -22,7 +23,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = false,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) = MaterialTheme(
     colors = if (darkTheme) DarkColorPalette else LightColorPalette,

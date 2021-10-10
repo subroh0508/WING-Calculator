@@ -2,6 +2,7 @@
 
 package net.subroh0508.wingcalculator.composeui.appframe
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,6 +17,7 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.Respo
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.rememberResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.components.themes.AppTheme
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorPage
+import net.subroh0508.wingcalculator.preference.model.AppPreference
 import net.subroh0508.wingcalculator.usecase.preference.FetchAppPreferenceUseCase
 
 @Composable
@@ -25,21 +27,25 @@ fun AppFrame() = BoxWithConstraints {
 
     val koin = getKoin()
     val fetchAppPreferenceUseCase: FetchAppPreferenceUseCase = remember(koin) { koin.get() }
+    var preference: AppPreference by remember(koin) { mutableStateOf(AppPreference()) }
 
-    LaunchedEffect(koin) {
-        val preference = fetchAppPreferenceUseCase.execute()
-        println(preference)
-    }
+    LaunchedEffect(koin) { preference = fetchAppPreferenceUseCase.execute() }
 
-    ThemedAppFrame(page, drawerState) { page = it }
+    ThemedAppFrame(preference, page, drawerState) { page = it }
 }
 
 @Composable
 private fun ThemedAppFrame(
+    preference: AppPreference,
     page: Pages,
     drawerState: ResponsiveDrawerState,
     onPageChanged: (Pages) -> Unit,
-) = AppTheme {
+) = AppTheme(
+    darkTheme = if (preference.theme == AppPreference.Theme.SYSTEM)
+                    isSystemInDarkTheme()
+                else
+                    preference.theme == AppPreference.Theme.DARK,
+) {
     ResponsiveDrawer(
         page.constraints,
         drawerContent = {

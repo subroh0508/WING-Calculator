@@ -5,6 +5,7 @@ package net.subroh0508.wingcalculator.composeui.components.atoms
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,7 +29,7 @@ fun TotalAppealsTable(
 
         Row(
             modifier = Modifier.height(IntrinsicSize.Max)
-                .background(Color.LightGray),
+                .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12F)),
         ) {
             Spacer(
                 modifier = Modifier.fillMaxHeight()
