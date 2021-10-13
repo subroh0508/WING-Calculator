@@ -41,7 +41,7 @@ fun PresetSearchBar(
         onSearchBarStateChange = {
             dispatch(
                 when (it) {
-                    SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened(form.name)
+                    SearchBarState.OPENED -> SimpleCalculatorUiModel.Query.Opened()
                     SearchBarState.CLOSED -> SimpleCalculatorUiModel.Query.Closed
                 },
             )

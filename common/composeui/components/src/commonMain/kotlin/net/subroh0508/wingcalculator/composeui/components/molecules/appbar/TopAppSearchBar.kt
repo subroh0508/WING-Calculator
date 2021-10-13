@@ -13,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -88,6 +89,7 @@ private fun RowScope.OpenedSearchBarContent(
             onValueChange = { onQueryChange(it.takeIf(String::isNotBlank)) },
             // @see: https://github.com/JetBrains/compose-jb/issues/364
             // singleLine = true,
+            textStyle = TextStyle.Default.copy(color = MaterialTheme.colors.onSurface),
             maxLines = 1,
             modifier = Modifier.fillMaxWidth()
                 .padding(end = 16.dp)
