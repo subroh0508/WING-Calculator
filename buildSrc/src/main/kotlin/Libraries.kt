@@ -7,7 +7,7 @@ object Libraries {
     }
 
     object Datetime {
-        private const val version = "0.2.1"
+        private const val version = "0.3.0"
         const val common = "org.jetbrains.kotlinx:kotlinx-datetime:$version"
     }
 
@@ -23,7 +23,7 @@ object Libraries {
     }
 
     object SQLDelight {
-        private const val version = "1.5.1"
+        private const val version = "1.5.2"
         const val plugin = "com.squareup.sqldelight:gradle-plugin:$version"
 
         const val jvm = "com.squareup.sqldelight:sqlite-driver:$version"
