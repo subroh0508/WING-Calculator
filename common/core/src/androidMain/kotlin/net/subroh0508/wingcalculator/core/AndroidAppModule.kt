@@ -10,4 +10,4 @@ import net.subroh0508.wingcalculator.usecase.preference.di.AppPreferenceDomainMo
 
 fun AndroidAppModule(context: Context) =
     SqlDriver.factoryModule(context) + SqlDriver.Module +
-        WingCalculatorDatabases.Module + ProducerRepositories.Module + AppPreferenceDomainModule
+        WingCalculatorDatabases.Module + AppPreferenceDomainModule

@@ -6,5 +6,4 @@ import net.subroh0508.wingcalculator.producer.infra.di.ProducerRepositories
 import net.subroh0508.wingcalculator.usecase.preference.di.AppPreferenceDomainModule
 
 val DesktopAppModule get() =
-    SqlDriver.Module + WingCalculatorDatabases.Module +
-            ProducerRepositories.Module + AppPreferenceDomainModule
+    SqlDriver.Module + WingCalculatorDatabases.Module + AppPreferenceDomainModule
