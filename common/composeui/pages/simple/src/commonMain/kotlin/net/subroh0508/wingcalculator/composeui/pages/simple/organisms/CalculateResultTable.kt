@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
-import net.subroh0508.wingcalculator.composeui.components.atoms.TotalAppealsTable
+import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.Switcher
 import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherLabel
@@ -44,7 +44,8 @@ private fun ColumnScope.CalculateResultTable(
     fun onClickBack(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.previous())
     fun onClickForward(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.next())
 
-    TotalAppealsTable(
+    Table(
+        JUDGES,
         totalAppeals.toTableData().let { (vo, da, vi) ->
             when (appealType) {
                 AppealType.VOCAL -> vo
@@ -71,11 +72,12 @@ enum class AppealType(override val text: String) : SwitcherLabel {
     fun previous() = values()[(values().size + (ordinal - 1)) % 3]
 }
 
-private fun TotalAppeals.toTableData() = Triple(
-    vocal.map(TotalAppeal.Vocal::toTableData),
-    dance.map(TotalAppeal.Dance::toTableData),
-    visual.map(TotalAppeal.Visual::toTableData),
-)
+private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
+private val HEADERS = listOf("P", "S1", "S2", "S3", "S4")
+
+private fun TotalAppeals.toTableData() = listOf(vocal, dance, visual).map {
+    it.foldIndexed(mapOf<String, List<String>>()) { i, acc, appeal -> acc + mapOf(HEADERS[i] to appeal.toTableData()) }
+}
 
 private fun TotalAppeal.toTableData() = listOf(toVocal, toDance, toVisual).let { (vo, da, vi) ->
     listOf(vo.toString(), da.toString(), vi.toString())
