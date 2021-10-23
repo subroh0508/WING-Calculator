@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.atoms.table.TableCell
 import net.subroh0508.wingcalculator.composeui.components.atoms.table.TableHeader
 
 private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
@@ -39,19 +40,7 @@ fun TotalAppealsTable(
                         .border(1.dp, Color.Black)
                         .padding(vertical = 8.dp),
                 )
-                rows.forEach { appeal ->
-                    Box(
-                        modifier = Modifier.fillMaxHeight()
-                            .weight(1F)
-                            .border(1.dp, Color.Black),
-                    ) {
-                        Text(
-                            appeal,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.align(Alignment.Center),
-                        )
-                    }
-                }
+                rows.forEach { appeal -> TableCell(appeal) }
             }
         }
     }
