@@ -7,6 +7,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.appeal.model.Appeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import net.subroh0508.wingcalculator.composeui.components.atoms.Table
@@ -15,6 +16,7 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.Switcher
 import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherLabel
 import net.subroh0508.wingcalculator.composeui.components.molecules.SwitcherOrientation
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 @Composable
 fun CalculateResultTables(
@@ -73,12 +75,19 @@ enum class AppealType(override val text: String) : SwitcherLabel {
 }
 
 private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
-private val HEADERS = listOf("P", "S1", "S2", "S3", "S4")
+private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
 
-private fun TotalAppeals.toTableData() = listOf(vocal, dance, visual).map {
-    it.foldIndexed(mapOf<String, List<String>>()) { i, acc, appeal -> acc + mapOf(HEADERS[i] to appeal.toTableData()) }
-}
+private fun TotalAppeals.toTableData() = toTableData(AppPreference.Table.JUDGE)
 
-private fun TotalAppeal.toTableData() = listOf(toVocal, toDance, toVisual).let { (vo, da, vi) ->
-    listOf(vo.toString(), da.toString(), vi.toString())
+private fun TotalAppeals.toTableData(type: AppPreference.Table) = listOf(vocal, dance, visual).map { unit -> unit.toTableData(type) }
+
+private fun TotalAppeals.Unit<TotalAppeal>.toTableData(type: AppPreference.Table): Map<String, List<String>> = when (type) {
+    AppPreference.Table.JUDGE -> foldIndexed(mapOf()) { i, acc, appeal ->
+        acc + mapOf(IDOLS[i] to listOf(appeal.toVocal, appeal.toDance, appeal.toVisual).map(Appeal::toString))
+    }
+    AppPreference.Table.APPEAL -> listOf(
+        map(TotalAppeal::toVocal),
+        map(TotalAppeal::toDance),
+        map(TotalAppeal::toVisual),
+    ).foldIndexed(mapOf()) { i, acc, appeals -> acc + mapOf(JUDGES[i] to appeals.map(Appeal::toString)) }
 }

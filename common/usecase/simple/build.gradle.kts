@@ -9,6 +9,7 @@ kotlin {
                 api(project(":common:data:appeal:model"))
                 api(project(":common:data:preset:model"))
                 api(project(":common:data:producer:model"))
+                api(project(":common:data:preference:model"))
 
                 implementation(project(":common:utilities"))
                 implementation(project(":common:data:preset:infra"))
