@@ -16,7 +16,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RowScope.TableCell(text: String) = TableCell {
+fun RowScope.TableCell(
+    text: String,
+    borderColor: Color = Color.Black,
+) = TableCell(borderColor) {
     Text(
         text,
         textAlign = TextAlign.Center,
@@ -25,8 +28,11 @@ fun RowScope.TableCell(text: String) = TableCell {
 }
 
 @Composable
-fun RowScope.TableCell(text: @Composable BoxScope.() -> Unit) = Box(
+fun RowScope.TableCell(
+    borderColor: Color = Color.Black,
+    text: @Composable BoxScope.() -> Unit,
+) = Box(
     modifier = Modifier.fillMaxHeight()
         .weight(1F)
-        .border(1.dp, Color.Black),
+        .border(1.dp, borderColor),
 ) { text() }

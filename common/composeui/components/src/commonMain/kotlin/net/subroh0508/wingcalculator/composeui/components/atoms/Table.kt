@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import net.subroh0508.wingcalculator.composeui.components.atoms.table.EmptyTableColumn
 import net.subroh0508.wingcalculator.composeui.components.atoms.table.TableColumn
 import net.subroh0508.wingcalculator.composeui.components.atoms.table.TableHeader
 
@@ -16,6 +17,7 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.table.TableHeade
 fun Table(
     header: List<String>,
     columns: Map<String, List<String>>,
+    height: Int? = null,
     modifier: Modifier = Modifier,
 ) = Column(modifier) {
     TableHeader(
@@ -25,4 +27,11 @@ fun Table(
     )
 
     columns.forEach { (label, contents) -> TableColumn(label, contents) }
+
+    (0 until getEmptySize(columns, height)).forEach { _ -> EmptyTableColumn() }
 }
+
+private fun getEmptySize(
+    map: Map<String, List<String>>,
+    height: Int? = null,
+) = height?.let { h -> (h - map.size).takeIf { h > 0 } } ?: 0

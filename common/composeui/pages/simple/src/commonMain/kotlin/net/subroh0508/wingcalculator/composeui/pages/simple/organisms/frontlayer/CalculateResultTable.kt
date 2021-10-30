@@ -97,6 +97,7 @@ private fun ColumnScope.CalculateResultTableWithSwitcher(
 
     Table(
         header.map(SwitcherLabel::text), columns,
+        height = IDOLS.size,
         modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
     )
     Switcher(
