@@ -2,7 +2,7 @@ package net.subroh0508.wingcalculator.appeal.model
 
 import kotlin.math.floor
 
-data class TotalAppeals(val units: List<Unit>) {
+data class TotalAppeals internal constructor(val units: List<Unit>) {
     constructor(
         vocal: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
         dance: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
@@ -45,33 +45,14 @@ data class TotalAppeals(val units: List<Unit>) {
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
             memoryLevel: MemoryLevel,
-        ): TotalAppeals {
-            val baseAppeals = calculateBaseAppeals(pIdol, sIdols, week)
-            val (baseVocal, baseDance, baseVisual) = baseAppeals
-
-            val (memoryVocal, memoryDance, memoryVisual) = calculateMemoryAppeal(baseAppeals, buffs, memoryLevel)
-
-            return TotalAppeals(
+        ) = calculateBaseAppeals(pIdol, sIdols, week).let { baseAppeals ->
+            TotalAppeals(
                 calculateUnitAppeals(
-                    pIdol.vocal,
-                    baseVocal,
-                    buffs.forVocal,
+                    pIdol,
+                    baseAppeals,
+                    buffs,
                     appealRatio, appealJudge, interestRatio,
-                    memoryVocal,
-                ),
-                calculateUnitAppeals(
-                    pIdol.dance,
-                    baseDance,
-                    buffs.forDance,
-                    appealRatio, appealJudge, interestRatio,
-                    memoryDance,
-                ),
-                calculateUnitAppeals(
-                    pIdol.visual,
-                    baseVisual,
-                    buffs.forVisual,
-                    appealRatio, appealJudge, interestRatio,
-                    memoryVisual,
+                    calculateMemoryAppeal(baseAppeals, buffs, memoryLevel),
                 ),
             )
         }
@@ -96,15 +77,19 @@ data class TotalAppeals(val units: List<Unit>) {
 
         @Suppress("UNCHECKED_CAST")
         private fun calculateUnitAppeals(
-            pStatus: Status,
-            baseAppeal: Pair<BaseAppeal.Produce, List<BaseAppeal.Support>>,
-            buff: Buff,
+            pIdol: Idol.Produce,
+            baseAppeals: List<Pair<BaseAppeal.Produce, List<BaseAppeal.Support>>>,
+            buffs: Buffs,
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
-            memoryAppeal: List<Appeal>,
-        ): Unit {
-            val (pBaseAppeal, sBaseAppeal) = baseAppeal
+            memoryAppeals: List<List<Appeal>>,
+        ) = listOf(
+            pIdol.vocal to buffs.forVocal,
+            pIdol.dance to buffs.forDance,
+            pIdol.visual to buffs.forVisual,
+        ).mapIndexed { i, (pStatus, buff) ->
+            val (pBaseAppeal, sBaseAppeal) = baseAppeals[i]
 
             val pTotalAppeal = calculateAppeal(
                 pStatus, pBaseAppeal,
@@ -117,7 +102,7 @@ data class TotalAppeals(val units: List<Unit>) {
                 )
             }
 
-            return Unit((listOf(pTotalAppeal) + sTotalAppeals) + listOf(memoryAppeal))
+            Unit((listOf(pTotalAppeal) + sTotalAppeals) + listOf(memoryAppeals[i]))
         }
 
         private fun calculateAppeal(
