@@ -9,7 +9,9 @@ data class TotalAppeals(val units: List<Unit>) {
         visual: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
     ) : this(listOf(vocal, dance, visual))
 
-    data class Unit(private val appeals: List<TotalAppeal>) : List<TotalAppeal> by appeals
+    data class Unit(private val appeals: List<TotalAppeal>) : List<TotalAppeal> by appeals.take(IDOLS_COUNT) {
+        val memoryAppeals get() = appeals.last()
+    }
 
     val vocal: Unit get() = byAppealType(AppealTypeIndex.Vo)
     val dance: Unit get() = byAppealType(AppealTypeIndex.Da)
@@ -19,6 +21,10 @@ data class TotalAppeals(val units: List<Unit>) {
     val toDance: Unit get() = toJudge(AppealTypeIndex.Da)
     val toVisual: Unit get() = toJudge(AppealTypeIndex.Vi)
 
+    val memoryToVocal: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Vo)
+    val memoryToDance: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Da)
+    val memoryToVisual: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Vi)
+
     private fun byAppealType(index: AppealTypeIndex) = units[index.ordinal]
 
     private fun toJudge(index: AppealTypeIndex) = Unit(
@@ -26,6 +32,8 @@ data class TotalAppeals(val units: List<Unit>) {
             AppealTypeIndex.values().map { units[it.ordinal][position][index.ordinal] }
         }
     )
+
+    private fun getMemoryAppeal(index: AppealTypeIndex) = units[index.ordinal].memoryAppeals
 
     private enum class AppealTypeIndex { Vo, Da, Vi }
 
@@ -38,6 +46,7 @@ data class TotalAppeals(val units: List<Unit>) {
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
+            memoryLevel: MemoryLevel = MemoryLevel.ONE,
         ): TotalAppeals = TotalAppeals(
             calculateUnitAppeals(
                 pIdol.vocal,
@@ -45,6 +54,7 @@ data class TotalAppeals(val units: List<Unit>) {
                 week,
                 buffs.forVocal,
                 appealRatio, appealJudge, interestRatio,
+                memoryLevel,
             ),
             calculateUnitAppeals(
                 pIdol.dance,
@@ -52,6 +62,7 @@ data class TotalAppeals(val units: List<Unit>) {
                 week,
                 buffs.forDance,
                 appealRatio, appealJudge, interestRatio,
+                memoryLevel,
             ),
             calculateUnitAppeals(
                 pIdol.visual,
@@ -59,6 +70,7 @@ data class TotalAppeals(val units: List<Unit>) {
                 week,
                 buffs.forVisual,
                 appealRatio, appealJudge, interestRatio,
+                memoryLevel,
             ),
         )
 
@@ -71,9 +83,12 @@ data class TotalAppeals(val units: List<Unit>) {
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
+            memoryLevel: MemoryLevel,
         ): Unit {
+            val pBaseAppeal = BaseAppeal.Produce(pStatus, sStatus, week)
+
             val pTotalAppeal = calculateAppeal(
-                pStatus, BaseAppeal.Produce(pStatus, sStatus, week),
+                pStatus, pBaseAppeal,
                 buff, appealRatio, appealJudge, interestRatio,
             )
             val sTotalAppeals = sStatus.mapIndexed { index, s ->
@@ -86,8 +101,9 @@ data class TotalAppeals(val units: List<Unit>) {
                     buff, appealRatio, appealJudge, interestRatio,
                 )
             }
+            val memoryAppeal = calculateMemoryAppeal(pBaseAppeal, buff, memoryLevel)
 
-            return Unit((listOf(pTotalAppeal) + sTotalAppeals))
+            return Unit((listOf(pTotalAppeal) + sTotalAppeals) + listOf(memoryAppeal))
         }
 
         private fun calculateAppeal(
@@ -104,6 +120,15 @@ data class TotalAppeals(val units: List<Unit>) {
         ).map { excellent ->
             Appeal(floor(floor(floor(base * buff * appealJudge.copy(excellent = excellent)) * appealRatio) * interestRatio).toInt())
         }
+
+        private fun calculateMemoryAppeal(
+            pBase: BaseAppeal.Produce,
+            buff: Buff,
+            memoryLevel: MemoryLevel,
+        ) = listOf(
+            AppealJudge.Factor.BAD,
+            AppealJudge.Factor.PERFECT,
+        ).map { judge -> Appeal(floor(floor(pBase * buff * judge) * memoryLevel).toInt()) }
 
         private const val IDOLS_COUNT = 5
     }

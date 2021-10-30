@@ -13,3 +13,4 @@ data class AppealJudge(
 }
 
 internal operator fun Double.times(judge: AppealJudge) = this * judge.factor.ratio * if (judge.excellent) 2.0 else 1.0
+internal operator fun Double.times(factor: AppealJudge.Factor) = this * factor.ratio
