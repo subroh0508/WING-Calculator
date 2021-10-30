@@ -16,6 +16,7 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLa
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.DropdownMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.ExpandableDropdownMenu
 import net.subroh0508.wingcalculator.composeui.pages.simple.TableTypePreferenceDispatcherContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.TableTypePreferenceProviderContext
 import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 @Composable
@@ -24,6 +25,7 @@ fun ColumnScope.CalculateResultHeader(
     isConcealed: Boolean? = null,
     onClickArrowIcon: () -> Unit = {},
 ) {
+    val tableType = TableType.valueOf(TableTypePreferenceProviderContext.current)
     val dispatcher = TableTypePreferenceDispatcherContext.current
 
     FrontLayerHeader(
@@ -31,25 +33,31 @@ fun ColumnScope.CalculateResultHeader(
         headerHeight,
         isConcealed,
         onClickArrowIcon = onClickArrowIcon,
-        actions = { if (isConcealed != false) SettingsMenu { dispatcher(it.toPreference()) } },
+        actions = {
+            if (isConcealed != false)
+                SettingsMenu(tableType) { dispatcher(it.toPreference()) }
+        },
     )
     Divider(Modifier.padding(horizontal = 8.dp))
 }
 
 private enum class TableType(override val label: String) : DropdownMenuItem {
-    APPEAL_TYPE(AppealType.LABEL), JUDGE(Judge.LABEL);
+    APPEAL(AppealType.LABEL), JUDGE(Judge.LABEL);
 
-    fun toPreference() = when (this) {
-        APPEAL_TYPE -> AppPreference.Table.APPEAL
-        JUDGE -> AppPreference.Table.JUDGE
+    fun toPreference() = AppPreference.Table.valueOf(name)
+
+    companion object {
+        fun valueOf(type: AppPreference.Table) = TableType.valueOf(type.name)
     }
 }
 
 @Composable
 private fun SettingsMenu(
+    type: TableType,
     onClick: (TableType) -> Unit,
 ) = ExpandableDropdownMenu(
     TableType.values().toList(),
+    selected = type,
     onClick = onClick,
 ) {
     Icon(

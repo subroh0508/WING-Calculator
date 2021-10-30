@@ -2,12 +2,14 @@
 
 package net.subroh0508.wingcalculator.composeui.components.molecules.menu
 
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -23,6 +25,7 @@ interface DropdownMenuItem {
 fun <T: DropdownMenuItem> ExpandableDropdownMenu(
     items: List<T>,
     onClick: (T) -> Unit,
+    selected: T? = null,
     icon: @Composable () -> Unit = {
         Icon(
             Icons.Default.MoreVert,
@@ -49,8 +52,28 @@ fun <T: DropdownMenuItem> ExpandableDropdownMenu(
                         expanded = false
                         onClick(item)
                     },
-                ) { Text(item.label) }
+                ) {
+                    when {
+                        selected == null -> Unit
+                        selected == item -> Icon(
+                            Icons.Default.Check,
+                            contentDescription = "Selected",
+                            modifier = CheckIconSize,
+                        )
+                        selected != item -> Spacer(CheckIconSize)
+                    }
+
+                    Text(
+                        item.label,
+                        modifier = if (selected == null)
+                                       Modifier
+                                   else
+                                       Modifier.padding(20.dp)
+                    )
+                }
             }
         }
     }
 }
+
+private val CheckIconSize = Modifier.size(24.dp)
