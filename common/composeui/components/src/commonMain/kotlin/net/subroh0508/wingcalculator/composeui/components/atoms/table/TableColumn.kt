@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 fun ColumnScope.TableColumn(
     label: String,
     contents: List<String>,
-) = TableColumn(label, contents) { text -> TableCell(text) }
+    borderColor: Color = Color.Black,
+) = TableColumn(label, contents, borderColor = borderColor) { text -> TableCell(text, borderColor) }
 
 @Composable
 fun ColumnScope.EmptyTableColumn() = TableColumn("x", listOf(), Color.Transparent, Color.Transparent)

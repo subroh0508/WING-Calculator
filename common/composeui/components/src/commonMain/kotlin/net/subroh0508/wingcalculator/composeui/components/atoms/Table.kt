@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,13 +21,16 @@ fun Table(
     height: Int? = null,
     modifier: Modifier = Modifier,
 ) = Column(modifier) {
+    val borderColor = MaterialTheme.colors.onSurface.copy(alpha = 0.12F)
+
     TableHeader(
         header,
+        borderColor,
         modifier = Modifier.height(IntrinsicSize.Max)
-            .background(MaterialTheme.colors.onSurface.copy(alpha = 0.12F)),
+            .background(borderColor),
     )
 
-    columns.forEach { (label, contents) -> TableColumn(label, contents) }
+    columns.forEach { (label, contents) -> TableColumn(label, contents, borderColor = borderColor) }
 
     (0 until getEmptySize(columns, height)).forEach { _ -> EmptyTableColumn() }
 }

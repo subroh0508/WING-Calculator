@@ -16,19 +16,20 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TableHeader(
     headersText: List<String>,
+    borderColor: Color = Color.Black,
     modifier: Modifier = Modifier,
 ) = Row(modifier) {
     Spacer(
         modifier = Modifier.fillMaxHeight()
             .weight(0.3F)
-            .border(1.dp, Color.Black),
+            .border(1.dp, borderColor),
     )
     headersText.forEach { text ->
         Text(
             text,
             textAlign = TextAlign.Center,
             modifier = Modifier.weight(1F)
-                .border(1.dp, Color.Black)
+                .border(1.dp, borderColor)
                 .padding(8.dp),
         )
     }
