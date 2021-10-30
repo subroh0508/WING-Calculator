@@ -23,6 +23,13 @@ interface DropdownMenuItem {
 fun <T: DropdownMenuItem> ExpandableDropdownMenu(
     items: List<T>,
     onClick: (T) -> Unit,
+    icon: @Composable () -> Unit = {
+        Icon(
+            Icons.Default.MoreVert,
+            contentDescription = "MenuSave",
+            modifier = Modifier.size(24.dp),
+        )
+    },
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -30,11 +37,7 @@ fun <T: DropdownMenuItem> ExpandableDropdownMenu(
         onClick = { expanded = true },
         modifier = Modifier.padding(4.dp),
     ) {
-        Icon(
-            Icons.Default.MoreVert,
-            contentDescription = "menu_save",
-            modifier = Modifier.size(24.dp),
-        )
+        icon()
 
         DropdownMenu(
             expanded,

@@ -22,7 +22,8 @@ fun FrontLayerHeader(
     label: String,
     headerHeight: Dp,
     isConcealed: Boolean? = null,
-    onClickIcon: () -> Unit = {},
+    onClickArrowIcon: () -> Unit = {},
+    actions: @Composable () -> Unit = {},
     modifier: Modifier = Modifier,
 ) = Row(
     modifier = modifier.height(headerHeight)
@@ -34,8 +35,9 @@ fun FrontLayerHeader(
             .padding(vertical = 8.dp)
             .align(Alignment.CenterVertically),
     )
+    actions()
     if (isConcealed != null) {
-        IconButton(onClick = onClickIcon) {
+        IconButton(onClick = onClickArrowIcon) {
             val (icon, description) =
                 if (isConcealed)
                     Icons.Default.KeyboardArrowUp to "reveal"

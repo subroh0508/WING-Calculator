@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
+package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.frontlayer
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
@@ -42,22 +42,23 @@ fun CalculateResultTable(modifier: Modifier = Modifier) {
 
 @Composable
 fun CalculateResultTables(
-    vararg switcherLabel: SwitcherLabel,
     modifier: Modifier = Modifier,
     onSwitcherLabelChanged: ((SwitcherLabel) -> Unit) = {},
 ) {
     val tableType = TableTypePreferenceProviderContext.current
     val tableData = SimpleCalculatorProviderContext.current.uiModel.totalAppeals.toTableData(tableType)
 
-    Column(modifier) {
-        switcherLabel.forEachIndexed { i, type ->
-            CalculateResultTableWithSwitcher(
-                type,
-                tableData,
-                if (switcherLabel.size == 1) onSwitcherLabelChanged else null,
-            )
+    val labels = when (tableType) {
+        AppPreference.Table.APPEAL -> AppealType.values()
+        AppPreference.Table.JUDGE -> Judge.values()
+        else -> return
+    }
 
-            if (switcherLabel.size != 1 && i < (switcherLabel.size - 1)) {
+    Column(modifier) {
+        labels.forEachIndexed { i, type ->
+            CalculateResultTableWithSwitcher(type, tableData, onSwitcherLabelChanged)
+
+            if (i < (labels.size - 1)) {
                 Divider(Modifier.padding(horizontal = 8.dp))
             }
         }
@@ -108,6 +109,8 @@ enum class AppealType(override val text: String) : SwitcherLabel {
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
+
+    companion object { const val LABEL = "アピール種別" }
 }
 
 enum class Judge(override val text: String) : SwitcherLabel {
@@ -115,6 +118,8 @@ enum class Judge(override val text: String) : SwitcherLabel {
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
+
+    companion object { const val LABEL = "審査員" }
 }
 
 private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
