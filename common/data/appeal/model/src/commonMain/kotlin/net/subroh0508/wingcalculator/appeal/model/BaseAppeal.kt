@@ -5,7 +5,7 @@ sealed class BaseAppeal {
     internal abstract val sStatus: List<Status>
     internal abstract val week: Week
 
-    protected abstract val base: Double
+    /*protected*/ abstract val base: Double
     protected val weekRatio get() = 0.2 * (1.0 + week * 0.1)
 
     operator fun times(buff: Buff) = base * buff
@@ -16,6 +16,8 @@ sealed class BaseAppeal {
         override val week: Week,
     ) : BaseAppeal() {
         override val base = pStatus * 2.0 + sStatus.sum() * weekRatio
+
+        operator fun times(ratio: Double) = base * ratio
     }
 
     data class Support(
