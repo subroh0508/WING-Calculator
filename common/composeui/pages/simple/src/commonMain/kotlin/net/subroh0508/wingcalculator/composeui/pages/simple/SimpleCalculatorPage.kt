@@ -19,6 +19,7 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculat
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.SimpleCalculatorBackdrop
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.FrontLayerContent
+import net.subroh0508.wingcalculator.preference.model.AppPreference
 import net.subroh0508.wingcalculator.usecase.simple.di.SimpleCalculatorDomainModule
 
 typealias SimpleCalculatorDispatcher = UiModelDispatcher<SimpleCalculatorUiModel>
@@ -36,13 +37,16 @@ fun SimpleCalculatorPage(
     panel: Panels,
     drawer: DrawerType,
     drawerState: ResponsiveDrawerState,
-) = KoinComponentContainer(
-    SimpleCalculatorUiModel(panel = panel, drawer = drawer),
-    SimpleCalculatorDomainModule,
-    SimpleCalculatorDispatcherContext,
-    SimpleCalculatorProviderContext,
-) { PageContent(panel, drawer, drawerState) }
-
+    table: AppPreference.Table,
+    provider: (AppPreference.Table) -> Unit,
+) = TableTypePreferenceContext(table, provider) {
+    KoinComponentContainer(
+        SimpleCalculatorUiModel(panel = panel, drawer = drawer),
+        SimpleCalculatorDomainModule,
+        SimpleCalculatorDispatcherContext,
+        SimpleCalculatorProviderContext,
+    ) { PageContent(panel, drawer, drawerState) }
+}
 
 @Composable
 private fun PageContent(

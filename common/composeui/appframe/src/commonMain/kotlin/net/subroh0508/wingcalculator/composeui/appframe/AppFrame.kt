@@ -63,6 +63,8 @@ private fun ThemedAppFrame(
                 else
                     preference.theme == AppPreference.Theme.DARK,
 ) {
+    val dispatcher = AppPreferenceDispatcherContext.current
+
     ResponsiveDrawer(
         page.constraints,
         drawerContent = {
@@ -88,7 +90,8 @@ private fun ThemedAppFrame(
                     page.constraints.panel,
                     page.constraints.drawer,
                     drawerState,
-                )
+                    preference.table,
+                ) { dispatcher(preference.copy(table = it)) }
                 is Pages.AppPreference -> AppPreferencePage(
                     page.constraints.drawer,
                     preference,
