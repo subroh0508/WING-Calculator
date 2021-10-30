@@ -20,7 +20,15 @@ import androidx.compose.ui.unit.dp
 
 interface SwitcherLabel {
     val text: String
+
+    operator fun component1() = text
+
+    fun next(): SwitcherLabel
+    fun previous(): SwitcherLabel
 }
+
+inline fun <reified E: Enum<E>> E.nextEnum() = enumValues<E>().let { it[(ordinal + 1) % it.size] }
+inline fun <reified E: Enum<E>> E.previousEnum() = enumValues<E>().let { it[(it.size + (ordinal - 1)) % it.size] }
 
 enum class SwitcherOrientation(
     val startIcon: ImageVector,

@@ -52,19 +52,16 @@ private val ShowOneTableHeight = CalculateResultTableMinHeight * 1.5F
 fun FrontLayerContent(
     modifier: Modifier = Modifier,
 ) = BoxWithConstraints(modifier.fillMaxHeight()) {
-    val showHeader = (CalculateResultTableMinHeight + TopAppSearchBarHeight) < maxHeight
     val showOneTable = maxHeight < ShowOneTableHeight
-    val isCollapsingEnable = maxHeight in 0.dp..CalculateResultTableMinHeight || (showHeader && !showOneTable)
-
-    val headerHeight = if (showHeader) TopAppSearchBarHeight else 0.dp
+    val isCollapsingEnable = maxHeight in 0.dp..CalculateResultTableMinHeight || !showOneTable
 
     CollapsingTopAppBarLayout(
         appBar = {
             Column(it.background(MaterialTheme.colors.background)) {
-                if (showHeader) FrontLayerHeader(TopAppSearchBarHeight)
+                FrontLayerHeader(TopAppSearchBarHeight)
             }
         },
-        appBarHeight = headerHeight + 1.dp,
+        appBarHeight = TopAppSearchBarHeight + 1.dp,
         isCollapsingEnable = isCollapsingEnable,
         modifier = widthConstraintsModifier,
     ) {
