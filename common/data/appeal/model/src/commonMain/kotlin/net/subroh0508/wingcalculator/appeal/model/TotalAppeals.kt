@@ -21,6 +21,7 @@ data class TotalAppeals(val units: List<Unit>) {
     val toDance: Unit get() = toJudge(AppealTypeIndex.Da)
     val toVisual: Unit get() = toJudge(AppealTypeIndex.Vi)
 
+    val memories: List<TotalAppeal> get() = AppealTypeIndex.values().map(this@TotalAppeals::getMemoryAppeal)
     val memoryToVocal: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Vo)
     val memoryToDance: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Da)
     val memoryToVisual: TotalAppeal get() = getMemoryAppeal(AppealTypeIndex.Vi)
@@ -125,10 +126,7 @@ data class TotalAppeals(val units: List<Unit>) {
             pBase: BaseAppeal.Produce,
             buff: Buff,
             memoryLevel: MemoryLevel,
-        ) = listOf(
-            AppealJudge.Factor.BAD,
-            AppealJudge.Factor.PERFECT,
-        ).map { judge -> Appeal(floor(floor(pBase * buff * judge) * memoryLevel).toInt()) }
+        ) = MemoryJudge.values().map { judge -> Appeal(floor(floor(pBase * buff * judge) * memoryLevel).toInt()) }
 
         private const val IDOLS_COUNT = 5
     }

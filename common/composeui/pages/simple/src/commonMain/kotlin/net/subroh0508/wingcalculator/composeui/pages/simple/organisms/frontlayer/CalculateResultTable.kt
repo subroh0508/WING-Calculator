@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.Appeal
+import net.subroh0508.wingcalculator.appeal.model.MemoryJudge
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
@@ -43,7 +44,7 @@ fun CalculateResultTable(modifier: Modifier = Modifier) {
 @Composable
 fun CalculateResultTables(
     modifier: Modifier = Modifier,
-    onSwitcherLabelChanged: ((SwitcherLabel) -> Unit) = {},
+    onSwitcherLabelChanged: ((SwitcherLabel) -> Unit)? = null,
 ) {
     val tableType = TableTypePreferenceProviderContext.current
     val tableData = SimpleCalculatorProviderContext.current.uiModel.totalAppeals.toTableData(tableType)
@@ -75,18 +76,20 @@ private fun ColumnScope.CalculateResultTableWithSwitcher(
     fun onClickForward(label: SwitcherLabel) = onSwitcherLabelChanged?.invoke(label.next())
 
     val (header, columns) = when (tableLabel) {
-        is AppealType -> Judge.values() to tableData.let { (vo, da, vi) ->
+        is AppealType -> header(tableLabel) to tableData.let { (vo, da, vi, memory) ->
             when (tableLabel) {
                 AppealType.VOCAL -> vo
                 AppealType.DANCE -> da
                 AppealType.VISUAL -> vi
+                AppealType.MEMORY -> memory
             }
         }
-        is Judge -> AppealType.values() to tableData.let { (vo, da, vi) ->
+        is Judge -> header(tableLabel) to tableData.let { (vo, da, vi, memory) ->
             when (tableLabel) {
                 Judge.VOCAL -> vo
                 Judge.DANCE -> da
                 Judge.VISUAL -> vi
+                Judge.MEMORY -> memory
             }
         }
         else -> return
@@ -105,7 +108,7 @@ private fun ColumnScope.CalculateResultTableWithSwitcher(
 }
 
 enum class AppealType(override val text: String) : SwitcherLabel {
-    VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール");
+    VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール"), MEMORY("思い出");
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
@@ -114,7 +117,7 @@ enum class AppealType(override val text: String) : SwitcherLabel {
 }
 
 enum class Judge(override val text: String) : SwitcherLabel {
-    VOCAL("Vo審査員"), DANCE("Da審査員"), VISUAL("Vi審査員");
+    VOCAL("Vo審査員"), DANCE("Da審査員"), VISUAL("Vi審査員"), MEMORY("思い出");
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
@@ -122,11 +125,22 @@ enum class Judge(override val text: String) : SwitcherLabel {
     companion object { const val LABEL = "審査員" }
 }
 
+private fun header(tableLabel: SwitcherLabel): List<SwitcherLabel> = when {
+    listOf(AppealType.MEMORY, Judge.MEMORY).contains(tableLabel) -> Judge.values()
+    tableLabel is AppealType -> Judge.values()
+    tableLabel is Judge -> AppealType.values()
+    else -> arrayOf()
+}.toList().dropLast(1)
+
 private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
 
 private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String, List<String>>> = when (type) {
     AppPreference.Table.APPEAL -> listOf(vocal, dance, visual).toTableData()
     AppPreference.Table.JUDGE -> listOf(toVocal, toDance, toVisual).toTableData()
+} + MemoryJudge.values().associate { memoryJudge ->
+    memoryJudge.toString() to Judge.values().dropLast(1).map {
+        memories[it.ordinal][memoryJudge.ordinal].toString()
+    }
 }
 
 private fun List<TotalAppeals.Unit>.toTableData(): List<Map<String, List<String>>> = map { unit ->
