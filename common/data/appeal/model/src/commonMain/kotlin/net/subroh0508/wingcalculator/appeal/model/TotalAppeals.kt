@@ -2,12 +2,22 @@ package net.subroh0508.wingcalculator.appeal.model
 
 import kotlin.math.floor
 
+private const val IDOLS_COUNT = 5
+
 data class TotalAppeals(
-    val vocal: Unit<TotalAppeal.Vocal> = Unit(List(5) { TotalAppeal.Vocal() }),
-    val dance: Unit<TotalAppeal.Dance> = Unit(List(5) { TotalAppeal.Dance() }),
-    val visual: Unit<TotalAppeal.Visual> = Unit(List(5) { TotalAppeal.Visual() }),
+    val vocal: Unit<TotalAppeal.Vocal> = Unit(List(IDOLS_COUNT) { TotalAppeal.Vocal() }),
+    val dance: Unit<TotalAppeal.Dance> = Unit(List(IDOLS_COUNT) { TotalAppeal.Dance() }),
+    val visual: Unit<TotalAppeal.Visual> = Unit(List(IDOLS_COUNT) { TotalAppeal.Visual() }),
 ) {
     data class Unit<out T: TotalAppeal>(private val appeals: List<T>) : List<T> by appeals
+
+    val toVocal: List<List<Appeal.ToVocal>> get() = toJudge(TotalAppeal::toVocal)
+    val toDance: List<List<Appeal.ToDance>> get() = toJudge(TotalAppeal::toDance)
+    val toVisual: List<List<Appeal.ToVisual>> get() = toJudge(TotalAppeal::toVisual)
+
+    private fun <T: Appeal> toJudge(transform: (TotalAppeal) -> T) = (0 until IDOLS_COUNT).map { i ->
+        listOf(vocal[i], dance[i], visual[i]).map(transform)
+    }
 
     companion object {
         operator fun invoke(

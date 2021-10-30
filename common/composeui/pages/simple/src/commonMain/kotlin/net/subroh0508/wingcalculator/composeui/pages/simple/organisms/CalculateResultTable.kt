@@ -74,20 +74,29 @@ enum class AppealType(override val text: String) : SwitcherLabel {
     fun previous() = values()[(values().size + (ordinal - 1)) % 3]
 }
 
+enum class Judge(override val text: String) : SwitcherLabel {
+    VOCAL("Vo審査員"), DANCE("Da審査員"), VISUAL("Vi審査員");
+
+    operator fun component1() = text
+
+    fun next() = values().let { it[(ordinal + 1) % it.size] }
+    fun previous() = values().let { it[(it.size + (ordinal - 1)) % it.size] }
+}
+
 private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
 private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
 
 private fun TotalAppeals.toTableData() = toTableData(AppPreference.Table.JUDGE)
 
-private fun TotalAppeals.toTableData(type: AppPreference.Table) = listOf(vocal, dance, visual).map { unit -> unit.toTableData(type) }
-
-private fun TotalAppeals.Unit<TotalAppeal>.toTableData(type: AppPreference.Table): Map<String, List<String>> = when (type) {
-    AppPreference.Table.JUDGE -> foldIndexed(mapOf()) { i, acc, appeal ->
-        acc + mapOf(IDOLS[i] to listOf(appeal.toVocal, appeal.toDance, appeal.toVisual).map(Appeal::toString))
+private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String, List<String>>> = when (type) {
+    AppPreference.Table.JUDGE -> listOf(vocal, dance, visual).map { unit ->
+        unit.foldIndexed(mapOf()) { i, acc, appeal ->
+            acc + mapOf(IDOLS[i] to listOf(appeal.toVocal, appeal.toDance, appeal.toVisual).map(Appeal::toString))
+        }
     }
-    AppPreference.Table.APPEAL -> listOf(
-        map(TotalAppeal::toVocal),
-        map(TotalAppeal::toDance),
-        map(TotalAppeal::toVisual),
-    ).foldIndexed(mapOf()) { i, acc, appeals -> acc + mapOf(JUDGES[i] to appeals.map(Appeal::toString)) }
+    AppPreference.Table.APPEAL -> listOf(toVocal, toDance, toVisual).map { unit ->
+        unit.foldIndexed(mapOf()) { i, acc, appeal ->
+            acc + mapOf(IDOLS[i] to appeal.map(Appeal::toString))
+        }
+    }
 }
