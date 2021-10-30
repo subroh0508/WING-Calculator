@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.Appeal
-import net.subroh0508.wingcalculator.appeal.model.TotalAppeal
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
@@ -89,14 +88,12 @@ private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
 private fun TotalAppeals.toTableData() = toTableData(AppPreference.Table.JUDGE)
 
 private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String, List<String>>> = when (type) {
-    AppPreference.Table.JUDGE -> listOf(vocal, dance, visual).map { unit ->
-        unit.foldIndexed(mapOf()) { i, acc, appeal ->
-            acc + mapOf(IDOLS[i] to listOf(appeal.toVocal, appeal.toDance, appeal.toVisual).map(Appeal::toString))
-        }
-    }
-    AppPreference.Table.APPEAL -> listOf(toVocal, toDance, toVisual).map { unit ->
-        unit.foldIndexed(mapOf()) { i, acc, appeal ->
-            acc + mapOf(IDOLS[i] to appeal.map(Appeal::toString))
-        }
+    AppPreference.Table.JUDGE -> listOf(vocal, dance, visual).toTableData()
+    AppPreference.Table.APPEAL -> listOf(toVocal, toDance, toVisual).toTableData()
+}
+
+private fun List<TotalAppeals.Unit>.toTableData(): List<Map<String, List<String>>> = map { unit ->
+    unit.foldIndexed(mapOf()) { i, acc, appeal ->
+        acc + mapOf(IDOLS[i] to appeal.map(Appeal::toString))
     }
 }

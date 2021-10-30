@@ -2,22 +2,32 @@ package net.subroh0508.wingcalculator.appeal.model
 
 import kotlin.math.floor
 
-private const val IDOLS_COUNT = 5
+data class TotalAppeals(val units: List<Unit>) {
+    constructor(
+        vocal: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
+        dance: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
+        visual: Unit = Unit(List(IDOLS_COUNT) { TotalAppeal() }),
+    ) : this(listOf(vocal, dance, visual))
 
-data class TotalAppeals(
-    val vocal: Unit<TotalAppeal.Vocal> = Unit(List(IDOLS_COUNT) { TotalAppeal.Vocal() }),
-    val dance: Unit<TotalAppeal.Dance> = Unit(List(IDOLS_COUNT) { TotalAppeal.Dance() }),
-    val visual: Unit<TotalAppeal.Visual> = Unit(List(IDOLS_COUNT) { TotalAppeal.Visual() }),
-) {
-    data class Unit<out T: TotalAppeal>(private val appeals: List<T>) : List<T> by appeals
+    data class Unit(private val appeals: List<TotalAppeal>) : List<TotalAppeal> by appeals
 
-    val toVocal: List<List<Appeal.ToVocal>> get() = toJudge(TotalAppeal::toVocal)
-    val toDance: List<List<Appeal.ToDance>> get() = toJudge(TotalAppeal::toDance)
-    val toVisual: List<List<Appeal.ToVisual>> get() = toJudge(TotalAppeal::toVisual)
+    val vocal: Unit get() = byAppealType(AppealTypeIndex.Vo)
+    val dance: Unit get() = byAppealType(AppealTypeIndex.Da)
+    val visual: Unit get() = byAppealType(AppealTypeIndex.Vi)
 
-    private fun <T: Appeal> toJudge(transform: (TotalAppeal) -> T) = (0 until IDOLS_COUNT).map { i ->
-        listOf(vocal[i], dance[i], visual[i]).map(transform)
-    }
+    val toVocal: Unit get() = toJudge(AppealTypeIndex.Vo)
+    val toDance: Unit get() = toJudge(AppealTypeIndex.Da)
+    val toVisual: Unit get() = toJudge(AppealTypeIndex.Vi)
+
+    private fun byAppealType(index: AppealTypeIndex) = units[index.ordinal]
+
+    private fun toJudge(index: AppealTypeIndex) = Unit(
+        List(IDOLS_COUNT) { position ->
+            AppealTypeIndex.values().map { units[it.ordinal][position][index.ordinal] }
+        }
+    )
+
+    private enum class AppealTypeIndex { Vo, Da, Vi }
 
     companion object {
         operator fun invoke(
@@ -53,7 +63,7 @@ data class TotalAppeals(
         )
 
         @Suppress("UNCHECKED_CAST")
-        private fun <T: TotalAppeal> calculateUnitAppeals(
+        private fun calculateUnitAppeals(
             pStatus: Status,
             sStatus: List<Status>,
             week: Week,
@@ -61,7 +71,7 @@ data class TotalAppeals(
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
-        ): Unit<T> {
+        ): Unit {
             val pTotalAppeal = calculateAppeal(
                 pStatus, BaseAppeal.Produce(pStatus, sStatus, week),
                 buff, appealRatio, appealJudge, interestRatio,
@@ -77,21 +87,7 @@ data class TotalAppeals(
                 )
             }
 
-            val constructor = when (pStatus) {
-                is Vocal -> TotalAppeal::Vocal
-                is Dance -> TotalAppeal::Dance
-                is Visual -> TotalAppeal::Visual
-            }
-
-            return Unit(
-                (listOf(pTotalAppeal) + sTotalAppeals).map { (vocal, dance, visual) ->
-                    constructor(
-                        Appeal.ToVocal(vocal),
-                        Appeal.ToDance(dance),
-                        Appeal.ToVisual(visual),
-                    ) as T
-                },
-            )
+            return Unit((listOf(pTotalAppeal) + sTotalAppeals))
         }
 
         private fun calculateAppeal(
@@ -106,7 +102,9 @@ data class TotalAppeals(
                 status is Dance,
                 status is Visual,
         ).map { excellent ->
-            floor(floor(floor(base * buff * appealJudge.copy(excellent = excellent)) * appealRatio) * interestRatio).toInt()
+            Appeal(floor(floor(floor(base * buff * appealJudge.copy(excellent = excellent)) * appealRatio) * interestRatio).toInt())
         }
+
+        private const val IDOLS_COUNT = 5
     }
 }

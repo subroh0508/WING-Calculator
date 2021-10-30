@@ -1,9 +1,6 @@
 package net.subroh0508.wingcalculator.appeal.model
 
-sealed class Appeal {
-    abstract val value: Int
+import net.subroh0508.wingcalculator.utilities.JvmInline
 
-    data class ToVocal(override val value: Int) : Appeal() { override fun toString() = value.toString() }
-    data class ToDance(override val value: Int) : Appeal() { override fun toString() = value.toString() }
-    data class ToVisual(override val value: Int) : Appeal() { override fun toString() = value.toString() }
-}
+@JvmInline
+value class Appeal(private val value: Int) { override fun toString() = value.toString() }

@@ -1,25 +1,11 @@
+@file:Suppress("FunctionName")
+
 package net.subroh0508.wingcalculator.appeal.model
 
-sealed class TotalAppeal {
-    abstract val toVocal: Appeal.ToVocal
-    abstract val toDance: Appeal.ToDance
-    abstract val toVisual: Appeal.ToVisual
+typealias TotalAppeal = List<Appeal>
 
-    data class Vocal(
-        override val toVocal: Appeal.ToVocal = Appeal.ToVocal(0),
-        override val toDance: Appeal.ToDance = Appeal.ToDance(0),
-        override val toVisual: Appeal.ToVisual = Appeal.ToVisual(0),
-    ) : TotalAppeal()
-
-    data class Dance(
-        override val toVocal: Appeal.ToVocal = Appeal.ToVocal(0),
-        override val toDance: Appeal.ToDance = Appeal.ToDance(0),
-        override val toVisual: Appeal.ToVisual = Appeal.ToVisual(0),
-    ) : TotalAppeal()
-
-    data class Visual(
-        override val toVocal: Appeal.ToVocal = Appeal.ToVocal(0),
-        override val toDance: Appeal.ToDance = Appeal.ToDance(0),
-        override val toVisual: Appeal.ToVisual = Appeal.ToVisual(0),
-    ) : TotalAppeal()
-}
+fun TotalAppeal(
+    vocal: Appeal = Appeal(0),
+    dance: Appeal = Appeal(0),
+    visual: Appeal = Appeal(0),
+) = listOf(vocal, dance, visual)
