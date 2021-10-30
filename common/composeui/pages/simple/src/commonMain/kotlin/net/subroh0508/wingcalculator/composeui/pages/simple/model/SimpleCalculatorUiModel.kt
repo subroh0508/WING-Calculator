@@ -11,7 +11,7 @@ data class SimpleCalculatorUiModel(
     val panel: Panels = Panels.ONE,
     val drawer: DrawerType = DrawerType.Modal,
 ) {
-    val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio) ->
+    val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio, memoryLevel) ->
         TotalAppeals(
             pIdol,
             sIdols,
@@ -20,6 +20,7 @@ data class SimpleCalculatorUiModel(
             appealRatio,
             appealJudge,
             interestRatio,
+            memoryLevel,
         )
     }
 
@@ -34,6 +35,7 @@ data class SimpleCalculatorUiModel(
         buff: Buff = form.buff,
         appealJudge: AppealJudge = form.appealJudge,
         interestRatio: InterestRatio = form.interestRatio,
+        memoryLevel: MemoryLevel = form.memoryLevel,
         name: String? = form.name,
         comment: String? = form.comment,
     ) = copy(
@@ -45,6 +47,7 @@ data class SimpleCalculatorUiModel(
             buff,
             appealJudge,
             interestRatio,
+            memoryLevel,
             id = form.id,
             name = name,
             comment = comment,
@@ -58,7 +61,7 @@ data class SimpleCalculatorUiModel(
     fun select(suggestion: Pair<Long, Form>) = copy(
         query = Query.Closed,
         form = suggestion.let { (id, form) ->
-            val (pIdol, sIdols, _, _, _, _, _, _, name, comment) = form
+            val (pIdol, sIdols, _, _, _, _, _, _, _, name, comment) = form
 
             this.form.copy(pIdol = pIdol, sIdols = sIdols, id = id, name = name, comment = comment)
         },
@@ -82,6 +85,7 @@ data class SimpleCalculatorUiModel(
         val buff: Buff = Buff(listOf(0.0)),
         val appealJudge: AppealJudge = AppealJudge(AppealJudge.Factor.GOOD),
         val interestRatio: InterestRatio = InterestRatio(listOf(1.0)),
+        val memoryLevel: MemoryLevel = MemoryLevel.ONE,
         val id: Long? = null,
         val name: String? = null,
         val comment: String? = null,

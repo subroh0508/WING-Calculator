@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSavePresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.BuffForm
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.CommentForm
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.MemoryForm
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.UnitStatusForm
 
 private const val THROTTLED_TIME_MILLIS = 500L
@@ -28,6 +29,8 @@ fun ColumnScope.CalculatorForm(
         UnitStatusForm()
         Divider(modifier.padding(top = 24.dp, bottom = 16.dp))
         BuffForm()
+        Divider(modifier.padding(top = 24.dp, bottom = 16.dp))
+        MemoryForm()
         Spacer(Modifier.height(40.dp))
         CommentForm()
         Spacer(Modifier.height(frontLayerHeight + 32.dp))

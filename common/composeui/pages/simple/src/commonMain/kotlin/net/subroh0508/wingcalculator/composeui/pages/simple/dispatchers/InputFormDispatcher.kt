@@ -16,6 +16,7 @@ interface InputFormDispatcher {
     operator fun invoke(buff: Buff)
     operator fun invoke(appealJudge: AppealJudge)
     operator fun invoke(interestRatio: InterestRatio)
+    operator fun invoke(memoryLevel: MemoryLevel)
     operator fun invoke(name: String? = null, comment: String? = null)
 }
 
@@ -62,6 +63,7 @@ fun provideInputFormDispatcher(): Pair<SimpleCalculatorUiModel, InputFormDispatc
         override fun invoke(buff: Buff) = dispatcher(uiModel.input(buff = buff))
         override fun invoke(appealJudge: AppealJudge) = dispatcher(uiModel.input(appealJudge = appealJudge))
         override fun invoke(interestRatio: InterestRatio) = dispatcher(uiModel.input(interestRatio = interestRatio))
+        override fun invoke(memoryLevel: MemoryLevel) = dispatcher(uiModel.input(memoryLevel = memoryLevel))
         override fun invoke(name: String?, comment: String?) = when {
             name != null -> dispatcher(uiModel.input(name = name))
             comment != null -> dispatcher(uiModel.input(comment = comment))

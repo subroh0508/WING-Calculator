@@ -46,7 +46,7 @@ data class TotalAppeals(val units: List<Unit>) {
             appealRatio: AppealRatio,
             appealJudge: AppealJudge,
             interestRatio: InterestRatio,
-            memoryLevel: MemoryLevel = MemoryLevel.ONE,
+            memoryLevel: MemoryLevel,
         ): TotalAppeals = TotalAppeals(
             calculateUnitAppeals(
                 pIdol.vocal,

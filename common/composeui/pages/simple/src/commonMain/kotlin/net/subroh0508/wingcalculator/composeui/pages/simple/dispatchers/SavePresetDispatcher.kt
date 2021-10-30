@@ -16,7 +16,7 @@ fun provideSavePresetDispatcher(): Pair<SimpleCalculatorUiModel, SavePresetDispa
 
     val handleOnUiModelChanged = remember(uiModel) {
         suspend {
-            val (pIdol, sIdols, _, _, _, _, _, id, name, comment) = uiModel.form
+            val (pIdol, sIdols, _, _, _, _, _, _, id, name, comment) = uiModel.form
 
             if (id != null && name != null)
                 savePresetUseCase?.execute(id, name, pIdol, sIdols, comment)

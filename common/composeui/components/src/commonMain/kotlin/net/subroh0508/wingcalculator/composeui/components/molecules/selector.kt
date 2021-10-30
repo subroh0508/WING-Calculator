@@ -183,6 +183,29 @@ fun InterestRatioField(
 private val INTEREST_RATIO_REGEX = """^([0-1]?\.?[0-9]{0,2},?)*$""".toRegex()
 
 @Composable
+fun <E: Enum<*>> MemoryLevelSelector(
+    selectedLevel: E,
+    levels: Array<E>,
+    onChange: (E) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            "思い出Lv",
+            style = MaterialTheme.typography.subtitle1,
+        )
+        Row {
+            DropdownSelector(
+                selectedLevel.toString(),
+                levels.map(Enum<*>::toString),
+                onClick = { onChange(levels[it]) },
+            )
+        }
+    }
+}
+
+
+@Composable
 private fun DropdownSelector(
     selectedItem: String,
     items: List<String>,
