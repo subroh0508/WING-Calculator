@@ -20,6 +20,7 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.backdrop.FrontLa
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.CollapsingTopAppBarLayout
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.AppealType
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculateResultTable
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.CalculateResultTables
 
 @Composable
@@ -41,7 +42,7 @@ fun FrontLayerContent(
             isConcealed = isConcealed,
             onIconClick = onHeaderIconClick,
         )
-        CalculatorResultLayout(constraint.verticalScroll(verticalScrollState))
+        CalculateResultTable(constraint.verticalScroll(verticalScrollState))
     }
 }
 
@@ -66,7 +67,7 @@ fun FrontLayerContent(
         modifier = widthConstraintsModifier,
     ) {
         when(showOneTable) {
-            true -> CalculatorResultLayout(modifier = Modifier.fillMaxHeight())
+            true -> CalculateResultTable(Modifier.fillMaxHeight())
             false -> CalculateResultTables(*AppealType.values())
         }
     }
@@ -91,16 +92,4 @@ private fun ColumnScope.FrontLayerHeader(
 ) {
     FrontLayerHeader("計算結果", headerHeight, isConcealed, onClickIcon = onIconClick)
     Divider(Modifier.padding(horizontal = 8.dp))
-}
-
-@Composable
-private fun CalculatorResultLayout(modifier: Modifier = Modifier) {
-    var appealType by remember { mutableStateOf(AppealType.VOCAL) }
-
-    Box(modifier) {
-        CalculateResultTables(
-            appealType,
-            modifier = Modifier.align(Alignment.Center),
-        ) { appealType = it }
-    }
 }

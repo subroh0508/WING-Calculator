@@ -5,6 +5,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple.organisms
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.Appeal
@@ -13,52 +14,92 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.*
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.TableTypePreferenceProviderContext
 import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 @Composable
-fun CalculateResultTables(
-    vararg appealType: AppealType,
-    modifier: Modifier = Modifier,
-    onAppealTypeChanged: ((AppealType) -> Unit) = {},
-) = Column(modifier) {
-    appealType.forEachIndexed { i, type ->
-        CalculateResultTable(
-            type,
-            SimpleCalculatorProviderContext.current.uiModel.totalAppeals,
-            if (appealType.size == 1) onAppealTypeChanged else null,
-        )
+fun CalculateResultTable(modifier: Modifier = Modifier) {
+    val tableType = TableTypePreferenceProviderContext.current
+    val tableData = SimpleCalculatorProviderContext.current.uiModel.totalAppeals.toTableData(tableType)
 
-        if (appealType.size != 1 && i < (appealType.size - 1)) {
-            Divider(Modifier.padding(horizontal = 8.dp))
+    var tableLabel by remember(tableType) {
+        mutableStateOf(
+            when (tableType) {
+                AppPreference.Table.APPEAL -> AppealType.VOCAL
+                AppPreference.Table.JUDGE -> Judge.VOCAL
+            }
+        )
+    }
+
+    Box(modifier) {
+        Column(Modifier.align(Alignment.Center)) {
+            CalculateResultTableWithSwitcher(tableLabel, tableData) {
+                tableLabel = it
+            }
         }
     }
 }
 
 @Composable
-private fun ColumnScope.CalculateResultTable(
-    appealType: AppealType,
-    totalAppeals: TotalAppeals,
-    onAppealTypeChanged: ((AppealType) -> Unit)? = null,
+fun CalculateResultTables(
+    vararg switcherLabel: SwitcherLabel,
+    modifier: Modifier = Modifier,
+    onSwitcherLabelChanged: ((SwitcherLabel) -> Unit) = {},
 ) {
-    fun onClickBack(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.previous())
-    fun onClickForward(appealType: AppealType) = onAppealTypeChanged?.invoke(appealType.next())
+    val tableType = TableTypePreferenceProviderContext.current
+    val tableData = SimpleCalculatorProviderContext.current.uiModel.totalAppeals.toTableData(tableType)
 
-    Table(
-        JUDGES,
-        totalAppeals.toTableData().let { (vo, da, vi) ->
-            when (appealType) {
+    Column(modifier) {
+        switcherLabel.forEachIndexed { i, type ->
+            CalculateResultTableWithSwitcher(
+                type,
+                tableData,
+                if (switcherLabel.size == 1) onSwitcherLabelChanged else null,
+            )
+
+            if (switcherLabel.size != 1 && i < (switcherLabel.size - 1)) {
+                Divider(Modifier.padding(horizontal = 8.dp))
+            }
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.CalculateResultTableWithSwitcher(
+    tableLabel: SwitcherLabel,
+    tableData: List<Map<String, List<String>>>,
+    onSwitcherLabelChanged: ((SwitcherLabel) -> Unit)? = null,
+) {
+    fun onClickBack(label: SwitcherLabel) = onSwitcherLabelChanged?.invoke(label.previous())
+    fun onClickForward(label: SwitcherLabel) = onSwitcherLabelChanged?.invoke(label.next())
+
+    val (header, columns) = when (tableLabel) {
+        is AppealType -> Judge.values() to tableData.let { (vo, da, vi) ->
+            when (tableLabel) {
                 AppealType.VOCAL -> vo
                 AppealType.DANCE -> da
                 AppealType.VISUAL -> vi
             }
-        },
+        }
+        is Judge -> AppealType.values() to tableData.let { (vo, da, vi) ->
+            when (tableLabel) {
+                Judge.VOCAL -> vo
+                Judge.DANCE -> da
+                Judge.VISUAL -> vi
+            }
+        }
+        else -> return
+    }
+
+    Table(
+        header.map(SwitcherLabel::text), columns,
         modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
     )
     Switcher(
-        appealType,
+        tableLabel,
         SwitcherOrientation.HORIZONTAL,
-        onClickBack = onAppealTypeChanged?.let { { onClickBack(appealType) } },
-        onClickForward = onAppealTypeChanged?.let { { onClickForward(appealType) } },
+        onClickBack = onSwitcherLabelChanged?.let { { onClickBack(tableLabel) } },
+        onClickForward = onSwitcherLabelChanged?.let { { onClickForward(tableLabel) } },
     )
 }
 
@@ -76,14 +117,11 @@ enum class Judge(override val text: String) : SwitcherLabel {
     override fun previous() = previousEnum()
 }
 
-private val JUDGES = listOf("Vo審査員", "Da審査員", "Vi審査員")
 private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
 
-private fun TotalAppeals.toTableData() = toTableData(AppPreference.Table.JUDGE)
-
 private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String, List<String>>> = when (type) {
-    AppPreference.Table.JUDGE -> listOf(vocal, dance, visual).toTableData()
-    AppPreference.Table.APPEAL -> listOf(toVocal, toDance, toVisual).toTableData()
+    AppPreference.Table.APPEAL -> listOf(vocal, dance, visual).toTableData()
+    AppPreference.Table.JUDGE -> listOf(toVocal, toDance, toVisual).toTableData()
 }
 
 private fun List<TotalAppeals.Unit>.toTableData(): List<Map<String, List<String>>> = map { unit ->
