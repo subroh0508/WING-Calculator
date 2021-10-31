@@ -9,9 +9,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.appeal.model.MemoryLevel
-import net.subroh0508.wingcalculator.composeui.components.molecules.MemoryLevelSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.MemoryLevelSelector
 
 @Composable
 fun ColumnScope.MemoryForm() {
@@ -22,8 +21,7 @@ fun ColumnScope.MemoryForm() {
     Row {
         MemoryLevelSelector(
             memoryLevel,
-            MemoryLevel.values(),
-            { dispatch(it) },
+            onChange = { dispatch(it) },
             modifier = Modifier.weight(1F)
         )
         Spacer(Modifier.width(8.dp))

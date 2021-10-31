@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.composeui.components.molecules.*
 import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.composeui.components.molecules.BuffRatioField
+import net.subroh0508.wingcalculator.composeui.components.molecules.InterestRatioField
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealJudgeSelector
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealRatioSelector
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.WeekSelector
 
 @Composable
 fun ColumnScope.BuffForm() {
@@ -19,8 +23,6 @@ fun ColumnScope.BuffForm() {
     WeekSelector(
         week.season,
         week.week,
-        Week.Season.values(),
-        !listOf(Week.Season.SEMI_FINAL, Week.Season.FINAL).contains(week.season),
         onChange = { season, week -> dispatch(Week(season, week)) },
     )
     Spacer(Modifier.height(16.dp))
@@ -33,7 +35,6 @@ fun ColumnScope.BuffForm() {
         Spacer(Modifier.width(8.dp))
         AppealJudgeSelector(
             appealJudge.factor,
-            AppealJudge.Factor.values(),
             onChange = { factor -> dispatch(AppealJudge(factor)) },
             modifier = Modifier.weight(1F),
         )

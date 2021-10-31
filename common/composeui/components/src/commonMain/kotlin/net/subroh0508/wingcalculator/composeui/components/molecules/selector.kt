@@ -16,75 +16,6 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
-import net.subroh0508.wingcalculator.utilities.extensions.toFixed
-
-@Composable
-fun <E: Enum<*>> WeekSelector(
-    selectedSeason: E,
-    week: Int,
-    seasons: Array<E>,
-    isWeekNumberEnabled: Boolean,
-    onChange: (E, Int) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var selection by remember { mutableStateOf(WeekSelection(selectedSeason, week))}
-
-    LaunchedEffect(selection) { onChange(selection.season, selection.week) }
-
-    Column(modifier = modifier) {
-        Text(
-            "シーズン・週",
-            style = MaterialTheme.typography.subtitle1,
-        )
-        Row(modifier = Modifier.fillMaxWidth()) {
-            DropdownSelector(
-                selectedSeason.toString(),
-                seasons.map(Enum<*>::toString),
-                onClick = { selection = selection.copy(season = seasons[it]) },
-                modifier = Modifier.weight(1F),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            if (isWeekNumberEnabled) {
-                DropdownSelector(
-                    "${selection.week}週目",
-                    WEEK_RANGE.map { "${it}週目" },
-                    onClick = { selection = selection.copy(week = it + 1) },
-                    modifier = Modifier.weight(1F),
-                )
-            } else {
-                Spacer(modifier = Modifier.weight(1F))
-            }
-        }
-    }
-}
-
-private data class WeekSelection<out T: Enum<*>>(
-    val season: T,
-    val week: Int = 1,
-)
-
-private val WEEK_RANGE = 1..8
-
-@Composable
-fun AppealRatioSelector(
-    selectedRatio: String,
-    onChange: (Double) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-        Text(
-            "アピール倍率",
-            style = MaterialTheme.typography.subtitle1,
-        )
-        DropdownSelector(
-            selectedRatio,
-            APPEAL_RATIO_RANGE.map { "${(it * 0.1).toFixed(1)}倍" },
-            onClick = { onChange(APPEAL_RATIO_RANGE.toList()[it] * 0.1) },
-        )
-    }
-}
-
-private val APPEAL_RATIO_RANGE = 10..50
 
 @Composable
 fun BuffRatioField(
@@ -124,28 +55,6 @@ fun BuffRatioField(
 private val BUFF_RATIO_REGEX = """^((0|-?[1-9]?[0-9]?|-?100),?)*$""".toRegex()
 
 @Composable
-fun <E: Enum<*>> AppealJudgeSelector(
-    selectedFactor: E,
-    factors: Array<E>,
-    onChange: (E) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-        Text(
-            "アピール判定",
-            style = MaterialTheme.typography.subtitle1,
-        )
-        Row {
-            DropdownSelector(
-                selectedFactor.toString(),
-                factors.map(Enum<*>::toString),
-                onClick = { onChange(factors[it]) },
-            )
-        }
-    }
-}
-
-@Composable
 fun InterestRatioField(
     interestRatio: String,
     total: String,
@@ -183,30 +92,7 @@ fun InterestRatioField(
 private val INTEREST_RATIO_REGEX = """^([0-1]?\.?[0-9]{0,2},?)*$""".toRegex()
 
 @Composable
-fun <E: Enum<*>> MemoryLevelSelector(
-    selectedLevel: E,
-    levels: Array<E>,
-    onChange: (E) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier) {
-        Text(
-            "思い出Lv",
-            style = MaterialTheme.typography.subtitle1,
-        )
-        Row {
-            DropdownSelector(
-                selectedLevel.toString(),
-                levels.map(Enum<*>::toString),
-                onClick = { onChange(levels[it]) },
-            )
-        }
-    }
-}
-
-
-@Composable
-private fun DropdownSelector(
+fun DropdownSelector(
     selectedItem: String,
     items: List<String>,
     onClick: (Int) -> Unit,
