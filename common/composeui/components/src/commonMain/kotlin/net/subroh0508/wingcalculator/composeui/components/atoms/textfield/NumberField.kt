@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.components.atoms
+package net.subroh0508.wingcalculator.composeui.components.atoms.textfield
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable

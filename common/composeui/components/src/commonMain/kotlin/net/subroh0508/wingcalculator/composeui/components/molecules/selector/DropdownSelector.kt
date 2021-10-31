@@ -1,6 +1,6 @@
 @file:Suppress("FunctionName")
 
-package net.subroh0508.wingcalculator.composeui.components.molecules
+package net.subroh0508.wingcalculator.composeui.components.molecules.selector
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,83 +13,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
-
-@Composable
-fun BuffRatioField(
-    buffRatio: String,
-    total: String,
-    onChange: (List<Double>) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var ratio by remember { mutableStateOf(buffRatio) }
-
-    LaunchedEffect(ratio) {
-        val array = ratio.split(",")
-            .filter(String::isNotBlank)
-            .mapNotNull { it.toIntOrNull()?.let { n -> n * 0.01 } }
-
-        if (array.isNotEmpty()) onChange(array)
-    }
-
-    Column(modifier = modifier) {
-        NumberField(
-            ratio,
-            label = "バフ補正: $total",
-            backgroundColor = MaterialTheme.colors.surface,
-            onChangeValue = { ratio = it },
-            regex = BUFF_RATIO_REGEX,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Text(
-            "カンマ区切り(単位: %)",
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.height(16.dp)
-                .padding(start = 16.dp),
-        )
-    }
-}
-
-private val BUFF_RATIO_REGEX = """^((0|-?[1-9]?[0-9]?|-?100),?)*$""".toRegex()
-
-@Composable
-fun InterestRatioField(
-    interestRatio: String,
-    total: String,
-    onChange: (List<Double>) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var ratio by remember { mutableStateOf(interestRatio) }
-
-    LaunchedEffect(ratio) {
-        val array = ratio.split(",")
-            .filter(String::isNotBlank)
-            .mapNotNull { it.toDoubleOrNull()?.takeIf { r -> r > 0.0 } }
-
-        if (array.isNotEmpty()) onChange(array)
-    }
-
-    Column(modifier = modifier) {
-        NumberField(
-            ratio,
-            label = "興味度: $total",
-            backgroundColor = MaterialTheme.colors.surface,
-            onChangeValue = { ratio = it },
-            regex = INTEREST_RATIO_REGEX,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Text(
-            "カンマ区切り",
-            style = MaterialTheme.typography.caption,
-            modifier = Modifier.height(16.dp)
-                .padding(start = 16.dp),
-        )
-    }
-}
-
-private val INTEREST_RATIO_REGEX = """^([0-1]?\.?[0-9]{0,2},?)*$""".toRegex()
 
 @Composable
 fun DropdownSelector(

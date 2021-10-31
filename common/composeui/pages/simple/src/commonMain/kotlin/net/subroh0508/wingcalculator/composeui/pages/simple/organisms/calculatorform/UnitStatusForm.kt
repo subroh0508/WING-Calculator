@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.Idol
-import net.subroh0508.wingcalculator.composeui.components.atoms.NumberField
+import net.subroh0508.wingcalculator.composeui.components.atoms.textfield.NumberField
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
 import net.subroh0508.wingcalculator.composeui.components.themes.mentalColor

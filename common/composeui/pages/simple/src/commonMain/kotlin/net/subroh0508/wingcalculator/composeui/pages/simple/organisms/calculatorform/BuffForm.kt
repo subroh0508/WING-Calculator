@@ -7,22 +7,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.*
-import net.subroh0508.wingcalculator.composeui.components.molecules.BuffRatioField
-import net.subroh0508.wingcalculator.composeui.components.molecules.InterestRatioField
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealJudgeSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealRatioSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.WeekSelector
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield.BuffRatioField
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield.InterestRatioField
 
 @Composable
 fun ColumnScope.BuffForm() {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
-    val (_, _, week, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
+    val (_, _, weekData, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
 
     WeekSelector(
-        week.season,
-        week.week,
+        weekData.season,
+        weekData.week,
         onChange = { season, week -> dispatch(Week(season, week)) },
     )
     Spacer(Modifier.height(16.dp))

@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.AppealJudge
 import net.subroh0508.wingcalculator.appeal.model.MemoryLevel
 import net.subroh0508.wingcalculator.appeal.model.Week
-import net.subroh0508.wingcalculator.composeui.components.molecules.DropdownSelector
+import net.subroh0508.wingcalculator.composeui.components.molecules.selector.DropdownSelector
 import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 
 @Composable
