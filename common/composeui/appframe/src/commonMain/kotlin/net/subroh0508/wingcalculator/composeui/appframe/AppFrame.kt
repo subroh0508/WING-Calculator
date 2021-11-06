@@ -29,7 +29,7 @@ typealias AppPreferenceDispatcher = (AppPreference) -> Unit
 val AppPreferenceDispatcherContext = compositionLocalOf<AppPreferenceDispatcher>(defaultFactory = { {} })
 
 @Composable
-fun AppFrame() = BoxWithConstraints {
+fun AppFrame(initPreference: AppPreference) = BoxWithConstraints {
     val (page, controller) = providePageController(maxWidth)
     val drawerState = rememberResponsiveDrawerState(page.constraints, DrawerValue.Closed)
 
@@ -38,7 +38,7 @@ fun AppFrame() = BoxWithConstraints {
     val fetchAppPreferenceUseCase: FetchAppPreferenceUseCase = remember(koin) { koin.get() }
     val updateAppPreferenceUseCase: UpdateAppPreferenceUseCase = remember(koin) { koin.get() }
 
-    var preference: AppPreference by remember(koin) { mutableStateOf(AppPreference()) }
+    var preference: AppPreference by remember(initPreference) { mutableStateOf(initPreference) }
 
     LaunchedEffect(koin) { preference = fetchAppPreferenceUseCase.execute() }
 
