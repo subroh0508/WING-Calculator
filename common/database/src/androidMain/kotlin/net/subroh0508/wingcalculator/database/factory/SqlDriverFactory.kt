@@ -8,22 +8,5 @@ import net.subroh0508.wingcalculator.database.WingCalculatorDatabase
 import net.subroh0508.wingcalculator.database.di.DB_NAME
 
 class SqlDriverFactory(private val context: Context) {
-    fun create(): SqlDriver = AndroidSqliteDriver(
-        WingCalculatorDatabase.Schema,
-        context,
-        DB_NAME,
-        callback = object : AndroidSqliteDriver.Callback(
-            schema = WingCalculatorDatabase.Schema,
-        ) {
-            override fun onCreate(db: SupportSQLiteDatabase) {
-                super.onCreate(db)
-
-                WingCalculatorDatabase.Schema.migrate(
-                    AndroidSqliteDriver(db, cacheSize = 1),
-                    0,
-                    WingCalculatorDatabase.Schema.version,
-                )
-            }
-        }
-    )
+    fun create(): SqlDriver = AndroidSqliteDriver(WingCalculatorDatabase.Schema, context, DB_NAME)
 }
