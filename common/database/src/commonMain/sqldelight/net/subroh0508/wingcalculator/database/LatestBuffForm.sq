@@ -1,0 +1,29 @@
+CREATE TABLE IF NOT EXISTS LatestBuffForm(
+    week INTEGER DEFAULT 1,
+    season TEXT NOT NULL DEFAULT 'ONE',
+    vocalBuff TEXT NOT NULL DEFAULT '0',
+    danceBuff TEXT NOT NULL DEFAULT '0',
+    visualBuff TEXT NOT NULL DEFAULT '0',
+    appealRatio REAL NOT NULL DEFAULT 2.0,
+    appealJudge TEXT NOT NULL DEFAULT 'GOOD',
+    interestRatio TEXT NOT NULL DEFAULT '0',
+    memoryLevel TEXT NOT NULL DEFAULT 'ONE'
+);
+
+INSERT OR IGNORE INTO LatestBuffForm
+DEFAULT VALUES;
+
+select:
+SELECT *
+FROM LatestBuffForm
+LIMIT 1;
+
+update:
+UPDATE LatestBuffForm
+SET
+  week = :week, season = :season,
+  vocalBuff = :vocalBuff, danceBuff = :danceBuff, visualBuff = :visualBuff,
+  appealRatio = :appealRatio,
+  appealJudge = :appealJudge,
+  interestRatio = :interestRatio,
+  memoryLevel = :memoryLevel;
