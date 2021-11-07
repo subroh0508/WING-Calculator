@@ -11,12 +11,12 @@ data class SimpleCalculatorUiModel(
     val panel: Panels = Panels.ONE,
     val drawer: DrawerType = DrawerType.Modal,
 ) {
-    val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buff, appealJudge, interestRatio, memoryLevel) ->
+    val totalAppeals = form.let { (pIdol, sIdols, week, appealRatio, buffs, appealJudge, interestRatio, memoryLevel) ->
         TotalAppeals(
             pIdol,
             sIdols,
             week,
-            Buffs(buff, buff, buff),
+            buffs,
             appealRatio,
             appealJudge,
             interestRatio,
@@ -32,7 +32,7 @@ data class SimpleCalculatorUiModel(
         sIdols: List<Idol.Support> = form.sIdols,
         week: Week = form.week,
         appealRatio: AppealRatio = form.appealRatio,
-        buff: Buff = form.buff,
+        buffs: Buffs = form.buffs,
         appealJudge: AppealJudge = form.appealJudge,
         interestRatio: InterestRatio = form.interestRatio,
         memoryLevel: MemoryLevel = form.memoryLevel,
@@ -44,7 +44,7 @@ data class SimpleCalculatorUiModel(
             sIdols,
             week,
             appealRatio,
-            buff,
+            buffs,
             appealJudge,
             interestRatio,
             memoryLevel,
@@ -82,7 +82,7 @@ data class SimpleCalculatorUiModel(
         val sIdols: List<Idol.Support> = listOf(Idol.Support(), Idol.Support(), Idol.Support(), Idol.Support()),
         val week: Week = Week(Week.Season.ONE),
         val appealRatio: AppealRatio = AppealRatio(2.5),
-        val buff: Buff = Buff(listOf(0.0)),
+        val buffs: Buffs = Buffs(),
         val appealJudge: AppealJudge = AppealJudge(AppealJudge.Factor.GOOD),
         val interestRatio: InterestRatio = InterestRatio(listOf(1.0)),
         val memoryLevel: MemoryLevel = MemoryLevel.ONE,

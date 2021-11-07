@@ -2,14 +2,47 @@
 
 package net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield
 
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.appeal.model.Buffs
 import net.subroh0508.wingcalculator.composeui.components.atoms.textfield.ArrayNumberField
+import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
+import net.subroh0508.wingcalculator.composeui.components.themes.visualColor
+import net.subroh0508.wingcalculator.composeui.components.themes.vocalColor
 
 @Composable
-fun BuffRatioField(
+fun ColumnScope.BuffRatioFields(
+    buffs: Buffs,
+    onChange: (Buffs) -> Unit,
+    modifier: Modifier = Modifier,
+) = buffs.forEachIndexed { i, buff ->
+    if (i != 0) {
+        Spacer(Modifier.height(16.dp))
+    }
+    BuffRatioField(
+        LABEL[i],
+        buff.toString(),
+        buff.total(),
+        COLORS[i],
+        onChange = { onChange(Buffs(i, it, buffs)) },
+        modifier = modifier,
+    )
+}
+
+private val LABEL = listOf("Voバフ補正", "Daバフ補正", "Viバフ補正")
+private val COLORS = listOf(vocalColor, danceColor, visualColor)
+
+@Composable
+private fun BuffRatioField(
+    label: String,
     buffRatio: String,
     total: String,
+    focusedColor: Color,
     onChange: (List<Double>) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -25,9 +58,10 @@ fun BuffRatioField(
 
     ArrayNumberField(
         ratio,
-        label = "バフ補正: $total",
+        label = "$label: $total",
         helperText = "カンマ区切り(単位: %)",
         regex = BUFF_RATIO_REGEX,
+        focusedColor = focusedColor,
         onChangeValue = { ratio = it },
         modifier = modifier,
     )

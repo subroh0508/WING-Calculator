@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
@@ -19,12 +21,14 @@ fun ArrayNumberField(
     helperText: String,
     onChangeValue: (String) -> Unit,
     regex: Regex,
+    focusedColor: Color = MaterialTheme.colors.primary.copy(alpha = ContentAlpha.high),
     modifier: Modifier = Modifier,
 ) = Column(modifier = modifier) {
     NumberField(
         text,
         label = label,
         backgroundColor = MaterialTheme.colors.surface,
+        focusedColor = focusedColor,
         onChangeValue = onChangeValue,
         regex = regex,
         modifier = Modifier.fillMaxWidth(),

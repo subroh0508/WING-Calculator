@@ -1,5 +1,6 @@
 package net.subroh0508.wingcalculator.appeal.model
 
+import net.subroh0508.wingcalculator.appeal.model.internal.AppealTypeIndex
 import kotlin.math.floor
 
 data class TotalAppeals internal constructor(val units: List<Unit>) {
@@ -32,8 +33,6 @@ data class TotalAppeals internal constructor(val units: List<Unit>) {
     )
 
     private fun getMemoryAppeal(index: AppealTypeIndex) = units[index.ordinal].memoryAppeals
-
-    private enum class AppealTypeIndex { Vo, Da, Vi }
 
     companion object {
         operator fun invoke(

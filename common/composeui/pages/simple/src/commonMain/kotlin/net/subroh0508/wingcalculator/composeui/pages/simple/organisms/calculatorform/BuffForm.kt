@@ -11,14 +11,14 @@ import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideI
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealJudgeSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealRatioSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.WeekSelector
-import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield.BuffRatioField
+import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield.BuffRatioFields
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.textfield.InterestRatioField
 
 @Composable
 fun ColumnScope.BuffForm() {
     val (uiModel, dispatch) = provideInputFormDispatcher()
 
-    val (_, _, weekData, appealRatio, buff, appealJudge, interestRatio) = uiModel.form
+    val (_, _, weekData, appealRatio, buffs, appealJudge, interestRatio) = uiModel.form
 
     WeekSelector(
         weekData.season,
@@ -40,11 +40,7 @@ fun ColumnScope.BuffForm() {
         )
     }
     Spacer(Modifier.height(16.dp))
-    BuffRatioField(
-        buff.toString(),
-        buff.total(),
-        onChange = { ratio -> dispatch(Buff(ratio)) },
-    )
+    BuffRatioFields(buffs, onChange = dispatch::invoke)
     Spacer(Modifier.height(16.dp))
     InterestRatioField(
         interestRatio.toString(),
