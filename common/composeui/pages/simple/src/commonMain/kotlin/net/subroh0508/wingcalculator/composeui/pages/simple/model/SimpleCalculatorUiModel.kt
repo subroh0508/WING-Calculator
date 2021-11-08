@@ -90,7 +90,16 @@ data class SimpleCalculatorUiModel(
         val id: Long? = null,
         val name: String? = null,
         val comment: String? = null,
-    )
+    ) {
+        constructor(form: BuffForm) : this(
+            week = form.week,
+            appealRatio = form.appealRatio,
+            buffs = form.buffs,
+            appealJudge = form.appealJudge,
+            interestRatio = form.interestRatio,
+            memoryLevel = form.memoryLevel,
+        )
+    }
 
     sealed class Query {
         abstract val text: String?

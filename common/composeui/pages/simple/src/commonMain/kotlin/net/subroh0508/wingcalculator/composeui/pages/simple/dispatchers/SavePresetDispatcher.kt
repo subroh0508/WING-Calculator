@@ -1,7 +1,7 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers
 
 import androidx.compose.runtime.*
-import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
+import net.subroh0508.wingcalculator.appeal.model.BuffForm
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 import net.subroh0508.wingcalculator.usecase.simple.SavePresetUseCase
@@ -16,12 +16,13 @@ fun provideSavePresetDispatcher(): Pair<SimpleCalculatorUiModel, SavePresetDispa
 
     val handleOnUiModelChanged = remember(uiModel) {
         suspend {
-            val (pIdol, sIdols, _, _, _, _, _, _, id, name, comment) = uiModel.form
+            val (pIdol, sIdols, week, appealRatio, buffs, appealJudge, interestRatio, memoryLevel, id, name, comment) = uiModel.form
+            val buffForm = BuffForm(week, appealRatio, buffs, appealJudge, interestRatio, memoryLevel)
 
             if (id != null && name != null)
-                savePresetUseCase?.execute(id, name, pIdol, sIdols, comment)
+                savePresetUseCase?.execute(id, name, pIdol, sIdols, buffForm, comment)
             else
-                savePresetUseCase?.execute(pIdol, sIdols, comment)
+                savePresetUseCase?.execute(pIdol, sIdols, buffForm, comment)
 
             Unit
         }

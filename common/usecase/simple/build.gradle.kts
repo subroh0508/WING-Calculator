@@ -12,6 +12,7 @@ kotlin {
                 api(project(":common:data:preference:model"))
 
                 implementation(project(":common:utilities"))
+                api(project(":common:data:appeal:infra"))
                 implementation(project(":common:data:preset:infra"))
                 implementation(project(":common:data:producer:infra"))
 

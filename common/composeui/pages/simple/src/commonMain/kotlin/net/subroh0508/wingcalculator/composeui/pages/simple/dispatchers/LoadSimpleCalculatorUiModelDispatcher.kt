@@ -19,8 +19,14 @@ fun provideLoadSimpleCalculatorUiModelDispatcher(): Pair<SimpleCalculatorUiModel
     val fetchLatestModifiedPresetUseCase: FetchLatestModifiedPresetUseCase? = remember(koin) { koin?.getOrNull() }
 
     return uiModel to { panel, drawer ->
-        fetchLatestModifiedPresetUseCase?.execute()?.let {
-            dispatcher(uiModel.copy(panel = panel, drawer = drawer).select(it))
+        fetchLatestModifiedPresetUseCase?.execute()?.let { (preset, buffForm) ->
+            val next = uiModel.copy(
+                panel = panel,
+                drawer = drawer,
+                form = SimpleCalculatorUiModel.Form(buffForm),
+            )
+
+            dispatcher(if (preset == null) next else next.select(preset))
         }
     }
 }

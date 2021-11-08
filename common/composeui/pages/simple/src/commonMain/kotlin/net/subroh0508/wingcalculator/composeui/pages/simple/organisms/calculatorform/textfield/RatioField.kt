@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.appeal.model.buffform.Buff
 import net.subroh0508.wingcalculator.appeal.model.buffform.Buffs
 import net.subroh0508.wingcalculator.composeui.components.atoms.textfield.ArrayNumberField
 import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
@@ -43,18 +44,12 @@ private fun BuffRatioField(
     buffRatio: String,
     total: String,
     focusedColor: Color,
-    onChange: (List<Double>) -> Unit,
+    onChange: (Buff) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var ratio by remember { mutableStateOf(buffRatio) }
 
-    LaunchedEffect(ratio) {
-        val array = ratio.split(",")
-            .filter(String::isNotBlank)
-            .mapNotNull { it.toIntOrNull()?.let { n -> n * 0.01 } }
-
-        if (array.isNotEmpty()) onChange(array)
-    }
+    LaunchedEffect(ratio) { Buff(ratio)?.let(onChange) }
 
     ArrayNumberField(
         ratio,

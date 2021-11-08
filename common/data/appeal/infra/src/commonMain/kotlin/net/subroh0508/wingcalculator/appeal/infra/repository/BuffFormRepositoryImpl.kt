@@ -29,9 +29,9 @@ internal class BuffFormRepositoryImpl(
         Week(Week.Season.valueOf(season), (week ?: 1).toInt()),
         AppealRatio(appealRatio),
         Buffs(
-            vocalBuff.split(",").map(String::toDouble),
-            danceBuff.split(",").map(String::toDouble),
-            visualBuff.split(",").map(String::toDouble),
+            Buff(vocalBuff) ?: Buff(),
+            Buff(danceBuff) ?: Buff(),
+            Buff(visualBuff) ?: Buff(),
         ),
         AppealJudge(AppealJudge.Factor.valueOf(appealJudge)),
         InterestRatio(interestRatio.split(",").map(String::toDouble)),

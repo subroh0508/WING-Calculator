@@ -5,6 +5,14 @@ import net.subroh0508.wingcalculator.appeal.model.internal.AppealTypeIndex
 data class Buff(
     internal val ratio: List<Double> = listOf(0.0),
 ) {
+    companion object {
+        operator fun invoke(ratio: String) = ratio.split(",")
+            .filter(String::isNotBlank)
+            .mapNotNull { it.toIntOrNull()?.let { n -> n * 0.01 } }
+            .takeIf(List<Double>::isNotEmpty)
+            ?.let(::Buff)
+    }
+
     override fun toString() = ratio.joinToString(",") { (it * 100).toInt().toString() }
 
     internal fun sum() = ratio.sum()
@@ -20,13 +28,13 @@ data class Buffs(
     val forVisual get() = get(AppealTypeIndex.Vi)
 
     constructor(
-        vocal: List<Double>,
-        dance: List<Double>,
-        visual: List<Double>,
-    ) : this(listOf(Buff(vocal), Buff(dance), Buff(visual)))
+        vocal: Buff,
+        dance: Buff,
+        visual: Buff,
+    ) : this(listOf(vocal, dance, visual))
 
-    constructor(index: Int, buff: List<Double>, buffs: Buffs) : this(
-        buffs.mapIndexed { i, b -> if (index == i) Buff(buff) else b },
+    constructor(index: Int, buff: Buff, buffs: Buffs) : this(
+        buffs.mapIndexed { i, b -> if (index == i) buff else b },
     )
 
     private operator fun get(type: AppealTypeIndex) = values[type.ordinal]

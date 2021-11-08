@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS LatestBuffForm(
     visualBuff TEXT NOT NULL DEFAULT '0',
     appealRatio REAL NOT NULL DEFAULT 2.0,
     appealJudge TEXT NOT NULL DEFAULT 'GOOD',
-    interestRatio TEXT NOT NULL DEFAULT '0',
+    interestRatio TEXT NOT NULL DEFAULT '1',
     memoryLevel TEXT NOT NULL DEFAULT 'ONE'
 );
 
