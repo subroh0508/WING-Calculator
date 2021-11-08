@@ -3,6 +3,7 @@ package net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.appeal.model.buffform.*
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorDispatcherContext
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext

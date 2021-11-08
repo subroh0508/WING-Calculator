@@ -1,9 +1,9 @@
-package net.subroh0508.wingcalculator.appeal.model
+package net.subroh0508.wingcalculator.appeal.model.buffform
 
 import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 
 data class AppealRatio(
-    internal val ratio: Double,
+    val ratio: Double,
 ) {
     override fun toString() = "${ratio.toFixed(1)}倍"
 }

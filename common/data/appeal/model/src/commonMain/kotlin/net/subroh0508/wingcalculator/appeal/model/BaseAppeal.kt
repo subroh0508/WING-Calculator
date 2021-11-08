@@ -1,5 +1,9 @@
 package net.subroh0508.wingcalculator.appeal.model
 
+import net.subroh0508.wingcalculator.appeal.model.buffform.Buff
+import net.subroh0508.wingcalculator.appeal.model.buffform.Week
+import net.subroh0508.wingcalculator.appeal.model.buffform.times
+
 sealed class BaseAppeal {
     internal abstract val pStatus: Status
     internal abstract val sStatus: List<Status>

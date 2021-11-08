@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.appeal.model.Buffs
+import net.subroh0508.wingcalculator.appeal.model.buffform.Buffs
 import net.subroh0508.wingcalculator.composeui.components.atoms.textfield.ArrayNumberField
 import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
 import net.subroh0508.wingcalculator.composeui.components.themes.visualColor

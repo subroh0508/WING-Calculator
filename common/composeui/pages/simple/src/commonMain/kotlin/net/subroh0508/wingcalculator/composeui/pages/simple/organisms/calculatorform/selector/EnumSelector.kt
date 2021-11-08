@@ -8,9 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.appeal.model.AppealJudge
-import net.subroh0508.wingcalculator.appeal.model.MemoryLevel
-import net.subroh0508.wingcalculator.appeal.model.Week
+import net.subroh0508.wingcalculator.appeal.model.buffform.AppealJudge
+import net.subroh0508.wingcalculator.appeal.model.buffform.MemoryLevel
+import net.subroh0508.wingcalculator.appeal.model.buffform.Week
 import net.subroh0508.wingcalculator.composeui.components.molecules.selector.DropdownSelector
 import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 

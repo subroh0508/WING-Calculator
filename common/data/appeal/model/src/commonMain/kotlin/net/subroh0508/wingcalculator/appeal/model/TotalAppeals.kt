@@ -1,5 +1,6 @@
 package net.subroh0508.wingcalculator.appeal.model
 
+import net.subroh0508.wingcalculator.appeal.model.buffform.*
 import net.subroh0508.wingcalculator.appeal.model.internal.AppealTypeIndex
 import kotlin.math.floor
 

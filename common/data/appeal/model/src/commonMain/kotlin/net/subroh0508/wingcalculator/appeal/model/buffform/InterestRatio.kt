@@ -1,4 +1,4 @@
-package net.subroh0508.wingcalculator.appeal.model
+package net.subroh0508.wingcalculator.appeal.model.buffform
 
 import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 

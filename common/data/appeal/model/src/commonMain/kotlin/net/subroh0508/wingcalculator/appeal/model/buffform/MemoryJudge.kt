@@ -1,4 +1,4 @@
-package net.subroh0508.wingcalculator.appeal.model
+package net.subroh0508.wingcalculator.appeal.model.buffform
 
 enum class MemoryJudge(internal val ratio: Double) {
     GOOD(1.5), BAD(0.5);

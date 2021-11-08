@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.appeal.model.buffform.AppealJudge
+import net.subroh0508.wingcalculator.appeal.model.buffform.AppealRatio
+import net.subroh0508.wingcalculator.appeal.model.buffform.InterestRatio
+import net.subroh0508.wingcalculator.appeal.model.buffform.Week
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealJudgeSelector
 import net.subroh0508.wingcalculator.composeui.pages.simple.organisms.calculatorform.selector.AppealRatioSelector

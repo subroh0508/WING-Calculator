@@ -1,4 +1,4 @@
-package net.subroh0508.wingcalculator.appeal.model
+package net.subroh0508.wingcalculator.appeal.model.buffform
 
 import net.subroh0508.wingcalculator.appeal.model.internal.AppealTypeIndex
 
@@ -18,6 +18,12 @@ data class Buffs(
     val forVocal get() = get(AppealTypeIndex.Vo)
     val forDance get() = get(AppealTypeIndex.Da)
     val forVisual get() = get(AppealTypeIndex.Vi)
+
+    constructor(
+        vocal: List<Double>,
+        dance: List<Double>,
+        visual: List<Double>,
+    ) : this(listOf(Buff(vocal), Buff(dance), Buff(visual)))
 
     constructor(index: Int, buff: List<Double>, buffs: Buffs) : this(
         buffs.mapIndexed { i, b -> if (index == i) Buff(buff) else b },

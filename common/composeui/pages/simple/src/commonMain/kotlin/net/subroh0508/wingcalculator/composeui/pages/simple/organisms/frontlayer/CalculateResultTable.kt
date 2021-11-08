@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.appeal.model.Appeal
-import net.subroh0508.wingcalculator.appeal.model.MemoryJudge
+import net.subroh0508.wingcalculator.appeal.model.buffform.MemoryJudge
 import net.subroh0508.wingcalculator.appeal.model.TotalAppeals
 import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel

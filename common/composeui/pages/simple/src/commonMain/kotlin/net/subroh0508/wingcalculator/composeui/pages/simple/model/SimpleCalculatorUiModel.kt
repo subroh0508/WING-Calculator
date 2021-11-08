@@ -1,6 +1,7 @@
 package net.subroh0508.wingcalculator.composeui.pages.simple.model
 
 import net.subroh0508.wingcalculator.appeal.model.*
+import net.subroh0508.wingcalculator.appeal.model.buffform.*
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
 import net.subroh0508.wingcalculator.preset.model.Preset
 
