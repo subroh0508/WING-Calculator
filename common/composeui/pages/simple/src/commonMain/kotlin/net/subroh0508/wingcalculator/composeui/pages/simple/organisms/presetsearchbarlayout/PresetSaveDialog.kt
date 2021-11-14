@@ -6,9 +6,13 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
+import net.subroh0508.wingcalculator.composeui.components.CommonStrings
 import net.subroh0508.wingcalculator.composeui.components.molecules.dialog.FormDialog
+import net.subroh0508.wingcalculator.composeui.components.getString as getCommonString
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideCreatePresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 
 @Composable
 fun SimplePresetCreateDialog(
@@ -38,18 +42,18 @@ private fun SimplePresetSaveDialog(
 
     FormDialog(
         onDismissRequest = onClose,
-        title = { Text("プリセット名を入力") },
+        title = { Text(getString(Strings.PresetSaveDialogTitle)) },
         confirmButton = {
             TextButton(onClick = {
                 onClickSave(presetName)
                 onClose()
             }) {
-                Text("保存")
+                Text(getCommonString(CommonStrings.Save))
             }
         },
         dismissButton = {
             TextButton(onClick = onClose) {
-                Text("閉じる")
+                Text(getCommonString(CommonStrings.Close))
             }
         },
     ) {

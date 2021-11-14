@@ -4,6 +4,7 @@ enum class CommonStrings {
     Cancel,
     Edit,
     Save,
+    Close,
 }
 
 expect fun getString(string: CommonStrings): String

@@ -21,8 +21,10 @@ import net.subroh0508.wingcalculator.composeui.components.Strings
 import net.subroh0508.wingcalculator.composeui.components.getString
 
 interface SwitcherLabel {
+    @get:Composable
     val text: String
 
+    @Composable
     operator fun component1() = text
 
     fun next(): SwitcherLabel

@@ -11,8 +11,10 @@ import androidx.compose.ui.Modifier
 import net.subroh0508.wingcalculator.composeui.components.atoms.list.DeletableListItem
 import net.subroh0508.wingcalculator.composeui.components.atoms.list.Footer
 import net.subroh0508.wingcalculator.composeui.components.molecules.list.LazyColumnWithFooter
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideDeletePresetDispatcher
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSelectPresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 
 @Composable
 fun ColumnScope.PresetSuggests(
@@ -30,7 +32,7 @@ fun ColumnScope.PresetSuggests(
         footer = {
             Footer(
                 query.text != null && suggestions.isEmpty(),
-                "条件に一致するプリセットが見つかりません",
+                getString(Strings.MessageSearchPresetSuggestsEmpty),
             )
         }
     ) { _, (id, form) ->

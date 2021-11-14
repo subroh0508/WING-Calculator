@@ -17,7 +17,9 @@ import net.subroh0508.wingcalculator.composeui.components.themes.mentalColor
 import net.subroh0508.wingcalculator.composeui.components.themes.visualColor
 import net.subroh0508.wingcalculator.composeui.components.themes.vocalColor
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideInputFormDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 
 @Composable
@@ -37,7 +39,7 @@ private fun ColumnScope.ProduceIdolStatusForm(
 ) {
     var status by remember(form.id) { mutableStateOf(IdolStatus(form.pIdol)) }
 
-    IdolStatusForm("プロデュースアイドル", status) { status = it }
+    IdolStatusForm(getString(Strings.ProduceIdolStatusFormLabel), status) { status = it }
 }
 
 @Composable
@@ -47,7 +49,7 @@ private fun ColumnScope.SupportIdolStatusForm(
 ) {
     var status by remember(form.id) { mutableStateOf(IdolStatus(form.sIdols[index])) }
 
-    IdolStatusForm("サポートアイドル", status, index) { status = it }
+    IdolStatusForm(getString(Strings.SupportIdolStatusFormLabel, index + 1), status, index) { status = it }
 }
 
 @Composable
@@ -69,13 +71,13 @@ private fun ColumnScope.IdolStatusForm(
     }
 
     Text(
-        label + (index?.let { "(${it + 1})" } ?: ""),
+        label,
         style = MaterialTheme.typography.subtitle1,
     )
     Row {
         StatusField(
             status.vocal,
-            label = "Vo",
+            label = getString(Strings.IdolVocalStatusFormLabel),
             focusedColor = vocalColor,
             onChangeValue = { onStateChange(status.copy(vocal = it)) },
             modifier = Modifier.weight(1F),
@@ -83,7 +85,7 @@ private fun ColumnScope.IdolStatusForm(
         Spacer(Modifier.width(8.dp))
         StatusField(
             status.dance,
-            label = "Da",
+            label = getString(Strings.IdolDanceStatusFormLabel),
             focusedColor = danceColor,
             onChangeValue = { onStateChange(status.copy(dance = it)) },
             modifier = Modifier.weight(1F),
@@ -91,7 +93,7 @@ private fun ColumnScope.IdolStatusForm(
         Spacer(Modifier.width(8.dp))
         StatusField(
             status.visual,
-            label = "Vi",
+            label = getString(Strings.IdolVisualStatusFormLabel),
             focusedColor = visualColor,
             onChangeValue = { onStateChange(status.copy(visual = it)) },
             modifier = Modifier.weight(1F),
@@ -100,7 +102,7 @@ private fun ColumnScope.IdolStatusForm(
         if (status.mental != null)
             StatusField(
                 status.mental,
-                label = "Me",
+                label = getString(Strings.IdolMentalStatusFormLabel),
                 focusedColor = mentalColor,
                 onChangeValue = { onStateChange(status.copy(mental = it)) },
                 modifier = Modifier.weight(1F),

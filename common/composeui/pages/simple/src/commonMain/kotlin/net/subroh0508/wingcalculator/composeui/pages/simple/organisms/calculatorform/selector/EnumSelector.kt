@@ -12,6 +12,8 @@ import net.subroh0508.wingcalculator.appeal.model.buffform.AppealJudge
 import net.subroh0508.wingcalculator.appeal.model.buffform.MemoryLevel
 import net.subroh0508.wingcalculator.appeal.model.buffform.Week
 import net.subroh0508.wingcalculator.composeui.components.molecules.selector.DropdownSelector
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 import net.subroh0508.wingcalculator.utilities.extensions.toFixed
 
 @Composable
@@ -29,7 +31,7 @@ fun WeekSelector(
 
     Column(modifier = modifier) {
         Text(
-            "シーズン・週",
+            getString(Strings.WeekSelectorLabel),
             style = MaterialTheme.typography.subtitle1,
         )
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -42,8 +44,8 @@ fun WeekSelector(
             Spacer(modifier = Modifier.width(8.dp))
             if (isWeekNumberEnabled) {
                 DropdownSelector(
-                    "${selection.week}週目",
-                    WEEK_RANGE.map { "${it}週目" },
+                    getString(Strings.WeekSelectorUnit, selection.week),
+                    WEEK_RANGE.map { getString(Strings.WeekSelectorUnit, it) },
                     onClick = { selection = selection.copy(week = it + 1) },
                     modifier = Modifier.weight(1F),
                 )
@@ -67,9 +69,9 @@ fun AppealRatioSelector(
     onChange: (Double) -> Unit,
     modifier: Modifier = Modifier,
 ) = StringListSelector(
-    "アピール倍率",
+    getString(Strings.AppealRatioSelectorLabel),
     selectedRatio,
-    APPEAL_RATIO_RANGE.map { "${(it * 0.1).toFixed(1)}倍" },
+    APPEAL_RATIO_RANGE.map { getString(Strings.AppealRatioSelectorUnit, (it * 0.1).toFixed(1)) },
     onChange = { onChange(APPEAL_RATIO_RANGE.toList()[it] * 0.1) },
     modifier = modifier,
 )
@@ -81,14 +83,14 @@ fun AppealJudgeSelector(
     selected: AppealJudge.Factor,
     onChange: (AppealJudge.Factor) -> Unit,
     modifier: Modifier = Modifier,
-) = EnumSelector("アピール判定", selected, AppealJudge.Factor.values(), onChange, modifier)
+) = EnumSelector(getString(Strings.AppealJudgeSelectorLabel), selected, AppealJudge.Factor.values(), onChange, modifier)
 
 @Composable
 fun MemoryLevelSelector(
     selected: MemoryLevel,
     onChange: (MemoryLevel) -> Unit,
     modifier: Modifier = Modifier,
-) = EnumSelector("思い出Lv", selected, MemoryLevel.values(), onChange, modifier)
+) = EnumSelector(getString(Strings.MemoryLevelSelectorLabel), selected, MemoryLevel.values(), onChange, modifier)
 
 @Composable
 private fun <E: Enum<*>> EnumSelector(

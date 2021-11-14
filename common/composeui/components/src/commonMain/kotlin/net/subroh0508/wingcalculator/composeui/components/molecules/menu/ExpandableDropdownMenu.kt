@@ -18,6 +18,7 @@ import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenu
 import net.subroh0508.wingcalculator.composeui.components.imports.DropdownMenuItem
 
 interface DropdownMenuItem {
+    @get:Composable
     val label: String
 }
 

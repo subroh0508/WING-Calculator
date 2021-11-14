@@ -3,6 +3,7 @@
     <string name="cancel">キャンセル</string>
     <string name="edit">編集</string>
     <string name="save">保存</string>
+    <string name="close">閉じる</string>
 
     <string name="close_drawer" translatable="false">Close navigation menu</string>
     <string name="icon_description_backdrop_reveal" translatable="false">reveal</string>

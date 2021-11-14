@@ -15,6 +15,8 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.textfield.ArrayN
 import net.subroh0508.wingcalculator.composeui.components.themes.danceColor
 import net.subroh0508.wingcalculator.composeui.components.themes.visualColor
 import net.subroh0508.wingcalculator.composeui.components.themes.vocalColor
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 
 @Composable
 fun ColumnScope.BuffRatioFields(
@@ -26,23 +28,21 @@ fun ColumnScope.BuffRatioFields(
         Spacer(Modifier.height(16.dp))
     }
     BuffRatioField(
-        LABEL[i],
+        getString(LABEL[i], buff.total()),
         buff.toString(),
-        buff.total(),
         COLORS[i],
         onChange = { onChange(Buffs(i, it, buffs)) },
         modifier = modifier,
     )
 }
 
-private val LABEL = listOf("Voバフ補正", "Daバフ補正", "Viバフ補正")
+private val LABEL = listOf(Strings.VocalBuffRatioLabel, Strings.DanceBuffRatioLabel, Strings.VisualBuffRatioLabel)
 private val COLORS = listOf(vocalColor, danceColor, visualColor)
 
 @Composable
 private fun BuffRatioField(
     label: String,
     buffRatio: String,
-    total: String,
     focusedColor: Color,
     onChange: (Buff) -> Unit,
     modifier: Modifier = Modifier,
@@ -54,8 +54,8 @@ private fun BuffRatioField(
 
     ArrayNumberField(
         ratio,
-        label = "$label: $total",
-        helperText = "カンマ区切り(単位: %)",
+        label = label,
+        helperText = getString(Strings.BuffRatioHelperText),
         regex = BUFF_RATIO_REGEX,
         focusedColor = focusedColor,
         onChangeValue = { ratio = it },
@@ -84,8 +84,8 @@ fun InterestRatioField(
 
     ArrayNumberField(
         ratio,
-        label = "興味度: $total",
-        helperText = "カンマ区切り",
+        label = getString(Strings.InterestRatioLabel, total),
+        helperText = getString(Strings.InterestRatioHelperText),
         regex = INTEREST_RATIO_REGEX,
         onChangeValue = { ratio = it },
         modifier = modifier,

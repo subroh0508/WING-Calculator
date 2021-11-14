@@ -15,7 +15,9 @@ import net.subroh0508.wingcalculator.composeui.components.atoms.Table
 import net.subroh0508.wingcalculator.composeui.components.di.uiModel
 import net.subroh0508.wingcalculator.composeui.components.molecules.*
 import net.subroh0508.wingcalculator.composeui.pages.simple.SimpleCalculatorProviderContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
 import net.subroh0508.wingcalculator.composeui.pages.simple.TableTypePreferenceProviderContext
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 @Composable
@@ -96,7 +98,7 @@ private fun ColumnScope.CalculateResultTableWithSwitcher(
     }
 
     Table(
-        header.map(SwitcherLabel::text), columns,
+        header.map { it.text }, columns,
         height = IDOLS.size,
         modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp),
     )
@@ -108,22 +110,34 @@ private fun ColumnScope.CalculateResultTableWithSwitcher(
     )
 }
 
-enum class AppealType(override val text: String) : SwitcherLabel {
-    VOCAL("Voアピール"), DANCE("Daアピール"), VISUAL("Viアピール"), MEMORY("思い出");
+enum class AppealType(private val strings: Strings) : SwitcherLabel {
+    VOCAL(Strings.TableSwitcherAppealLabelVocal),
+    DANCE(Strings.TableSwitcherAppealLabelDance),
+    VISUAL(Strings.TableSwitcherAppealLabelVisual),
+    MEMORY(Strings.TableSwitcherAppealLabelMemory);
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
 
-    companion object { const val LABEL = "アピール種別" }
+    override val text: String
+        @Composable get() = getString(strings)
+
+    companion object { internal val LABEL = Strings.TableSwitcherAppealLabel }
 }
 
-enum class Judge(override val text: String) : SwitcherLabel {
-    VOCAL("Vo審査員"), DANCE("Da審査員"), VISUAL("Vi審査員"), MEMORY("思い出");
+enum class Judge(private val strings: Strings) : SwitcherLabel {
+    VOCAL(Strings.TableSwitcherJudgeLabelVocal),
+    DANCE(Strings.TableSwitcherJudgeLabelDance),
+    VISUAL(Strings.TableSwitcherJudgeLabelVisual),
+    MEMORY(Strings.TableSwitcherAppealLabelMemory);
 
     override fun next() = nextEnum()
     override fun previous() = previousEnum()
 
-    companion object { const val LABEL = "審査員" }
+    override val text: String
+        @Composable get() = getString(strings)
+
+    companion object { internal val LABEL = Strings.TableSwitcherJudgeLabel }
 }
 
 private fun header(tableLabel: SwitcherLabel): List<SwitcherLabel> = when {
@@ -133,8 +147,15 @@ private fun header(tableLabel: SwitcherLabel): List<SwitcherLabel> = when {
     else -> arrayOf()
 }.toList().dropLast(1)
 
-private val IDOLS = listOf("P", "S1", "S2", "S3", "S4")
+private val IDOLS = listOf(
+    Strings.TableColumnLabelProduce,
+    Strings.TableColumnLabelSupport1,
+    Strings.TableColumnLabelSupport2,
+    Strings.TableColumnLabelSupport3,
+    Strings.TableColumnLabelSupport4,
+)
 
+@Composable
 private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String, List<String>>> = when (type) {
     AppPreference.Table.APPEAL -> listOf(vocal, dance, visual).toTableData()
     AppPreference.Table.JUDGE -> listOf(toVocal, toDance, toVisual).toTableData()
@@ -144,8 +165,9 @@ private fun TotalAppeals.toTableData(type: AppPreference.Table): List<Map<String
     }
 }
 
+@Composable
 private fun List<TotalAppeals.Unit>.toTableData(): List<Map<String, List<String>>> = map { unit ->
     unit.foldIndexed(mapOf()) { i, acc, appeal ->
-        acc + mapOf(IDOLS[i] to appeal.map(Appeal::toString))
+        acc + mapOf(getString(IDOLS[i]) to appeal.map(Appeal::toString))
     }
 }

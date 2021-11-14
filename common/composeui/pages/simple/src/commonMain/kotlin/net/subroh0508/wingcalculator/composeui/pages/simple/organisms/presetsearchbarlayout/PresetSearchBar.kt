@@ -11,11 +11,17 @@ import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.Searc
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBar
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.DropdownMenuItem
 import net.subroh0508.wingcalculator.composeui.components.molecules.menu.ExpandableDropdownMenu
+import net.subroh0508.wingcalculator.composeui.pages.simple.Strings
 import net.subroh0508.wingcalculator.composeui.pages.simple.dispatchers.provideSearchPresetDispatcher
+import net.subroh0508.wingcalculator.composeui.pages.simple.getString
 import net.subroh0508.wingcalculator.composeui.pages.simple.model.SimpleCalculatorUiModel
 
-private enum class MenuForSave(override val label: String) : DropdownMenuItem {
-    CREATE("新規プリセット"), UPDATE("プリセット名変更")
+private enum class MenuForSave(private val strings: Strings) : DropdownMenuItem {
+    CREATE(Strings.PresetSaveMenuCreate),
+    UPDATE(Strings.PresetSaveMenuUpdate);
+
+    override val label: String
+        @Composable get() = getString(strings)
 }
 
 @Composable
@@ -26,7 +32,7 @@ fun PresetSearchBar(
     val (uiModel, dispatch) = provideSearchPresetDispatcher()
     var saveMode by remember { mutableStateOf<MenuForSave?>(null) }
 
-    val (form, query, _) = uiModel
+    val (_, query, _) = uiModel
 
     when (saveMode) {
         MenuForSave.CREATE -> SimplePresetCreateDialog { saveMode = null }
@@ -35,7 +41,7 @@ fun PresetSearchBar(
 
     TopAppSearchBar(
         uiModel.searchBarText,
-        "プリセットを検索",
+        getString(Strings.PresetSearchBarPlaceholder),
         query.toSearchBarState(),
         onNavigationClick = if (uiModel.isOpenDrawerButtonVisible) onNavigationClick else null,
         onSearchBarStateChange = {
@@ -65,8 +71,8 @@ private fun SimpleCalculatorUiModel.Query.toSearchBarState() = when (this) {
     is SimpleCalculatorUiModel.Query.Closed -> SearchBarState.CLOSED
 }
 
-private val SimpleCalculatorUiModel.searchBarText get() = when (query) {
+private val SimpleCalculatorUiModel.searchBarText @Composable get() = when (query) {
     is SimpleCalculatorUiModel.Query.Opened -> query.text
-    is SimpleCalculatorUiModel.Query.Closed -> form.name?.let { "プリセット名: $it" }
+    is SimpleCalculatorUiModel.Query.Closed -> form.name?.let { getString(Strings.PresetSearchBarText, it) }
 }
 private val SimpleCalculatorUiModel.isSelectedSuggestion get() = form.id != null && form.name != null
