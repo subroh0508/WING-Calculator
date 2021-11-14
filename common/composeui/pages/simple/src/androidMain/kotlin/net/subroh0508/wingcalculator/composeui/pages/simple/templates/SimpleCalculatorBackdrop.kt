@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.ResponsiveDrawerState
 import net.subroh0508.wingcalculator.composeui.pages.simple.templates.backdrop.BackLayerContent
@@ -54,6 +55,7 @@ actual fun SimpleCalculatorBackdrop(drawerState: ResponsiveDrawerState, isResult
             },
             scaffoldState = backdropScaffoldState,
             peekHeight = peekHeight,
+            headerHeight = if (isResultTableHidden) 0.dp else BackdropScaffoldDefaults.HeaderHeight
         )
     }
 }

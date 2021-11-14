@@ -9,7 +9,6 @@ internal actual fun getString(string: Strings): String {
     val resources = LocalContext.current.resources
 
     return when (string) {
-        Strings.CloseDrawer -> resources.getString(R.string.close_drawer)
         Strings.IconDescriptionBackdropReveal -> resources.getString(R.string.icon_description_backdrop_reveal)
         Strings.IconDescriptionBackdropConceal -> resources.getString(R.string.icon_description_backdrop_conceal)
         Strings.IconDescriptionDeletableListItem -> resources.getString(R.string.icon_description_deletable_list_item)
