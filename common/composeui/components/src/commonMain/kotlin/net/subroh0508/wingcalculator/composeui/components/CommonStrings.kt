@@ -5,6 +5,9 @@ enum class CommonStrings {
     Edit,
     Save,
     Close,
+
+    CloseDrawer,
+    OpenDrawer,
 }
 
 expect fun getString(string: CommonStrings): String

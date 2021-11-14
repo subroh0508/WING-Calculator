@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import net.subroh0508.wingcalculator.composeui.appframe.Strings
 import net.subroh0508.wingcalculator.composeui.appframe.constraints.AppPreferenceMinWidth
+import net.subroh0508.wingcalculator.composeui.appframe.getString
 import net.subroh0508.wingcalculator.composeui.appframe.preference.forms.DarkTheme
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppBarWithNavigation
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
@@ -30,7 +32,7 @@ fun AppPreferencePage(
     Surface(Modifier.fillMaxSize()) {
         Column {
             TopAppBarWithNavigation(
-                "アプリ設定",
+                getString(Strings.PageTitlePreference),
                 onNavigationClick =
                     if (drawerType == DrawerType.Modal)
                         { { scope.launch { drawerState.open() } } }

@@ -20,6 +20,7 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.CommonStrings
 import net.subroh0508.wingcalculator.composeui.components.Strings
 import net.subroh0508.wingcalculator.composeui.components.borderEnd
 import net.subroh0508.wingcalculator.composeui.components.getString
@@ -232,7 +233,7 @@ private fun ModalScrim(
         animationSpec = TweenSpec(),
     )
 
-    val closeDrawer = getString(Strings.CloseDrawer)
+    val closeDrawer = getString(CommonStrings.CloseDrawer)
     val dismissModifier =
         if (open)
             Modifier

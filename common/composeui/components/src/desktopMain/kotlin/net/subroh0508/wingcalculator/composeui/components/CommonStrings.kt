@@ -8,4 +8,6 @@ actual fun getString(string: CommonStrings): String = when (string) {
     CommonStrings.Edit -> "編集"
     CommonStrings.Save -> "保存"
     CommonStrings.Close -> "閉じる"
+    CommonStrings.CloseDrawer -> "close navigation menu"
+    CommonStrings.OpenDrawer -> "open navigation menu"
 }

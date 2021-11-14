@@ -1,7 +1,6 @@
 package net.subroh0508.wingcalculator.composeui.components
 
 internal enum class Strings {
-    CloseDrawer,
     IconDescriptionBackdropReveal,
     IconDescriptionBackdropConceal,
     IconDescriptionDeletableListItem,

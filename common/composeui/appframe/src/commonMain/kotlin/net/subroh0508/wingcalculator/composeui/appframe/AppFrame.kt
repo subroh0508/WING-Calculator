@@ -71,14 +71,14 @@ private fun ThemedAppFrame(
             DrawerHeader(drawerState, page.constraints)
             Divider()
             DrawerMenuItem(
-                Icons.Default.Calculate to "SimpleCalculator",
-                "アピール値計算",
+                Icons.Default.Calculate to getString(Strings.IconDescriptionSimpleCalculator),
+                getString(Strings.PageTitleSimpleCalculator),
                 drawerState,
                 controller::openSimpleCalculator,
             )
             DrawerMenuItem(
-                Icons.Default.Settings to "Settings",
-                "アプリ設定",
+                Icons.Default.Settings to getString(Strings.IconDescriptionPreference),
+                getString(Strings.PageTitlePreference),
                 drawerState,
                 controller::openAppPreference,
             )

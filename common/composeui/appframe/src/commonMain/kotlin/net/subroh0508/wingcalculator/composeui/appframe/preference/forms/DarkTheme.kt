@@ -12,6 +12,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import net.subroh0508.wingcalculator.composeui.appframe.AppPreferenceDispatcherContext
+import net.subroh0508.wingcalculator.composeui.appframe.Strings
+import net.subroh0508.wingcalculator.composeui.appframe.getString
 import net.subroh0508.wingcalculator.preference.model.AppPreference
 
 @Composable
@@ -19,7 +21,7 @@ fun ColumnScope.DarkTheme(preference: AppPreference) {
     val dispatcher = AppPreferenceDispatcherContext.current
 
     Text(
-        "モード",
+        getString(Strings.PreferenceColorThemeLabel),
         style = MaterialTheme.typography.subtitle2,
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 32.dp, bottom = 16.dp)
     )
@@ -40,8 +42,8 @@ fun ColumnScope.DarkTheme(preference: AppPreference) {
     }
 }
 
-private val AppPreference.Theme.label get() = when (this) {
-    AppPreference.Theme.SYSTEM -> "システム設定に従う"
-    AppPreference.Theme.LIGHT -> "ライトテーマ"
-    AppPreference.Theme.DARK -> "ダークテーマ"
+private val AppPreference.Theme.label @Composable get() = when (this) {
+    AppPreference.Theme.SYSTEM -> getString(Strings.PreferenceColorThemeSystem)
+    AppPreference.Theme.LIGHT -> getString(Strings.PreferenceColorThemeLight)
+    AppPreference.Theme.DARK -> getString(Strings.PreferenceColorThemeDark)
 }

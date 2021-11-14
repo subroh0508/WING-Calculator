@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="page_title_simple_calculator">アピール値計算</string>
+    <string name="page_title_preference">アプリ設定</string>
+    <string name="preference_color_theme_label">モード</string>
+    <string name="preference_color_theme_system">システム設定に従う</string>
+    <string name="preference_color_theme_light">ライトモード</string>
+    <string name="preference_color_theme_dark">ダークモード</string>
+
+    <string name="app_frame_icon_description_simple_calculator" translatable="false">SimpleCalculator</string>
+    <string name="app_frame_icon_description_preference" translatable="false">Settings</string>
+</resources>

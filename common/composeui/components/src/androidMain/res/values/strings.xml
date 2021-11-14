@@ -5,7 +5,8 @@
     <string name="save">保存</string>
     <string name="close">閉じる</string>
 
-    <string name="close_drawer" translatable="false">Close navigation menu</string>
+    <string name="close_drawer" translatable="false">close navigation menu</string>
+    <string name="open_drawer" translatable="false">open navigation menu</string>
     <string name="icon_description_backdrop_reveal" translatable="false">reveal</string>
     <string name="icon_description_backdrop_conceal" translatable="false">conceal</string>
     <string name="icon_description_deletable_list_item" translatable="false">delete</string>

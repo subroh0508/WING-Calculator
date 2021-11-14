@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 
 @Composable
 internal actual fun getString(string: Strings): String = when (string) {
-    Strings.CloseDrawer -> "Close navigation menu"
     Strings.IconDescriptionBackdropReveal -> "reveal"
     Strings.IconDescriptionBackdropConceal -> "conceal"
     Strings.IconDescriptionDeletableListItem -> "delete"

@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import net.subroh0508.wingcalculator.composeui.components.CommonStrings
+import net.subroh0508.wingcalculator.composeui.components.getString as getCommonString
 import net.subroh0508.wingcalculator.composeui.components.molecules.appbar.TopAppSearchBarHeight
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerConstraints
 import net.subroh0508.wingcalculator.composeui.components.molecules.drawer.DrawerType
@@ -42,7 +44,7 @@ private fun ColumnScope.ClosedDrawerHeader(
     ) {
         Icon(
             Icons.Default.MenuOpen,
-            contentDescription = "Open Drawer",
+            contentDescription = getCommonString(CommonStrings.OpenDrawer),
             modifier = Modifier.size(24.dp),
         )
     }
@@ -64,7 +66,7 @@ private fun ColumnScope.OpenDrawerHeader(
         ) {
             Icon(
                 Icons.Default.KeyboardArrowLeft,
-                contentDescription = "Close Drawer",
+                contentDescription = getCommonString(CommonStrings.CloseDrawer),
                 modifier = Modifier.size(24.dp),
             )
         }

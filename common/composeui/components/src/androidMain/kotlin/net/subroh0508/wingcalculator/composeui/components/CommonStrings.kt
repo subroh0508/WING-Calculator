@@ -13,5 +13,7 @@ actual fun getString(string: CommonStrings): String {
         CommonStrings.Edit -> resources.getString(R.string.edit)
         CommonStrings.Save -> resources.getString(R.string.save)
         CommonStrings.Close -> resources.getString(R.string.close)
+        CommonStrings.CloseDrawer -> resources.getString(R.string.close_drawer)
+        CommonStrings.OpenDrawer -> resources.getString(R.string.open_drawer)
     }
 }
