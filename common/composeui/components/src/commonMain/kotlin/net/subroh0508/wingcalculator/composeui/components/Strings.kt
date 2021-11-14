@@ -1,12 +1,16 @@
 package net.subroh0508.wingcalculator.composeui.components
 
-import net.subroh0508.wingcalculator.utilities.JvmInline
-
-@JvmInline
-internal value class Strings private constructor(private val value: Int) {
-    companion object {
-        val CloseDrawer = Strings(0)
-    }
+internal enum class Strings {
+    CloseDrawer,
+    IconDescriptionBackdropReveal,
+    IconDescriptionBackdropConceal,
+    IconDescriptionDeletableListItem,
+    IconDescriptionTopAppBarNavigation,
+    IconDescriptionOpenedSearchBarBack,
+    IconDescriptionOpenedSearchBarClear,
+    IconDescriptionDropdownSelector,
+    IconDescriptionSwitcherStart,
+    IconDescriptionSwitcherEnd;
 }
 
 internal expect fun getString(string: Strings): String

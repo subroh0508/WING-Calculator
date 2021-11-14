@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.Strings
+import net.subroh0508.wingcalculator.composeui.components.getString
 
 interface SwitcherLabel {
     val text: String
@@ -33,11 +35,14 @@ inline fun <reified E: Enum<E>> E.previousEnum() = enumValues<E>().let { it[(it.
 enum class SwitcherOrientation(
     val startIcon: ImageVector,
     val endIcon: ImageVector,
-    val startDescription: String = "back",
-    val endDescription: String = "forward",
 ) {
     VERTICAL(Icons.Default.KeyboardArrowUp, Icons.Default.KeyboardArrowDown),
     HORIZONTAL(Icons.Default.KeyboardArrowLeft, Icons.Default.KeyboardArrowRight);
+
+    val startDescription
+        @Composable get() = getString(Strings.IconDescriptionSwitcherStart)
+    val endDescription
+        @Composable get() = getString(Strings.IconDescriptionSwitcherEnd)
 }
 
 @Composable

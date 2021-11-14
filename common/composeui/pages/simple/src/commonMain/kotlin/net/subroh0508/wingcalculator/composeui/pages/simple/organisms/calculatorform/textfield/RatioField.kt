@@ -47,6 +47,7 @@ private fun BuffRatioField(
     onChange: (Buff) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    // TODO Intialize by cache correctly
     var ratio by remember { mutableStateOf(buffRatio) }
 
     LaunchedEffect(ratio) { Buff(ratio)?.let(onChange) }

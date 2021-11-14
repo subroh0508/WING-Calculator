@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.Strings
+import net.subroh0508.wingcalculator.composeui.components.getString
 
 @Composable
 fun FrontLayerHeader(
@@ -40,9 +42,9 @@ fun FrontLayerHeader(
         IconButton(onClick = onClickArrowIcon) {
             val (icon, description) =
                 if (isConcealed)
-                    Icons.Default.KeyboardArrowUp to "reveal"
+                    Icons.Default.KeyboardArrowUp to getString(Strings.IconDescriptionBackdropReveal)
                 else
-                    Icons.Default.KeyboardArrowDown to "conceal"
+                    Icons.Default.KeyboardArrowDown to getString(Strings.IconDescriptionBackdropConceal)
 
             Icon(icon, contentDescription = description)
         }

@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.Strings
+import net.subroh0508.wingcalculator.composeui.components.getString
 
 @Composable
 fun TopAppBarWithNavigation(
@@ -34,7 +36,7 @@ fun TopAppBarWithNavigation(
         ) {
             Icon(
                 Icons.Default.Menu,
-                contentDescription = "navigation",
+                contentDescription = getString(Strings.IconDescriptionTopAppBarNavigation),
                 modifier = Modifier.size(24.dp),
             )
         }

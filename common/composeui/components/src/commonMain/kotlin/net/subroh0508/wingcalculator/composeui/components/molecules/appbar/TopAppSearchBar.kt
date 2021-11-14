@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.Strings
+import net.subroh0508.wingcalculator.composeui.components.getString
 
 val TopAppSearchBarHeight = 64.dp
 
@@ -70,7 +72,7 @@ private fun RowScope.OpenedSearchBarContent(
     ) {
         Icon(
             Icons.Default.ArrowBack,
-            contentDescription = "back",
+            contentDescription = getString(Strings.IconDescriptionOpenedSearchBarBack),
             modifier = Modifier.size(24.dp),
         )
     }
@@ -102,7 +104,7 @@ private fun RowScope.OpenedSearchBarContent(
     ) {
         Icon(
             Icons.Default.Clear,
-            contentDescription = "clear",
+            contentDescription = getString(Strings.IconDescriptionOpenedSearchBarClear),
             modifier = Modifier.size(24.dp),
         )
     }
@@ -129,7 +131,7 @@ private fun RowScope.ClosedSearchBarContent(
         ) {
             Icon(
                 Icons.Default.Menu,
-                contentDescription = "navigation",
+                contentDescription = getString(Strings.IconDescriptionDropdownSelector),
                 modifier = Modifier.size(24.dp),
             )
         }

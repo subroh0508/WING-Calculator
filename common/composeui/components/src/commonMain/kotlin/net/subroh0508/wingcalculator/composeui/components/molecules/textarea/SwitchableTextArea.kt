@@ -11,10 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import net.subroh0508.wingcalculator.composeui.components.CommonStrings
+import net.subroh0508.wingcalculator.composeui.components.getString
 
 @Composable
 fun SwitchableTextArea(
     text: String?,
+    label: String,
+    placeholder: String,
     onTextChanged: (String?) -> Unit = {},
     onSaveClick: (String?) -> Unit = {},
     modifier: Modifier = Modifier,
@@ -32,7 +36,7 @@ fun SwitchableTextArea(
     ) {
         Column {
             Text(
-                "メモ",
+                label,
                 style = MaterialTheme.typography.caption,
                 modifier = Modifier.fillMaxWidth()
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
@@ -40,6 +44,7 @@ fun SwitchableTextArea(
             TextAreaContent(
                 editable,
                 inputText,
+                placeholder,
                 modifier = Modifier.padding(horizontal = 16.dp),
             ) { s ->
                 inputText = s
@@ -68,6 +73,7 @@ fun SwitchableTextArea(
 private fun TextAreaContent(
     editable: Boolean,
     text: String?,
+    placeholder: String,
     modifier: Modifier = Modifier,
     onTextChanged: (String?) -> Unit,
 ) {
@@ -83,7 +89,7 @@ private fun TextAreaContent(
     OutlinedTextField(
         text ?: "",
         onValueChange = { onTextChanged(it.takeIf(String::isNotBlank)) },
-        placeholder = { Text("メモを入力") },
+        placeholder = { Text(placeholder) },
         modifier = modifier.fillMaxWidth(),
     )
 }
@@ -99,9 +105,9 @@ private fun ColumnScope.TextAreaButtons(
         TextButton(
             onClick = onNegativeClick,
             modifier = Modifier.padding(end = 8.dp),
-        ) { Text("キャンセル") }
+        ) { Text(getString(CommonStrings.Cancel)) }
     }
     TextButton(
         onClick = { onPositiveClick(!editable) },
-    ) { Text(if (editable) "保存" else "編集") }
+    ) { Text(getString(if (editable) CommonStrings.Save else CommonStrings.Edit)) }
 }

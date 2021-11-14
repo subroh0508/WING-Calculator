@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="close_drawer">"Close navigation menu"</string>
+    <string name="cancel">キャンセル</string>
+    <string name="edit">編集</string>
+    <string name="save">保存</string>
+
+    <string name="close_drawer" translatable="false">Close navigation menu</string>
+    <string name="icon_description_backdrop_reveal" translatable="false">reveal</string>
+    <string name="icon_description_backdrop_conceal" translatable="false">conceal</string>
+    <string name="icon_description_deletable_list_item" translatable="false">delete</string>
+    <string name="icon_description_top_app_bar_navigation" translatable="false">navigation</string>
+    <string name="icon_description_opened_search_bar_back" translatable="false">back</string>
+    <string name="icon_description_opened_search_bar_clear" translatable="false">clear</string>
+    <string name="icon_description_dropdown_selector" translatable="false">select</string>
+    <string name="icon_description_switcher_start" translatable="false">back</string>
+    <string name="icon_description_switcher_end" translatable="false">forward</string>
 </resources>
